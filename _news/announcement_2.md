@@ -5,4 +5,4 @@ inline: true
 related_posts: false
 ---
 
-Youyang 'Icewired' Du and Chi 'Faye' Zhang are in a relationship! :two_hearts:
+Youyang "Icewired" Du and Chi "Faye" Zhang are in a relationship! :two_hearts:
