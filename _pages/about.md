@@ -9,7 +9,7 @@ profile:
   image: me.jpg
   image_circular: false # crops the image to make it circular
   more_info: >
-    <p>+86 13590209850</p>
+    <p>duyouyang957@gmail.com</p>
     <p>1500 Shunhua Rd.</p>
     <p>Jinan, Shandong, China</p>
 
