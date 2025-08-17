@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html>
+
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+
+    <title>Facial Microscopic Structure Synthesis from a Single Unconstrained Image</title>
+
+    <meta name="description" content="Facial Microscopic Structure Synthesis from a Single Unconstrained Image">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.8.0/codemirror.min.css">
+    <link rel="stylesheet" href="css/app.css">
+
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.8.0/codemirror.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.5.3/clipboard.min.js"></script>
+
+    <script src="js/app.js"></script>
+	
+	
+	<link rel="stylesheet" href="css/dics.min.css">
+    <script src="scripts/dics.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', domReady);
+        function domReady() {
+            for (const e of document.querySelectorAll(".b-dics")) {
+                new Dics({
+                    container: e,
+                    textPosition: "top"
+                });
+            }
+        }
+    </script>
+	
+</head>
+
+<body>
+    <div class="container" id="main">
+        <div class="row">
+            <h2 class="col-md-12 text-center">
+                Facial Microscopic Structure Synthesis from a Single Unconstrained Image <br>
+                <small>
+                    Proceedings of ACM SIGGRAPH 2025
+                </small>
+            </h2>
+        </div>
+		
+		<div class="row">
+            <div class="col-md-12 text-center">
+                <ul class="list-inline">
+                    <li>
+                        <a href="https://icewired-yy.github.io/">
+                          Youyang Du
+                        </a>
+                        <br>Shandong University<br>
+                    </li>
+					<li>
+                        <a href="https://wanglusdu.github.io/">
+                          Lu Wang*
+                        </a>
+                        <br>Shandong University<br>
+                    </li>
+                    <li>
+                        <a href="https://wangningbei.github.io/">
+                          Beibei Wang*
+                        </a>
+                        <br>Nanjing University<br>
+                    </li><br>
+                </ul>
+            </div>
+        </div>
+		
+		<div class="row">
+            <div class="col-md-12 text-center">
+                *Denotes corresponding authors
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6 col-md-offset-3 text-center">
+                <ul class="nav nav-pills nav-justified">
+                    <li>
+						<a href="pdf/Facial Microscopic Structure Synthesis from a Single Unconstrained Image.pdf" target="_blank">
+                            <h4><strong>Paper</strong></h4>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- <div class="row">
+            <div class="col-md-8 col-md-offset-2">
+                <h3>
+                    Video
+                </h3>
+                <div class="text-center">
+                    <div style="position:relative;padding-top:56.25%;">
+                        <iframe src="" allowfullscreen style="position:absolute;top:0;left:0;width:100%;height:100%;"></iframe>
+                    </div>
+                </div>
+            </div>
+        </div> -->
+
+        <div class="row">
+            <div class="col-md-10 col-md-offset-1">
+                <h3>
+                    Abstract
+                </h3>
+                <image src="img/teaser.png" style="width:100%;" class="img-responsive center-block" alt="overview"></image>
+                <br>
+                <p class="text-justify">
+                    Obtaining 3D faces with microscopic structures from a single unconstrained image is challenging. The complexities of wrinkles and pores at a microscopic level, coupled with the blurriness of the input image, raise the difficulty. However, the distribution of wrinkles and pores tends to follow a specialized pattern, which can provide a strong prior for synthesizing them. Therefore, a key to microstructure synthesis is a parametric wrinkles and pore model with controllable semantic parameters. Additionally, ensuring differentiability is essential for enabling optimization through gradient descent methods. To this end,  we propose a novel framework designed to reconstruct facial micro-wrinkles and pores from naturally captured images efficiently. At the core of our framework is a differentiable representation of wrinkles and pores via a graph neural network (GNN), which can simulate the complex interactions between adjacent wrinkles by multiple graph convolutions. Furthermore, to overcome the problem of inconsistency between the blurry input and clear wrinkles during optimization, we proposed a Direction Distribution Similarity that ensures that the wrinkle-directional features remain consistent. Consequently, our framework can synthesize facial micro-structures from a blurry skin image patch, which is cropped from a natural-captured facial image, in around an average of 2 seconds. Our framework can seamlessly integrate with existing macroscopic facial detail reconstruction methods to enhance their detailed appearance. We showcase this capability on several works, including DECA, HRN, and FaceScape.
+                </p>
+            </div>
+        </div>
+
+    <div class="row comp-margin">
+        <div class="col-md-10 col-md-offset-1">
+            <h3>
+                Geometry
+            </h3>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-10 col-md-offset-1 text-center">
+            <ul class="nav nav-pills nav-justified">
+                <li>
+                    <div class="b-dics" style="width: 220px">
+                        <img src="img/qualitative/1/coarse.png" alt="Coarse" />
+                        <img src="img/qualitative/1/ours.png" alt="Ours" />
+                    </div>
+                </li>
+                <li>
+                    <div class="b-dics" style="width: 220px">
+                        <img src="img/qualitative/1/noise.png" alt="Noise" />
+                        <img src="img/qualitative/1/ours.png" alt="Ours" />
+                    </div>
+                </li>
+                <li>
+                    <div class="b-dics" style="width: 220px">
+                        <img src="img/qualitative/1/uniform.png" alt="Uniform" />
+                        <img src="img/qualitative/1/ours.png" alt="Ours" />
+                    </div>
+                </li>
+                <li>
+                    <div class="b-dics" style="width: 220px">
+                        <img src="img/qualitative/1/gt.png" alt="GT" />
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <br>
+    <div class="row">
+        <div class="col-md-10 col-md-offset-1 text-center">
+            <ul class="nav nav-pills nav-justified">
+                <li>
+                    <div class="b-dics" style="width: 220px">
+                        <img src="img/qualitative/2/coarse.png" alt="Coarse" />
+                        <img src="img/qualitative/2/ours.png" alt="Ours" />
+                    </div>
+                </li>
+                <li>
+                    <div class="b-dics" style="width: 220px">
+                        <img src="img/qualitative/2/noise.png" alt="Noise" />
+                        <img src="img/qualitative/2/ours.png" alt="Ours" />
+                    </div>
+                </li>
+                <li>
+                    <div class="b-dics" style="width: 220px">
+                        <img src="img/qualitative/2/uniform.png" alt="Uniform" />
+                        <img src="img/qualitative/2/ours.png" alt="Ours" />
+                    </div>
+                </li>
+                <li>
+                    <div class="b-dics" style="width: 220px">
+                        <img src="img/qualitative/2/gt.png" alt="GT" />
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <br>
+    <div class="row">
+        <div class="col-md-10 col-md-offset-1 text-center">
+            <ul class="nav nav-pills nav-justified">
+                <li>
+                    <div class="b-dics" style="width: 220px">
+                        <img src="img/qualitative/3/coarse.png" alt="Coarse" />
+                        <img src="img/qualitative/3/ours.png" alt="Ours" />
+                    </div>
+                </li>
+                <li>
+                    <div class="b-dics" style="width: 220px">
+                        <img src="img/qualitative/3/noise.png" alt="Noise" />
+                        <img src="img/qualitative/3/ours.png" alt="Ours" />
+                    </div>
+                </li>
+                <li>
+                    <div class="b-dics" style="width: 220px">
+                        <img src="img/qualitative/3/uniform.png" alt="Uniform" />
+                        <img src="img/qualitative/3/ours.png" alt="Ours" />
+                    </div>
+                </li>
+                <li>
+                    <div class="b-dics" style="width: 220px">
+                        <img src="img/qualitative/3/gt.png" alt="GT" />
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <br>
+    <div class="row">
+        <div class="col-md-10 col-md-offset-1 text-center">
+            <ul class="nav nav-pills nav-justified">
+                <li>
+                    <div class="b-dics" style="width: 220px">
+                        <img src="img/qualitative/4/coarse.png" alt="Coarse" />
+                        <img src="img/qualitative/4/ours.png" alt="Ours" />
+                    </div>
+                </li>
+                <li>
+                    <div class="b-dics" style="width: 220px">
+                        <img src="img/qualitative/4/noise.png" alt="Noise" />
+                        <img src="img/qualitative/4/ours.png" alt="Ours" />
+                    </div>
+                </li>
+                <li>
+                    <div class="b-dics" style="width: 220px">
+                        <img src="img/qualitative/4/uniform.png" alt="Uniform" />
+                        <img src="img/qualitative/4/ours.png" alt="Ours" />
+                    </div>
+                </li>
+                <li>
+                    <div class="b-dics" style="width: 220px">
+                        <img src="img/qualitative/4/gt.png" alt="GT" />
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="row comp-margin">
+        <div class="col-md-10 col-md-offset-1">
+            <h3>
+                Rendering
+            </h3>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-10 col-md-offset-1 text-center">
+            <ul class="nav nav-pills nav-justified">
+                <li>
+                    <div class="b-dics" style="width: 460px">
+                        <img src="img/rendering/1/coarse/coarse.png" alt="Coarse" />
+                        <img src="img/rendering/1/ours/ours.png" alt="Ours" />
+                    </div>
+                </li>
+                <li>
+                    <div class="b-dics" style="width: 460px">
+                        <img src="img/rendering/2/coarse/coarse.png" alt="Coarse" />
+                        <img src="img/rendering/2/ours/ours.png" alt="Ours" />
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <br>
+    <div class="row">
+        <div class="col-md-10 col-md-offset-1 text-center">
+            <ul class="nav nav-pills nav-justified">
+                <li>
+                    <div class="b-dics" style="width: 310px">
+                        <img src="img/rendering/1/coarse/cheek.png" alt="Coarse" />
+                        <img src="img/rendering/1/ours/cheek.png" alt="Ours" />
+                    </div>
+                </li>
+                <li>
+                    <div class="b-dics" style="width: 310px">
+                        <img src="img/rendering/1/coarse/nose.png" alt="Coarse" />
+                        <img src="img/rendering/1/ours/nose.png" alt="Ours" />
+                    </div>
+                </li>
+                <li>
+                    <div class="b-dics" style="width: 310px">
+                        <img src="img/rendering/1/coarse/forehead.png" alt="Coarse" />
+                        <img src="img/rendering/1/ours/forehead.png" alt="Ours" />
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <br>
+    <div class="row">
+        <div class="col-md-10 col-md-offset-1 text-center">
+            <ul class="nav nav-pills nav-justified">
+                <li>
+                    <div class="b-dics" style="width: 310px">
+                        <img src="img/rendering/2/coarse/cheek.png" alt="Coarse" />
+                        <img src="img/rendering/2/ours/cheek.png" alt="Ours" />
+                    </div>
+                </li>
+                <li>
+                    <div class="b-dics" style="width: 310px">
+                        <img src="img/rendering/2/coarse/nose.png" alt="Coarse" />
+                        <img src="img/rendering/2/ours/nose.png" alt="Ours" />
+                    </div>
+                </li>
+                <li>
+                    <div class="b-dics" style="width: 310px">
+                        <img src="img/rendering/2/coarse/forehead.png" alt="Coarse" />
+                        <img src="img/rendering/2/ours/forehead.png" alt="Ours" />
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+    
+    <br>
+    <div class="row">
+    <div class="col-md-10 col-md-offset-1">
+        <h3>
+            Citation
+        </h3>
+        <div class="form-group col-md-10">
+            <textarea id="bibtex" class="form-control" readonly>
+Wait for being released...
+            </textarea>
+        </div>
+    </div>
+    </div>	    
+
+        <div class="row">
+            <div class="col-md-10 col-md-offset-1">
+                <h3>
+                    Acknowledgements
+                </h3>
+                <p class="text-justify">
+                The website template was borrowed from <a href="https://chenxiang0810.github.io/neural_woven_fabric/index.html">NeuralWovenFabric</a>.
+                </p>
+            </div>
+        </div>
+
+    </div>
+</body>
+</html>
