@@ -1,7 +1,7 @@
 ---
 layout: post
 title: PaperReading - Compressive Light Transport Sensing
-date: 2025-08-18 12:00:00
+date: 2025-08-17 12:00:00
 description: About Compressive Light Transport Sensing
 tags: paper, rendering, relighting
 categories: paper-reading
@@ -41,7 +41,8 @@ $$
 
 这种直接用线性方程描述渲染过程的方式有以下约定：
 
-- **不需要建模相机参数，光源大小，物体之间的相对位置**。所有的信息都包含在了Light Transport Matrix之中（有点神经网络的感觉了）。
-- **光源需要参数化描述**。比如，如果光源是m个点光源，那么光源的参数向量的维度就是$m$；如果是Constant的面光源，那么维度是$1$；如果是用贴图控制的面光源，那么维度就是贴图的像素数$p'$。
+- **不需要建模相机参数，光源大小，物体之间的相对位置**。所有这些信息都隐含在Light Transport Matrix之中（有点神经网络的感觉）。
+- **光源需要参数化描述**。比如，如果光源是m个点光源，那么光源的参数向量的维度就是$m$；如果是Constant的面光源，那么维度是$1$；如果是用贴图控制的面光源，那么维度就是贴图的像素数$p'$。每一个值可以是Radiance。
 
+在这个方程中，$\boldsymbol{T}$中的每一个行向量都是我们要求解的Light Transport Function，或者也可以是Reflectance Function。
   
