@@ -162,7 +162,7 @@ RIP的数学定义如下：对于一个矩阵$$\boldsymbol{A}$$，如果存在�
 
 我们将这个思想代入我们熟悉的压缩感知方程$$\boldsymbol{y} = \boldsymbol{A}\hat{\boldsymbol{t}}$$中（这里$$\boldsymbol{y}$$是观测值，$$\boldsymbol{A}$$是测量矩阵）：
 \begin{equation}
-\boldsymbol{y} = \boldsymbol{A}(\hat{\boldsymbol{t}}_{init} + \boldsymbol{d})  = \boldsymbol{A} \hat{\boldsymbol{t}}_{init} + \boldsymbol{A}\boldsymbol{d}
+\boldsymbol{y} = \boldsymbol{A}(\hat{\boldsymbol{t}}\_{init} + \boldsymbol{d})  = \boldsymbol{A} \hat{\boldsymbol{t}}\_{init} + \boldsymbol{A}\boldsymbol{d}
 \end{equation}
 
 将已知项移到等式左边，我们得到一个新的压缩感知问题：
