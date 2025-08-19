@@ -29,7 +29,7 @@ Any vector is essentially a discrete representation under a certain set of basis
 
 Consider a scene, for example:
 
-![alt text](../assets/posts/image.png)
+{% include figure.liquid loading="eager" path="../assets/posts/image.png" class="img-fluid rounded z-depth-1" %}
 **In this scene, every object, including the camera and the light source, is fixed.** We want to find a Light Transport function such that when our light source changes, we can solve for the scene under new lighting conditions. As you can see, this is a constrained Capture-Relighting problem.
 
 Previous work has shown that this problem can be described by a linear equation:
