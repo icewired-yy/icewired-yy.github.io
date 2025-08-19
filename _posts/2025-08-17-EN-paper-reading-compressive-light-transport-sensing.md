@@ -162,7 +162,7 @@ Since $$\hat{\boldsymbol{t}}_{init}$$ is already a good approximation, we can ex
 
 We can substitute this idea into our familiar CS equation, $$\boldsymbol{y} = \boldsymbol{A}\hat{\boldsymbol{t}}$$ (where $$\boldsymbol{y}$$ is the observation and $$\boldsymbol{A}$$ is the measurement matrix):
 \begin{equation}
-\boldsymbol{y} = \boldsymbol{A}(\hat{\boldsymbol{t}}_{init} + \boldsymbol{d})  = \boldsymbol{A} \hat{\boldsymbol{t}}_{init} + \boldsymbol{A}\boldsymbol{d}
+\boldsymbol{y} = \boldsymbol{A}(\hat{\boldsymbol{t}}\_{init} + \boldsymbol{d})  = \boldsymbol{A} \hat{\boldsymbol{t}}\_{init} + \boldsymbol{A}\boldsymbol{d}
 \end{equation}
 
 By moving the known terms to the left side, we formulate a new compressive sensing problem:

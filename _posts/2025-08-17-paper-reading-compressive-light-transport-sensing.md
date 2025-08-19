@@ -29,7 +29,7 @@ Compressive Sensing（压缩感知）研究的是这样一个问题：对于这�
 
 在一个场景中，比如:
 
-![alt text](../assets/posts/image.png)
+{% include figure.liquid loading="eager" path="../assets/posts/image.png" class="img-fluid rounded z-depth-1" %}
 **其中场景中的每一个物体，包括相机与光源，都是固定不动的**。我们希望找到一个Light Transport函数，使得当我们的光源发生变化时，我可以求解出新的光照下的场景。可以见到，这个问题是一个有限制的Capture-Relighting问题。
 
 前人的工作已经证明了，这个问题可以用一个线性方程去描述：
@@ -162,7 +162,7 @@ RIP的数学定义如下：对于一个矩阵$$\boldsymbol{A}$$，如果存在�
 
 我们将这个思想代入我们熟悉的压缩感知方程$$\boldsymbol{y} = \boldsymbol{A}\hat{\boldsymbol{t}}$$中（这里$$\boldsymbol{y}$$是观测值，$$\boldsymbol{A}$$是测量矩阵）：
 \begin{equation}
-\boldsymbol{y} = \boldsymbol{A}(\hat{\boldsymbol{t}}_{init} + \boldsymbol{d})  = \boldsymbol{A} \hat{\boldsymbol{t}}_{init} + \boldsymbol{A}\boldsymbol{d}
+\boldsymbol{y} = \boldsymbol{A}(\hat{\boldsymbol{t}}\_{init} + \boldsymbol{d})  = \boldsymbol{A} \hat{\boldsymbol{t}}\_{init} + \boldsymbol{A}\boldsymbol{d}
 \end{equation}
 
 将已知项移到等式左边，我们得到一个新的压缩感知问题：
