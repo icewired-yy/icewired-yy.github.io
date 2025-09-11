@@ -9,17 +9,25 @@ categories: paper-reading
 # Introduction
 ## What is Compressive Sensing?
 
-Consider the following linear equation:
+Before understanding compressive sensing, we first need to have a concept of compression itself. If a signal, when projected onto a space spanned by a certain set of bases, has a significant coefficient concentration effect (large coefficients are mainly distributed on a small number of bases, while the coefficients on the remaining bases are very small), then if we only keep those bases with significant coefficients and their coefficients, the reconstructed signal can still retain most of the information of the original signal. We call this space a compressible space, and this signal is compressible in certain specific spaces.
+
+And we know that, according to the Nyquist sampling theorem, if we do not perform any transformation on the signal, our sampling frequency must be at least twice the frequency of the measured signal to fully recover the complete signal.
+
+Compressive Sensing studies the following problem: can we project a signal into a specific compressible space, changing the objective to reconstructing a k-sparse compressed signal, thereby reconstructing the original signal with a number of samples significantly smaller than what is required by the Nyquist theorem?
+
+> K-Sparse: Refers to a vector containing at most k non-zero elements.
+
+# Underdetermined Linear Systems
+
+For a linear equation such as this:
 \begin{equation}
 \boldsymbol{y} = \boldsymbol{A}\boldsymbol{x}
 \end{equation}
-Here, $$\boldsymbol{x}$$ is an n-dimensional **unknown signal to be solved**, $$\boldsymbol{A}$$ is an $$m \times n$$ matrix known as the **measurement matrix** used to measure the unknown signal $$\boldsymbol{x}$$, and the vector $$\boldsymbol{y}$$ is an m-dimensional column vector representing the **observed results** after measurement. Generally, if we can ensure that $$m>n$$ and the rank of $$\boldsymbol{A}$$ is greater than or equal to $$n$$, the unknown signal $$\boldsymbol{x}$$ can be solved for precisely. However, if $$m \ll n$$, the system of equations is **underdetermined**, and the solution is not unique.
+where $$\boldsymbol{x}$$ is an n-dimensional **unknown signal to be solved for**, $$\boldsymbol{A}$$ is an $$m \times n$$ matrix, which is the **measurement matrix** used to measure the unknown signal $$\boldsymbol{x}$$, and the vector $$\boldsymbol{y}$$ is an m-dimensional column vector, which is the **observation result** after measurement. Generally, if we can ensure that $$m>n$$ and the rank of $$\boldsymbol{A}$$ is greater than or equal to $$n$$, then this unknown signal $$\boldsymbol{x}$$ can be solved for precisely. However, if $$m \ll n$$, then this equation is **underdetermined**, and its solution is not unique.
 
-Compressive Sensing investigates the problem of how to find a solution $$\boldsymbol{x}$$ that satisfies a certain sparsity level $$k (k \ll n)$$ for such an underdetermined linear system.
+There are many existing algorithms for finding the sparse solution of underdetermined linear systems, such as Basis Pursuit.
 
-> K-Sparse: A vector is k-sparse if it contains at most k non-zero elements.
-
-## Why is it **Compressive**?
+## Let's look again at what **Compressive** means?
 
 As mentioned, Compressive Sensing aims to find a sparse solution in an underdetermined linear system. The "compressive" nature is embedded in the sparsity of this solution. Why is that?
 
