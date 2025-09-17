@@ -18,4 +18,6 @@ selected_papers: true # includes a list of papers marked as "selected={true}"
 social: true # includes social icons at the bottom of the page
 ---
 
-Hello, I'm Youyang Du.
+Hello! My name is Youyang Du (pronounced "You Young, Due"). I earned my Bachelor's degree from Shandong University, where I am currently a Master's student under the supervision of Prof. [Lu Wang](https://wanglusdu.github.io). I am also fortunate to be remotely co-advised by Prof. [Beibei Wang](https://wangningbei.github.io) and Prof. [Lingqi Yan](https://sites.cs.ucsb.edu/~lingqi/).
+
+My research interests include Neural-Aided Offline Rendering, Neural Scene Representation, and emerging topics such as AIGC enhancement guided by Computer Graphics.

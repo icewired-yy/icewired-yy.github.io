@@ -21,5 +21,20 @@ location = {
 },
 series = {SIGGRAPH Conference Papers '25},
 preview={SIG25-face.jpg},
-website={https://icewired-yy.github.io/papers/face_micro_detail_synthesis/}
+website={https://icewired-yy.github.io/papers/face_micro_detail_synthesis/},
+selected={true}
+}
+
+@inproceedings{Xing:2025:Diffusion-Guided,
+  title={Diffusion-Guided Relighting for Single-Image SVBRDF Estimation},
+  author={Youxin Xing, Zheng Zeng, Youyang Du, Lu Wang and Beibei Wang},
+  booktitle={Proceedings of the SIGGRAPH Asia Conference Papers '25},
+  year={2025},
+  publisher = {Association for Computing Machinery},
+  keywords = {SVBRDF, Single-Image Material Estimation, Diffusion Model, Relighting},
+  series = {SIGGRAPH Asia Conference Papers '25},
+  abstract = {Recovering high-fidelity spatially varying bidirectional reflectance distribution function (SVBRDF) maps from a single image remains an ill-posed and challenging problem, especially in the presence of saturated highlights. Existing methods often fail to reconstruct the underlying texture in regions overwhelmed by intense specular reflections. This kind of bake-in artifacts caused by highlight corruption can be greatly alleviated by providing a series of material images under different lighting conditions. To this end, our key insight is to leverage the strong priors of diffusion models to generate images of the same material under varying lighting conditions. These generated images are then used to aid a multi-image SVBRDF estimator in recovering highlight-free reflectance maps. However, strong highlights in the input image lead to inconsistencies across the relighting results. Moreover, texture reconstruction becomes unstable in saturated regions, with variations in background structure, specular shape, and overall material color. These artifacts degrade the quality of SVBRDF recovery. To address this issue, we propose a shuffle-based background consistency module that extracts stable background features and implicitly identifies saturated regions. This guides the diffusion model to generate coherent content while preserving material structures and details. Furthermore, to stabilize the appearance of generated highlights, we introduce a lightweight specular prior encoder that estimates highlight features and then performs grid-based latent feature translation, injecting consistent specular contour priors while preserving material color fidelity. Both quantitative analysis and qualitative visualization demonstrate that our method enables stable neural relighting from a single image and can be seamlessly integrated into multi-input SVBRDF networks to estimate highlight-free reflectance maps.},
+  preview = {SigAsia25-DiffusionRelighting.png},
+  website = {https://xingyouxin.github.io/works/DGRSISE/index.html},
+  selected={true}
 }

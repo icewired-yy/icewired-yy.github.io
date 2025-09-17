@@ -5,4 +5,4 @@ inline: true
 related_posts: false
 ---
 
-Our paper [Facial Microscopic Structure Synthesis from a Single Unconstrained Image](https://icewired-yy.github.io/papers/face_micro_detail_synthesis/) has beed conditionally accepted by Siggraph 2025!
+Our paper [Facial Microscopic Structure Synthesis from a Single Unconstrained Image](https://icewired-yy.github.io/papers/face_micro_detail_synthesis/) has beed accepted by Siggraph 2025!
