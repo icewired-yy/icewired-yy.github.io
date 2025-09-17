@@ -5,4 +5,4 @@ inline: true
 related_posts: false
 ---
 
-Become a postgradutae in Software School, Shandong University.
+Become a postgraduate in Software School, Shandong University.
