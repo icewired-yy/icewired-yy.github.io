@@ -3,7 +3,7 @@ layout: post
 title: PaperReading - Compressive Light Transport Sensing
 date: 2025-08-17 12:00:00
 description: About Compressive Light Transport Sensing
-tags: paper, rendering, relighting, en-blog
+tags: paper, rendering, relighting, en-blog, compressive-sensing
 categories: paper-reading
 ---
 # Introduction

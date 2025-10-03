@@ -3,7 +3,7 @@ layout: post
 title: 论文解读 - 光线传输的压缩感知 （Compressive Light Transport Sensing）
 date: 2025-08-17 12:00:00
 description: About Compressive Light Transport Sensing
-tags: paper, rendering, relighting, cn-blog
+tags: paper, rendering, relighting, cn-blog, compressive-sensing
 categories: paper-reading
 ---
 # 引言
