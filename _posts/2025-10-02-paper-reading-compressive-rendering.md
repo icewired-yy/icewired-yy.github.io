@@ -1,7 +1,7 @@
 ---
 layout: post
 title: 论文解读 - 渲染压缩感知
-date: 2025-10-03 12:00:00
+date: 2025-10-02 12:00:00
 description: About Compressive Rendering Sensing
 tags: paper, rendering, cn-blog, compressive-sensing
 categories: paper-reading

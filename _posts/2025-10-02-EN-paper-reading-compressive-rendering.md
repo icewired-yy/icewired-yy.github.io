@@ -1,7 +1,7 @@
 ---
 layout: post
 title: PaperReading - Compressive Rendering Sensing
-date: 2025-10-03 12:00:00
+date: 2025-10-02 12:00:00
 description: About Compressive Rendering Sensing
 tags: paper, rendering, en-blog, compressive-sensing
 categories: paper-reading
