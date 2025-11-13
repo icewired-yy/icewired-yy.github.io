@@ -46,7 +46,7 @@ Before get deeper into the microfacet theory, we need to answer why we need this
 
 <div class="row mt-3">
     <div class="col-sm mt-3 mt-md-0">
-        {% include figure.liquid loading="eager" path="assets/ndf_microfacet/macrosurface_microsurface.png" class="img-fluid rounded z-depth-1" %}
+        {% include figure.liquid loading="eager" path="../assets/ndf_microfacet/macrosurface_microsurface.png" class="img-fluid rounded z-depth-1" %}
     </div>
 </div>
 <div class="caption">
