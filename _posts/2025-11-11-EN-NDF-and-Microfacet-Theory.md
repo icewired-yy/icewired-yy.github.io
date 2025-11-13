@@ -78,9 +78,7 @@ The classical microfacet theory has a basic assumption, that is there need to be
 
 \begin{equation}
 \label{eq: Relationship between micro and geo}
-
 \int_{\mathcal{M}} <\omega_m(p_m), \omega_g> \mathrm{d} p_m = \int_{\mathcal{G}} \mathrm{d} p_g = A_g,
-
 \end{equation}
 
 where $A_g$ is the area of geometric surface. One can make $A_g = 1m^2$ without loss of generality. This term will always be cancelled out in the following derivation.
@@ -101,9 +99,7 @@ One important information we need to use to describe the microsurface's geometri
 
 \begin{equation}
 \label{eq: def of NDF}
-
 D(\omega) = \int_{\mathcal{M}} \delta_{\omega}(\omega_m(p_m)) \mathrm{d} p_m.
-
 \end{equation}
 
 It describes the total area of the microsurface that their normal pointing at direction $\omega$. Thus, the unit of $D(\omega)$ is `$\frac{m^2}{sr}$`. Why we need to define the NDF? The reason is that, **NDF is a bridge to connect two different spaces**: one is the spatial space, that is, the microsurface space $\mathcal{M}$, and another is the statistical space, that is, the positive hemisphere space $\Omega$. An informal understanding from the relationship of unit is that, $D(\omega)\mathrm{d}\omega$ ($\frac{m^2}{sr} \cdot sr$) indicates all the differential area $\mathrm{d}p_m$ ($m^2$) whose normal pointing toward $\omega$. A more precise description of this relationship is that, given a subset $\Omega'$ from the $\Omega$, we can have a corresponding subset $\mathcal{M}'$ from $\mathcal{M}$ that $\mathcal{M}'$ contains all the points on the microsurface whose normal inside the $\Omega'$, and we have:
