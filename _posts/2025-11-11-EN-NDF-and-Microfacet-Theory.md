@@ -35,6 +35,7 @@ toc:
   - name: Micro-surface & Macro-surface
   - name: Normal Distribution Function
   - name: Masking Funtion
+  - name: Microfacet BRDF
 ---
 
 ## Preliminary
@@ -217,3 +218,9 @@ This is also a restriction of the masking function.
     The illustration of the summary of the aforementioned concept, which is borrowed from E. Heitz, _Understanding the Masking-Shadowing Function in Microfacet-Based BRDFs_
   </p>
 </aside>
+
+---
+
+## Microfacet BRDF
+
+TODO
