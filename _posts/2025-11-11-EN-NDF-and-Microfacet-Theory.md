@@ -46,7 +46,7 @@ Before get deeper into the microfacet theory, we need to answer why we need this
 
 <div class="row mt-3">
     <div class="col-sm mt-3 mt-md-0">
-        {% include figure.liquid loading="eager" path="../assets/ndf_microfacet/macrosurface_microsurface.png" class="img-fluid rounded z-depth-1" %}
+        {% include figure.liquid loading="eager" path="../assets/posts/ndf_microfacet/macrosurface_microsurface.png" class="img-fluid rounded z-depth-1" %}
     </div>
 </div>
 <div class="caption">
@@ -57,4 +57,12 @@ We called the area of the object surface that covered by one pixel the `footprin
 
 # Normal Distribution Function
 
-One important information we need to use to describe the microsurface's appearance, is the summarization of the normal on the microsurface. We can use a function called `Normal Distribution Function (NDF)` to describe it. One need to distinguish it from the `Probability Density Function (PDF)` of normal, which describe the probability of normal from a randomly sampled point on the microsurface.
+One important information we need to use to describe the microsurface's geometric appearance, is the summary of the normal on the microsurface. We can use a function called `Normal Distribution Function (NDF)` to describe it. One need to distinguish it from the `Probability Density Function (PDF)` of normal, which describe the probability of normal of a uniformly random-sampled point on the microsurface. The definition of the NDF is:
+
+\begin{equation}
+\label{eq: def of NDF}
+
+D(\omega) = \int_{\mathcal{M}} \delta_{\omega}(\omega_m(p_m)) \mathrm{d} p_m
+
+\end{equation}
+
