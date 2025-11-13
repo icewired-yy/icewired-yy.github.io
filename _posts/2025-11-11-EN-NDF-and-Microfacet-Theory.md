@@ -89,7 +89,7 @@ where $A_g$ is the area of geometric surface. One can make $A_g = 1m^2$ without 
 | ------            | ----------                            |
 | $\Omega$          | The positive hemisphere space         |
 | $D(\omega)$       | The normal distribution function      |
-| $\delta_{\omega'}(\omega)$  | The dirac delta function, $+\infty$ if $\omega = \omega'$ and 0 otherwise, normalized in the integral |
+| $\delta_{\omega^{\prime}}(\omega)$  | The dirac delta function, $+\infty$ if $\omega = \omega^{\prime}$ and 0 otherwise, normalized in the integral |
 | $\omega_i$        | The incident direction                |
 | $\omega_o$        | The outgoing direction                |
 | $\omega_m$        | The normal of one point on the \mathcal{M} |
@@ -102,10 +102,10 @@ One important information we need to use to describe the microsurface's geometri
 D(\omega) = \int_{\mathcal{M}} \delta_{\omega}(\omega_m(p_m)) \mathrm{d} p_m.
 \end{equation}
 
-It describes the total area of the microsurface that their normal pointing at direction $\omega$. Thus, the unit of $D(\omega)$ is `$\frac{m^2}{sr}$`. Why we need to define the NDF? The reason is that, **NDF is a bridge to connect two different spaces**: one is the spatial space, that is, the microsurface space $\mathcal{M}$, and another is the statistical space, that is, the positive hemisphere space $\Omega$. An informal understanding from the relationship of unit is that, $D(\omega)\mathrm{d}\omega$ ($\frac{m^2}{sr} \cdot sr$) indicates all the differential area $\mathrm{d}p_m$ ($m^2$) whose normal pointing toward $\omega$. A more precise description of this relationship is that, given a subset $\Omega'$ from the $\Omega$, we can have a corresponding subset $\mathcal{M}'$ from $\mathcal{M}$ that $\mathcal{M}'$ contains all the points on the microsurface whose normal inside the $\Omega'$, and we have:
+It describes the total area of the microsurface that their normal pointing at direction $\omega$. Thus, the unit of $D(\omega)$ is `$\frac{m^2}{sr}$`. Why we need to define the NDF? The reason is that, **NDF is a bridge to connect two different spaces**: one is the spatial space, that is, the microsurface space $\mathcal{M}$, and another is the statistical space, that is, the positive hemisphere space $\Omega$. An informal understanding from the relationship of unit is that, $D(\omega)\mathrm{d}\omega$ ($\frac{m^2}{sr} \cdot sr$) indicates all the differential area $\mathrm{d}p_m$ ($m^2$) whose normal pointing toward $\omega$. A more precise description of this relationship is that, given a subset $\Omega^{\prime}$ from the $\Omega$, we can have a corresponding subset $\mathcal{M}^{\prime}$ from $\mathcal{M}$ that $\mathcal{M}^{\prime}$ contains all the points on the microsurface whose normal inside the $\Omega^{\prime}$, and we have:
 
 $$
-\int_{\Omega'} D(\omega) \mathrm{d} \omega = \int_{\mathcal{M}'} \mathrm{d}p_m
+\int_{\Omega^{\prime}} D(\omega) \mathrm{d} \omega = \int_{\mathcal{M}^{\prime}} \mathrm{d}p_m
 $$
 
 <div class="row mt-3">
@@ -121,12 +121,12 @@ $$
 
 Here are some deduction related to NDF:
 
-**__Statistical area counting__**. The counting of the microsurface area can be converted from spatial integral to statistical integral via NDF, leading to: 
+**_Statistical area counting_**. The counting of the microsurface area can be converted from spatial integral to statistical integral via NDF, leading to: 
 $$
 \int_{\Omega} D(\omega) <\omega, \omega_g> \mathrm{d} \omega = \int_{\mathcal{M}} <\omega_m(p_m), \omega_g> \mathrm{d} p_m = \int_{\mathcal{G}} \mathrm{d} p_g = A_g = 1m^2
 $$
 
-**__Relationship between NDF and normal PDF__**. The unit of PDF of normal $p(\omega)$ is $\frac{1}{sr}$, so it is obviously that:
+**_Relationship between NDF and normal PDF_**. The unit of PDF of normal $p(\omega)$ is $\frac{1}{sr}$, so it is obviously that:
 $$
 p(\omega) = \frac{D(\omega)}{\int_{\Omega} D(\omega) \mathrm{d} \omega}
 $$
