@@ -37,11 +37,13 @@ toc:
   - name: Masking Funtion
 ---
 
-# Preliminary
+## Preliminary
 
 The target of writing this post is to record my understanding of microfacet theory. It will be updated whenever my understanding is refined. I will try to derive the microfacet model in a friendly way for all the readers that want to get familiar with this theory as well. It is greatly appreciated if one can figure out the mistake in this post and show in the comment below. Also, any discussion on this topic is welcome.
 
-# Micro-surface & Macro-surface
+---
+
+## Micro-surface & Macro-surface
 
 | Symbol            | Definition                            |
 | ------            | ----------                            |
@@ -83,7 +85,9 @@ The classical microfacet theory has a basic assumption, that is there need to be
 
 where $A_g$ is the area of geometric surface. One can make $A_g = 1m^2$ without loss of generality. This term will always be cancelled out in the following derivation.
 
-# Normal Distribution Function
+---
+
+## Normal Distribution Function
 
 | Symbol            | Definition                            |
 | ------            | ----------                            |
@@ -121,17 +125,22 @@ $$
 
 Here are some deduction related to NDF:
 
-**_Statistical area counting_**. The counting of the microsurface area can be converted from spatial integral to statistical integral via NDF, leading to: 
+**_Statistical area counting_**. The counting of the microsurface area can be converted from spatial integral to statistical integral via NDF, leading to:
+
 $$
-\int_{\Omega} D(\omega) <\omega, \omega_g> \mathrm{d} \omega = \int_{\mathcal{M}} <\omega_m(p_m), \omega_g> \mathrm{d} p_m = \int_{\mathcal{G}} \mathrm{d} p_g = A_g = 1m^2
+\int_{\Omega} D(\omega) <\omega, \omega_g> \mathrm{d} \omega = \int_{\mathcal{M}} <\omega_m(p_m), \omega_g> \mathrm{d} p_m = \int_{\mathcal{G}} \mathrm{d} p_g = A_g \left(= 1m^2\right)
 $$
 
 **_Relationship between NDF and normal PDF_**. The unit of PDF of normal $p(\omega)$ is $\frac{1}{sr}$, so it is obviously that:
+
 $$
-p(\omega) = \frac{D(\omega)}{\int_{\Omega} D(\omega) \mathrm{d} \omega}
+p(\omega) = \frac{D(\omega)}{\int_{\Omega} D(\omega) \mathrm{d} \omega},
 $$
+
 where the denominator is the total area of microsurface.
 
-# Masking Function
+---
 
-TODO
+## Masking Function
+
+Why we introduce the microfacet theory is to calculate the aggregated outgoing radiance from the microsurface covered by the pixel's footprint. Thus, we need to first figure out two magnitudes: the view-dependent projected area and the formulation of the outgoing radiance.
