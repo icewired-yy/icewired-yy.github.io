@@ -121,9 +121,7 @@ $$
     The relationship between the statistical integral via NDF and the sptial integral to sum the specific area.
 </div>
 
-**We need to understand the NDF well before we get into the following content, this is the base of the microfacet theory.** 
-
-Here are some deduction related to NDF:
+**We need to understand the NDF well before we get into the following content, this is the base of the microfacet theory.** Here are some deduction related to NDF:
 
 **_Statistical area counting_**. The counting of the microsurface area can be converted from spatial integral to statistical integral via NDF, leading to:
 
@@ -143,4 +141,38 @@ where the denominator is the total area of microsurface.
 
 ## Masking Function
 
-Why we introduce the microfacet theory is to calculate the aggregated outgoing radiance from the microsurface covered by the pixel's footprint. Thus, we need to first figure out two magnitudes: the view-dependent projected area and the formulation of the outgoing radiance.
+The reason why we introduce the microfacet theory is to calculate the aggregated outgoing radiance from the microsurface covered by the pixel's footprint. Thus, we need to first figure out two magnitudes: the view-dependent projected area and the formulation of the outgoing radiance.
+
+### View-dependent Projected Area
+
+This projected area measures the area of the microsurface that we can observe from one given view direction. To analyze the formulation, we can assume that every differential area $\mathrm{d}p_m$ has a projection factor $W_m(p_m, \omega_o)$ toward the given view direction $\omega_o$. Thus, the projected area can be formulated as:
+
+$$
+A_{proj}(\omega_o) = \int_{\mathcal{M}} W_m(p_m, \omega_o)\mathrm{d}p_m
+$$
+
+Due to the intrinsic of the microfacet assumption, the view-dependent projected area is always $<\omega_g, \omega_o>$, leading to:
+
+$$
+\int_{\mathcal{M}} W_m(p_m, \omega_o)\mathrm{d}p_m = <\omega_g, \omega_o> = \cos\theta_o
+$$
+
+<div class="row mt-3">
+    <div class="col-sm mt-3 mt-md-0">
+        {% include figure.liquid loading="eager" path="../assets/posts/ndf_microfacet/view-dependent projected area.png" class="img-fluid rounded z-depth-1" zoomable=true %}
+    </div>
+</div>
+<div class="caption">
+    How the microsurface projected to the given view direction.
+</div>
+
+### Outgoing Radiance
+
+Obviously, observer can only receive the outgoing radiance from the view-dependent projected area, that is, the visible part of the microsurface. To formulate this, we could guess that every point $p_m$ on the microsurface should have an outgoing radiance $L_m(p_m, \omega_o)$ that may contribute to the final aggregated outgonig radiance $L(\omega_o)$, and the contribution weight is the view-dependent projected area of $p_m$. Since this weight is not guaranteed to be normalized, so the final formulation is:
+
+\begin{equation}
+\label{eq: Outgoing Radiance}
+L(\omega_o) = \frac{\int_{\mathcal{M}} W_m(p_m, \omega_o) L(p_m, \omega_o) \mathrm{d} p_m }{\int_{\mathcal{M}} W_m(p_m, \omega_o) \mathrm{d} p_m}
+\end{equation}
+
+Maybe you have thought about how to convert this spatial integral into a statistical integral as before. However, we have not analyzed the components of $W_m(p_m, \omega_o)$ so far, which we will discuss in the next subsection.
