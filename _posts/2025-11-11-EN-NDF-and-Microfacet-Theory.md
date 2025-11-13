@@ -181,6 +181,13 @@ Maybe you have thought about how to convert this spatial integral into a statist
 
 Obviously, we can notice that there are many place on the microsurface whose outgoing radiance will be occluded (or masked) be another part of the microsurface. Like the visibility term, we also need to use a term called masking function $G(p_m, \omega_o)$ to indicate whether the outgoing radiance will not be occluded. After we define this masking function, the projection factor $W_m(p_m, \omega_o)$ can be represented by:
 
+<aside>
+  {% include figure.liquid loading="eager" path="../assets/posts/ndf_microfacet/Masking function from Heitz.png" class="img-fluid rounded z-depth-1" zoomable=true %}
+  <p>
+    The illustration of the summary of the aforementioned concept, which is borrowed from E. Heitz, "Understanding the Masking-Shadowing Function in Microfacet-Based BRDFs".
+  </p>
+</aside>
+
 $$
 W_m(p_m, \omega_o) = G(p_m, \omega_o) <\omega_m(p_m), \omega_o>.
 $$
@@ -211,13 +218,6 @@ Then, the equation \eqref{eq: Spatial Projected Area} has them statistical versi
 \end{equation}
 
 This is also a restriction of the masking function.
-
-<aside>
-  {% include figure.liquid loading="eager" path="../assets/posts/ndf_microfacet/Masking function from Heitz.png" class="img-fluid rounded z-depth-1" zoomable=true %}
-  <p>
-    The illustration of the summary of the aforementioned concept, which is borrowed from E. Heitz, _Understanding the Masking-Shadowing Function in Microfacet-Based BRDFs_
-  </p>
-</aside>
 
 ---
 
