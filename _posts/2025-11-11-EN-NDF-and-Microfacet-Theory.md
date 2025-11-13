@@ -65,6 +65,15 @@ Before get deeper into the microfacet theory, we need to answer why we need this
 
 We called the area of the object surface that covered by one pixel the `footprint`. As illustrated in the figure, there are many complex microstructures within that footprint, we call them `microsurface`. Due to these microstructures, the appearance of this area should be highly spatial-varying. However, since **one pixel can only return one RGB**, we need to summarize the appearance of these microstructures with only one RGB value. Obviously, we need to derive the statistical (or aggregated) properities of the microsurface from its spatial properities. Once we have its statistical properites, we can assume that the area within the footprint is flat, which can use only one normal vector to describe it. called `macrosurface` or `geometric surface`. This assumed macrosurface needs a complex microfacet theory that summarizes the appearance into one value from its statistical properties. That's why we need the microfacet model.
 
+<div class="row mt-3">
+    <div class="col-sm mt-3 mt-md-0">
+        {% include figure.liquid loading="eager" path="../assets/posts/ndf_microfacet/geo-micro.png" class="img-fluid rounded z-depth-1" zoomable=true %}
+    </div>
+</div>
+<div class="caption">
+    The bijecction between microsurface and geometric surface.
+</div>
+
 The classical microfacet theory has a basic assumption, that is there need to be a bijection between microsurface $\mathcal{M}$ and geometric surface $\mathcal{G}$. One, and only one point $p_m$ on the $\mathcal{M}$ can be projected to the $\mathcal{G}$ along the geometric normal $\omega_g$, leading to:
 
 \begin{equation}
