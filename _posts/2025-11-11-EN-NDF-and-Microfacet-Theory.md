@@ -184,7 +184,7 @@ Obviously, we can notice that there are many place on the microsurface whose out
 <aside>
   {% include figure.liquid loading="eager" path="../assets/posts/ndf_microfacet/Masking function from Heitz.png" class="img-fluid rounded z-depth-1" zoomable=true %}
   <p>
-    The illustration of the summary of the aforementioned concept, which is borrowed from E. Heitz, "Understanding the Masking-Shadowing Function in Microfacet-Based BRDFs".
+    E. Heitz, "Understanding the Masking-Shadowing Function in Microfacet-Based BRDFs".
   </p>
 </aside>
 
