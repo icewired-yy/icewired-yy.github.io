@@ -170,9 +170,50 @@ $$
 
 Obviously, observer can only receive the outgoing radiance from the view-dependent projected area, that is, the visible part of the microsurface. To formulate this, we could guess that every point $p_m$ on the microsurface should have an outgoing radiance $L_m(p_m, \omega_o)$ that may contribute to the final aggregated outgonig radiance $L(\omega_o)$, and the contribution weight is the view-dependent projected area of $p_m$. Since this weight is not guaranteed to be normalized, so the final formulation is:
 
-\begin{equation}
-\label{eq: Outgoing Radiance}
+$$
 L(\omega_o) = \frac{\int_{\mathcal{M}} W_m(p_m, \omega_o) L(p_m, \omega_o) \mathrm{d} p_m }{\int_{\mathcal{M}} W_m(p_m, \omega_o) \mathrm{d} p_m}
-\end{equation}
+$$
 
 Maybe you have thought about how to convert this spatial integral into a statistical integral as before. However, we have not analyzed the components of $W_m(p_m, \omega_o)$ so far, which we will discuss in the next subsection.
+
+### Geometric Masking
+
+Obviously, we can notice that there are many place on the microsurface whose outgoing radiance will be occluded (or masked) be another part of the microsurface. Like the visibility term, we also need to use a term called masking function $G(p_m, \omega_o)$ to indicate whether the outgoing radiance will not be occluded. After we define this masking function, the projection factor $W_m(p_m, \omega_o)$ can be represented by:
+
+$$
+W_m(p_m, \omega_o) = G(p_m, \omega_o) <\omega_m(p_m), \omega_o>.
+$$
+
+And we can immediately get the following spatial integral equations:
+
+\begin{equation}
+\label{eq: Spatial Projected Area}
+\int_{\mathcal{M}} G(p_m, \omega_o) <\omega_m(p_m), \omega_o>\mathrm{d}p_m = \cos\theta_o
+\end{equation}
+
+\begin{equation}
+\label{eq: Spatial Outgoing Radiance}
+L(\omega_o) = \frac{\int_{\mathcal{M}} G(p_m, \omega_o) <\omega_m(p_m), \omega_o> L(p_m, \omega_o) \mathrm{d} p_m }{\int_{\mathcal{M}} G(p_m, \omega_o) <\omega_m(p_m), \omega_o> \mathrm{d} p_m}
+\end{equation}
+
+Conventionally, we need to have a statistical version of the masking function. Different from the normal distribution function, the statistical masking function $G(\omega, \omega_o)$ is defined as the visible ratio of the  microsurface area whose normal is pointing toward $\omega$, leading to:
+
+$$
+G(\omega, \omega_o) = \frac{\int_{\mathcal{M}}\delta_{\omega}(\omega_m(p_m)) G(p_m, \omega_o)\mathrm{d}p_m}{\int_{\mathcal{M}}\delta_{\omega}(\omega_m(p_m))\mathrm{d}p_m}
+$$
+
+Then, the equation \eqref{eq: Spatial Projected Area} has them statistical version:
+
+\begin{equation}
+\label{eq: Statistical Projected Area}
+\int_{\Omega} G(\omega, \omega_o) <\omega, \omega_o> D(\omega) \mathrm{d}\omega = \cos\theta_o
+\end{equation}
+
+This is also a restriction of the masking function.
+
+<aside>
+  {% include figure.liquid loading="eager" path="../assets/posts/ndf_microfacet/Masking function from Heitz.png" class="img-fluid rounded z-depth-1" zoomable=true %}
+  <p>
+    The illustration of the summary of the aforementioned concept, which is borrowed from E. Heitz, _Understanding the Masking-Shadowing Function in Microfacet-Based BRDFs_
+  </p>
+</aside>
