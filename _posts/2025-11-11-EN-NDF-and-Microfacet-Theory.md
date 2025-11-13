@@ -89,7 +89,7 @@ where $A_g$ is the area of geometric surface. One can make $A_g = 1m^2$ without 
 | ------            | ----------                            |
 | $\Omega$          | The positive hemisphere space         |
 | $D(\omega)$       | The normal distribution function      |
-| $\delta_{x'}(x)$  | The dirac delta function, $+\infty$ if $x = x'$ and 0 otherwise, normalized in the integral |
+| $\delta_{\omega'}(\omega)$  | The dirac delta function, $+\infty$ if $\omega = \omega'$ and 0 otherwise, normalized in the integral |
 | $\omega_i$        | The incident direction                |
 | $\omega_o$        | The outgoing direction                |
 | $\omega_m$        | The normal of one point on the \mathcal{M} |
