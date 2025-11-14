@@ -364,3 +364,45 @@ So, the pure specular BRDF is:
 \label{eq: Pure Specular BRDF}
 f_m(\omega_m, \omega_i, \omega_o) = \frac{F(\omega_m, \omega_i)\delta_{R(\omega_o;\omega_m)}(\omega_i)}{<\omega_i, \omega_m>}
 \end{equation}
+
+### Introducing Half Direction
+
+**HOWEVER**, it’s too soon to celebrate; there is one more thing we need to do. Maybe you have noticed that, in the equation \eqref{eq: Statistical Microfacet BRDF}, the incident direction $\omega_i$ and the outgoing direction $\omega_o$ are fixed; the integral variable is the normal of microsurface $\omega_m$. We know that the incident radiance can reflected to the desired outgoing direction only if the normal is pointing toward the half vector between $\omega_i$ and $\omega_o$. So there is truly a delta situation. But our previous delta function is defined on the $\omega_i$ or $\omega_o$. Thus we cannot utilize it to solve the integral. 
+
+We can make the equation more concise if we can introduce the half vector $\vec{h} = \omega_i + \omega_o$ to the equation \eqref{eq: Pure Specular BRDF}. If so, one need to be very causious if the variable of the equation has changed, since the jacobian term needs to be considered. We can assume that, there are many pairs of $\omega_i$ and $\omega_o$ that have the same half vector $\vec{h}$, so the function need to have a transformation term to maintain consistency before and after replacing variable. This is called the [`Change of Variables Theorem`](https://en.wikipedia.org/wiki/Change_of_variables). 
+
+By replacing the $\omega_o$ term (the same as $\omega_i$), we can have a new BRDF equation:
+
+$$
+f_m(\omega_m, \omega_i, \omega_o) = \frac{F(\omega_m, \omega_i)\delta_{\omega_m}(\omega_h)}{<\omega_i, \omega_m>} |\frac{\partial\omega_h}{\partial\omega_o}|=\lim_{\mathrm{d}\omega_o\rightarrow0} \frac{F(\omega_m, \omega_i)\delta_{\omega_m}(\omega_h)}{<\omega_i, \omega_m>} |\frac{\mathrm{d}\omega_h}{\mathrm{d}\omega_o}|
+$$
+
+Perhaps we are quite unfamiliar with how to solve this derivative, but Heitz gave us a very genius solution.
+
+<div class="row mt-3">
+    <div class="col-sm mt-3 mt-md-0">
+        {% include figure.liquid loading="eager" path="../assets/posts/ndf_microfacet/derivative.png" class="img-fluid rounded z-depth-1" zoomable=true %}
+    </div>
+</div>
+<div class="caption">
+    The illustration from Heitz<d-cite key="heitz2015Microfacet"></d-cite>.
+</div>
+
+We can directly realize the relationship between $\mathrm{d}\omega_o$ and $\mathrm{d}\omega_h$:
+
+$$
+|\frac{\mathrm{d}\omega_h}{\mathrm{d}\omega_o}| = \frac{|\omega_o \cdot \omega_h|}{||\vec{h}||^2} = \frac{|\omega_o \cdot \omega_h|}{(\omega_h\cdot\vec{h})^2} = \frac{|\omega_o \cdot \omega_h|}{(\omega_h\cdot(\omega_i+\omega_o))^2}=\frac{|\omega_o \cdot \omega_h|}{(2\omega_h\cdot\omega_o)^2} = \frac{1}{4|\omega_h\cdot\omega_o|}.
+$$
+
+Thus, we have:
+
+$$
+f_m(\omega_m, \omega_i, \omega_o) = \frac{F(\omega_m, \omega_i)\delta_{\omega_m}(\omega_h)}{<\omega_i, \omega_m>} \frac{1}{4|\omega_h\cdot\omega_o|}.
+$$
+
+### The microfacet BRDF
+
+TODO:
+1. complete the final derivation
+2. Add the shadow masking function
+3. Add the symbol.
