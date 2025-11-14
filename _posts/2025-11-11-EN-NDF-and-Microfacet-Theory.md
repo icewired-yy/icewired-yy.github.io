@@ -240,6 +240,11 @@ This is also a constraint of the masking function.
 | $f_r(\omega_i, \omega_o)$ | The microfacet BRDF        |
 | $f_m(p_m, \omega_i, \omega_o)$ | The microsurface BRDF at point $p_m$        |
 | $f_m(\omega_m, \omega_i, \omega_o)$ | The microsurface BRDF where the normal is pointing toward $\omega_m$        |
+| $G(\omega_m, \omega_i, \omega_o)$ | The shadowing-masking function       |
+| $R(\omega;\omega_m)$ | The pure reflected direction if the incident / outgoing direction is $\omega$ and the normal of surface is $\omega_m$.|
+| $F(\omega_i, \omega_m)$ | The fresnel term.|
+| $\vec{h}$ | The unnormalized half vector |
+| $\omega_h$ | The normalized half vector |
 
 To find out the formula of the microfacet BRDF $f_r(\omega_i, \omega_o)$ to satisfy:
 
@@ -273,19 +278,21 @@ as well as the definition of the BRDF $f_m(p_m, \omega_i, \omega_o) = \frac{\mat
 Substituting the $\mathrm{d}L(p_m, \omega_o)$ term, we have:
 
 $$
-\mathrm{d}L(\omega_o) = \frac{1}{\cos\theta_o} \int_{\mathcal{M}} G(p_m, \omega_o) f_m(p_m, \omega_i, \omega_o) L(p_m, \omega_i) <\omega_m(p_m), \omega_o>   <\omega_i, \omega_m(p_m)> \mathrm{d}\omega_i \mathrm{d} p_m 
+\mathrm{d}L(\omega_o) = \frac{1}{\cos\theta_o} \int_{\mathcal{M}} G(p_m, \omega_i,\omega_o) f_m(p_m, \omega_i, \omega_o) L(p_m, \omega_i) <\omega_m(p_m), \omega_o>   <\omega_i, \omega_m(p_m)> \mathrm{d}\omega_i \mathrm{d} p_m 
 $$
 
-Here, since those microstructure are too tiny to have a significant difference on the location $p_m$ w.r.t. the distance between light source and geometric surface. Hence, we have a proper assumption that the incident radiance $L(p_m, \omega_i)$ is independent to the location $p_m$, leading to $L(p_m, \omega_i) = L(\omega_i)$.And the equation can be rewritten as:
+Here, we could find the the original masking function $G(p_m, \omega_o)$ has been replaced by the new shadowing-masking function. The reason is that, $p_m$ may not be directly illuminated by the light source, and this is a symmetric case to the masking-function. So we extend it into shadowing-masking function $G(p_m, \omega_i,\omega_o)$. 
+
+Since those microstructure are too tiny to have a significant difference on the location $p_m$ w.r.t. the distance between light source and geometric surface. Hence, we have a proper assumption that the incident radiance $L(p_m, \omega_i)$ is independent to the location $p_m$, leading to $L(p_m, \omega_i) = L(\omega_i)$.And the equation can be rewritten as:
 
 $$
-\mathrm{d}L(\omega_o) = \frac{1}{\cos\theta_o} L(\omega_i) \mathrm{d}\omega_i \int_{\mathcal{M}} G(p_m, \omega_o) f_m(p_m, \omega_i, \omega_o) <\omega_m(p_m), \omega_o>   <\omega_i, \omega_m(p_m)> \mathrm{d} p_m 
+\mathrm{d}L(\omega_o) = \frac{1}{\cos\theta_o} L(\omega_i) \mathrm{d}\omega_i \int_{\mathcal{M}} G(p_m, \omega_i,\omega_o) f_m(p_m, \omega_i, \omega_o) <\omega_m(p_m), \omega_o>   <\omega_i, \omega_m(p_m)> \mathrm{d} p_m 
 $$
 
 Comparing with the definition of $f_r(\omega_i, \omega_o)$, we have the initial formula of the microfacet BRDF:
 
 $$
-f_r(\omega_i, \omega_o) = \frac{1}{<\omega_i, \omega_g><\omega_o, \omega_g>} \int_{\mathcal{M}} G(p_m, \omega_o) f_m(p_m, \omega_i, \omega_o) <\omega_m(p_m), \omega_o>   <\omega_i, \omega_m(p_m)> \mathrm{d} p_m 
+f_r(\omega_i, \omega_o) = \frac{1}{<\omega_i, \omega_g><\omega_o, \omega_g>} \int_{\mathcal{M}} G(p_m, \omega_i, \omega_o) f_m(p_m, \omega_i, \omega_o) <\omega_m(p_m), \omega_o>   <\omega_i, \omega_m(p_m)> \mathrm{d} p_m 
 $$
 
 Now we obtain the spatial formula of the microfacet BRDF. To convert it into statistical integral, we need to introduce a new assumption:
@@ -295,7 +302,7 @@ This assumption leads to the independency between location $p_m$ and microsurfac
 
 \begin{equation}
 \label{eq: Statistical Microfacet BRDF}
-f_r(\omega_i, \omega_o) = \frac{1}{<\omega_i, \omega_g><\omega_o, \omega_g>} \int_{\Omega} G(\omega_m, \omega_o) f_m(\omega_m, \omega_i, \omega_o) D(\omega_m) <\omega_m, \omega_o> <\omega_m, \omega_i> \mathrm{d} \omega_m 
+f_r(\omega_i, \omega_o) = \frac{1}{<\omega_i, \omega_g><\omega_o, \omega_g>} \int_{\Omega} G(\omega_m, \omega_i, \omega_o) f_m(\omega_m, \omega_i, \omega_o) D(\omega_m) <\omega_m, \omega_o> <\omega_m, \omega_i> \mathrm{d} \omega_m 
 \end{equation}
 
 Hence, what we need to do next, is to show the components of microsurface BRDF $f_m(\omega_m, \omega_i, \omega_o)$.
@@ -402,7 +409,21 @@ $$
 
 ### The microfacet BRDF
 
-TODO:
-1. complete the final derivation
-2. Add the shadow masking function
-3. Add the symbol.
+We are almost here! By substituting the microsurface brdf in the \eqref{eq: Statistical Microfacet BRDF}, we could get:
+
+$$
+f_r(\omega_i, \omega_o) = \frac{1}{<\omega_i, \omega_g><\omega_o, \omega_g>} \int_{\Omega} G(\omega_m, \omega_i, \omega_o) \frac{F(\omega_m, \omega_i)\delta_{\omega_m}(\omega_h)}{<\omega_i, \omega_m>} \frac{1}{4|\omega_h\cdot\omega_o|} D(\omega_m) <\omega_m, \omega_o> <\omega_m, \omega_i> \mathrm{d} \omega_m .
+$$
+
+Since the delta term, we could solve this integral and get:
+
+$$
+f_r(\omega_i, \omega_o) = \frac{1}{<\omega_i, \omega_g><\omega_o, \omega_g>} G(\omega_h, \omega_i,\omega_o) \frac{F(\omega_h, \omega_i)}{<\omega_i, \omega_h>} \frac{1}{4|\omega_h\cdot\omega_o|} D(\omega_h) <\omega_h, \omega_o> <\omega_h, \omega_i>.
+$$
+
+And now we get the microfacet BRDF:
+
+\begin{equation}
+\label{eq: Microfacet BRDF}
+f_r(\omega_i, \omega_o) = \frac{F(\omega_h, \omega_i)G(\omega_h, \omega_i, \omega_o) D(\omega_h) }{4<\omega_i, \omega_g><\omega_o, \omega_g>}.
+\end{equation}
