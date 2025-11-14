@@ -289,7 +289,7 @@ f_r(\omega_i, \omega_o) = \frac{1}{<\omega_i, \omega_g><\omega_o, \omega_g>} \in
 $$
 
 Now we obtain the spatial formula of the microfacet BRDF. To convert it into statistical integral, we need to introduce a new assumption:
-> **_Assumption 2_**: The material properities cross all the microsurface covered by the same footprint are identical.
+> **_Assumption 2_**: The material properities across all the microsurface covered by the same footprint are identical.
 
 This assumption leads to the independency between location $p_m$ and microsurface BRDF $f_m(p_m, \omega_i, \omega_o)$, causing $f_m(p_m, \omega_i, \omega_o) = f_m(\omega_m, \omega_i, \omega_o)$. And we can have the statistical integral:
 
@@ -300,6 +300,67 @@ f_r(\omega_i, \omega_o) = \frac{1}{<\omega_i, \omega_g><\omega_o, \omega_g>} \in
 
 Hence, what we need to do next, is to show the components of microsurface BRDF $f_m(\omega_m, \omega_i, \omega_o)$.
 
-### Pure Specular Microsurface BRDF
+### Pure Specular BRDF
 
-TODO
+Before introducing the pure specular BRDF, let me explain why we need it. This is because of the third assumption of the microfacet theory:
+> **_Assumption 3_**: The microsurface is pure specular.
+
+So what does the pure specular BRDF look like? This is what we need to solve in this subsection. To begin with, we need to first get familiar with the `fresnel effect`.
+
+<div class="row mt-3">
+    <div class="col-sm mt-3 mt-md-0">
+        {% include figure.liquid loading="eager" path="../assets/posts/ndf_microfacet/fresenl_img.png" class="img-fluid rounded z-depth-1" zoomable=true %}
+    </div>
+</div>
+<div class="caption">
+    The fresnel effect. The left image is borrowed from [Reflection, Refraction and Fresnel](https://www.scratchapixel.com/lessons/3d-basic-rendering/introduction-to-shading/reflection-refraction-fresnel.html)
+</div>
+
+Fresnel effect describes that when the light hit on the surface, some of its energy reflected, and the order refracted. The amount of reflected energy is related to the angle of incidence. In radiosity, we need to use the energy per second, i.e., the flux, to mathematically describe this effect. Here we only consider the relationship between the reflected outgoing flux and the incident flux:
+
+$$
+\mathrm{d}\Phi(\omega_o) = F(\omega_m, \omega_i)\mathrm{d}\Phi.(\omega_i)
+$$
+
+Since 
+
+$$
+\mathrm{d}\Phi(\omega)=L(\omega)\cos\theta\mathrm{d}A\mathrm{d}\omega = L(\omega)\cos\theta\mathrm{d}A\sin\theta\mathrm{d}\theta\mathrm{d}\phi, 
+$$
+
+we have
+
+$$
+L(\omega_o)\cos\theta_o\mathrm{d}A\sin\theta_o\mathrm{d}\theta\mathrm{d}\phi = F(\omega_m, \omega_i) L(\omega_i)\cos\theta_i\mathrm{d}A\sin\theta_i\mathrm{d}\theta\mathrm{d}\phi
+$$
+
+Due to the nature of the reflection effect, many of the terms can be cancelled out, leaving:
+
+$$
+L(\omega_o) = F(\omega_m, \omega_i) L(\omega_i).
+$$
+
+On the other hand, since we are deriving the BRDF $f_m(\omega_m, \omega_i, \omega_o)$ of "pure specular" surface, it means that we only receive the light from the direction $\omega_i = R(\omega_o; \omega_m)$ which will reflected mirrorly to the $\omega_o$. Thus, there must be a delta term in the $f_m(\omega_m, \omega_i, \omega_o)$, leading to:
+
+$$
+f_m(\omega_m, \omega_i, \omega_o) = f(\omega_m, \omega_i, \omega_o) \delta_{R(\omega_o;\omega_m)}(\omega_i).
+$$
+
+Subsequently, the rendering equation has become:
+
+$$
+L(\omega_o) = \int_\Omega f(\omega_m, \omega_i, \omega_o) \delta_{R(\omega_o;\omega_m)}(\omega_i) L(\omega_i) <\omega_i, \omega_m> \mathrm{d} \omega_i = f(\omega_m, R(\omega_o;\omega_m), \omega_o) L(R(\omega_o;\omega_m)) <R(\omega_o;\omega_m), \omega_m>.
+$$
+
+Substituting the $L(\omega_o)$, we can get:
+
+$$
+f(\omega_m, \omega_i, \omega_o) = \frac{F(\omega_m, \omega_i)}{<\omega_i, \omega_m>}.
+$$
+
+So, the pure specular BRDF is:
+
+\begin{equation}
+\label{eq: Pure Specular BRDF}
+f_m(\omega_m, \omega_i, \omega_o) = \frac{F(\omega_m, \omega_i)\delta_{R(\omega_o;\omega_m)}(\omega_i)}{<\omega_i, \omega_m>}
+\end{equation}
