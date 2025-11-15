@@ -35,13 +35,13 @@ toc:
   - name: Micro-surface & Macro-surface
   - name: Normal Distribution Function
   - name: Masking Funtion
-      - name: View-dependent Projected Area
-      - name: Outgoing Radiance
-      - name: Geometric Masking
+    #  - name: View-dependent Projected Area
+    #   - name: Outgoing Radiance
+    #   - name: Geometric Masking
   - name: Microfacet BRDF
-      - name: Pure Specular BRDF
-      - name: Introducing Half Direction
-      - name: The microfacet BRDF
+    #   - name: Pure Specular BRDF
+    #   - name: Introducing Half Direction
+    #   - name: The microfacet BRDF
 ---
 
 ## Preliminary
