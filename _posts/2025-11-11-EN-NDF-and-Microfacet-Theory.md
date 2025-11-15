@@ -18,7 +18,7 @@ featured: true
 # tikzjax: true
 # typograms: true
 
-bibliography: 2018-12-22-distill.bib
+bibliography: ndf_microfacet.bib
 
 # Optionally, you can add a table of contents to your post.
 # NOTES:
@@ -35,7 +35,13 @@ toc:
   - name: Micro-surface & Macro-surface
   - name: Normal Distribution Function
   - name: Masking Funtion
+      - name: View-dependent Projected Area
+      - name: Outgoing Radiance
+      - name: Geometric Masking
   - name: Microfacet BRDF
+      - name: Pure Specular BRDF
+      - name: Introducing Half Direction
+      - name: The microfacet BRDF
 ---
 
 ## Preliminary
@@ -312,15 +318,15 @@ Hence, what we need to do next, is to show the components of microsurface BRDF $
 Before introducing the pure specular BRDF, let me explain why we need it. This is because of the third assumption of the microfacet theory:
 > **_Assumption 3_**: The microsurface is pure specular.
 
-So what does the pure specular BRDF look like? This is what we need to solve in this subsection. To begin with, we need to first get familiar with the `fresnel effect`.
+So what does the pure specular BRDF look like? This is what we need to solve in this subsection. To begin with, we need to first get familiar with the `fresnel effect`. The left image below is borrowed from [Reflection, Refraction and Fresnel](https://www.scratchapixel.com/lessons/3d-basic-rendering/introduction-to-shading/reflection-refraction-fresnel.html).
 
 <div class="row mt-3">
     <div class="col-sm mt-3 mt-md-0">
-        {% include figure.liquid loading="eager" path="../assets/posts/ndf_microfacet/fresenl_img.png" class="img-fluid rounded z-depth-1" zoomable=true %}
+        {% include figure.liquid loading="eager" path="../assets/posts/ndf_microfacet/fresnel_img.png" class="img-fluid rounded z-depth-1" zoomable=true %}
     </div>
 </div>
 <div class="caption">
-    The fresnel effect. The left image is borrowed from [Reflection, Refraction and Fresnel](https://www.scratchapixel.com/lessons/3d-basic-rendering/introduction-to-shading/reflection-refraction-fresnel.html)
+    The fresnel effect.
 </div>
 
 Fresnel effect describes that when the light hit on the surface, some of its energy reflected, and the order refracted. The amount of reflected energy is related to the angle of incidence. In radiosity, we need to use the energy per second, i.e., the flux, to mathematically describe this effect. Here we only consider the relationship between the reflected outgoing flux and the incident flux:
@@ -392,7 +398,7 @@ Perhaps we are quite unfamiliar with how to solve this derivative, but Heitz gav
     </div>
 </div>
 <div class="caption">
-    The illustration from Heitz<d-cite key="heitz2015Microfacet"></d-cite>.
+    The illustration from Heitz<d-cite key="2014Understanding"></d-cite>.
 </div>
 
 We can directly realize the relationship between $\mathrm{d}\omega_o$ and $\mathrm{d}\omega_h$:
