@@ -361,9 +361,9 @@ $$
 
 Subsequently, the rendering equation has become:
 
-$$
+\begin{equation}
 L(\omega_o) = \int_\Omega f(\omega_m, \omega_i, \omega_o) \delta_{R(\omega_o;\omega_m)}(\omega_i) L(\omega_i) <\omega_i, \omega_m> \mathrm{d} \omega_i = f(\omega_m, R(\omega_o;\omega_m), \omega_o) L(R(\omega_o;\omega_m)) <R(\omega_o;\omega_m), \omega_m>.
-$$
+\end{equation}
 
 Substituting the $L(\omega_o)$, we can get:
 
