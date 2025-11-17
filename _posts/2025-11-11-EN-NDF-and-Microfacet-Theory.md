@@ -18,7 +18,7 @@ featured: true
 # tikzjax: true
 # typograms: true
 
-bibliography: 2018-12-22-distill.bib
+bibliography: ndf_microfacet.bib
 
 # Optionally, you can add a table of contents to your post.
 # NOTES:
@@ -35,7 +35,13 @@ toc:
   - name: Micro-surface & Macro-surface
   - name: Normal Distribution Function
   - name: Masking Funtion
+    #  - name: View-dependent Projected Area
+    #   - name: Outgoing Radiance
+    #   - name: Geometric Masking
   - name: Microfacet BRDF
+    #   - name: Pure Specular BRDF
+    #   - name: Introducing Half Direction
+    #   - name: The microfacet BRDF
 ---
 
 ## Preliminary
@@ -240,6 +246,11 @@ This is also a constraint of the masking function.
 | $f_r(\omega_i, \omega_o)$ | The microfacet BRDF        |
 | $f_m(p_m, \omega_i, \omega_o)$ | The microsurface BRDF at point $p_m$        |
 | $f_m(\omega_m, \omega_i, \omega_o)$ | The microsurface BRDF where the normal is pointing toward $\omega_m$        |
+| $G(\omega_m, \omega_i, \omega_o)$ | The shadowing-masking function       |
+| $R(\omega;\omega_m)$ | The pure reflected direction if the incident / outgoing direction is $\omega$ and the normal of surface is $\omega_m$.|
+| $F(\omega_i, \omega_m)$ | The fresnel term.|
+| $\vec{h}$ | The unnormalized half vector |
+| $\omega_h$ | The normalized half vector |
 
 To find out the formula of the microfacet BRDF $f_r(\omega_i, \omega_o)$ to satisfy:
 
@@ -273,19 +284,21 @@ as well as the definition of the BRDF $f_m(p_m, \omega_i, \omega_o) = \frac{\mat
 Substituting the $\mathrm{d}L(p_m, \omega_o)$ term, we have:
 
 $$
-\mathrm{d}L(\omega_o) = \frac{1}{\cos\theta_o} \int_{\mathcal{M}} G(p_m, \omega_o) f_m(p_m, \omega_i, \omega_o) L(p_m, \omega_i) <\omega_m(p_m), \omega_o>   <\omega_i, \omega_m(p_m)> \mathrm{d}\omega_i \mathrm{d} p_m 
+\mathrm{d}L(\omega_o) = \frac{1}{\cos\theta_o} \int_{\mathcal{M}} G(p_m, \omega_i,\omega_o) f_m(p_m, \omega_i, \omega_o) L(p_m, \omega_i) <\omega_m(p_m), \omega_o>   <\omega_i, \omega_m(p_m)> \mathrm{d}\omega_i \mathrm{d} p_m 
 $$
 
-Here, since those microstructure are too tiny to have a significant difference on the location $p_m$ w.r.t. the distance between light source and geometric surface. Hence, we have a proper assumption that the incident radiance $L(p_m, \omega_i)$ is independent to the location $p_m$, leading to $L(p_m, \omega_i) = L(\omega_i)$.And the equation can be rewritten as:
+Here, we could find the the original masking function $G(p_m, \omega_o)$ has been replaced by the new shadowing-masking function. The reason is that, $p_m$ may not be directly illuminated by the light source, and this is a symmetric case to the masking-function. So we extend it into shadowing-masking function $G(p_m, \omega_i,\omega_o)$. 
+
+Since those microstructure are too tiny to have a significant difference on the location $p_m$ w.r.t. the distance between light source and geometric surface. Hence, we have a proper assumption that the incident radiance $L(p_m, \omega_i)$ is independent to the location $p_m$, leading to $L(p_m, \omega_i) = L(\omega_i)$.And the equation can be rewritten as:
 
 $$
-\mathrm{d}L(\omega_o) = \frac{1}{\cos\theta_o} L(\omega_i) \mathrm{d}\omega_i \int_{\mathcal{M}} G(p_m, \omega_o) f_m(p_m, \omega_i, \omega_o) <\omega_m(p_m), \omega_o>   <\omega_i, \omega_m(p_m)> \mathrm{d} p_m 
+\mathrm{d}L(\omega_o) = \frac{1}{\cos\theta_o} L(\omega_i) \mathrm{d}\omega_i \int_{\mathcal{M}} G(p_m, \omega_i,\omega_o) f_m(p_m, \omega_i, \omega_o) <\omega_m(p_m), \omega_o>   <\omega_i, \omega_m(p_m)> \mathrm{d} p_m 
 $$
 
 Comparing with the definition of $f_r(\omega_i, \omega_o)$, we have the initial formula of the microfacet BRDF:
 
 $$
-f_r(\omega_i, \omega_o) = \frac{1}{<\omega_i, \omega_g><\omega_o, \omega_g>} \int_{\mathcal{M}} G(p_m, \omega_o) f_m(p_m, \omega_i, \omega_o) <\omega_m(p_m), \omega_o>   <\omega_i, \omega_m(p_m)> \mathrm{d} p_m 
+f_r(\omega_i, \omega_o) = \frac{1}{<\omega_i, \omega_g><\omega_o, \omega_g>} \int_{\mathcal{M}} G(p_m, \omega_i, \omega_o) f_m(p_m, \omega_i, \omega_o) <\omega_m(p_m), \omega_o>   <\omega_i, \omega_m(p_m)> \mathrm{d} p_m 
 $$
 
 Now we obtain the spatial formula of the microfacet BRDF. To convert it into statistical integral, we need to introduce a new assumption:
@@ -295,7 +308,7 @@ This assumption leads to the independency between location $p_m$ and microsurfac
 
 \begin{equation}
 \label{eq: Statistical Microfacet BRDF}
-f_r(\omega_i, \omega_o) = \frac{1}{<\omega_i, \omega_g><\omega_o, \omega_g>} \int_{\Omega} G(\omega_m, \omega_o) f_m(\omega_m, \omega_i, \omega_o) D(\omega_m) <\omega_m, \omega_o> <\omega_m, \omega_i> \mathrm{d} \omega_m 
+f_r(\omega_i, \omega_o) = \frac{1}{<\omega_i, \omega_g><\omega_o, \omega_g>} \int_{\Omega} G(\omega_m, \omega_i, \omega_o) f_m(\omega_m, \omega_i, \omega_o) D(\omega_m) <\omega_m, \omega_o> <\omega_m, \omega_i> \mathrm{d} \omega_m 
 \end{equation}
 
 Hence, what we need to do next, is to show the components of microsurface BRDF $f_m(\omega_m, \omega_i, \omega_o)$.
@@ -305,15 +318,15 @@ Hence, what we need to do next, is to show the components of microsurface BRDF $
 Before introducing the pure specular BRDF, let me explain why we need it. This is because of the third assumption of the microfacet theory:
 > **_Assumption 3_**: The microsurface is pure specular.
 
-So what does the pure specular BRDF look like? This is what we need to solve in this subsection. To begin with, we need to first get familiar with the `fresnel effect`.
+So what does the pure specular BRDF look like? This is what we need to solve in this subsection. To begin with, we need to first get familiar with the `fresnel effect`. The left image below is borrowed from [Reflection, Refraction and Fresnel](https://www.scratchapixel.com/lessons/3d-basic-rendering/introduction-to-shading/reflection-refraction-fresnel.html).
 
 <div class="row mt-3">
     <div class="col-sm mt-3 mt-md-0">
-        {% include figure.liquid loading="eager" path="../assets/posts/ndf_microfacet/fresenl_img.png" class="img-fluid rounded z-depth-1" zoomable=true %}
+        {% include figure.liquid loading="eager" path="../assets/posts/ndf_microfacet/fresnel_img.png" class="img-fluid rounded z-depth-1" zoomable=true %}
     </div>
 </div>
 <div class="caption">
-    The fresnel effect. The left image is borrowed from [Reflection, Refraction and Fresnel](https://www.scratchapixel.com/lessons/3d-basic-rendering/introduction-to-shading/reflection-refraction-fresnel.html)
+    The fresnel effect.
 </div>
 
 Fresnel effect describes that when the light hit on the surface, some of its energy reflected, and the order refracted. The amount of reflected energy is related to the angle of incidence. In radiosity, we need to use the energy per second, i.e., the flux, to mathematically describe this effect. Here we only consider the relationship between the reflected outgoing flux and the incident flux:
@@ -348,9 +361,9 @@ $$
 
 Subsequently, the rendering equation has become:
 
-$$
+\begin{equation}
 L(\omega_o) = \int_\Omega f(\omega_m, \omega_i, \omega_o) \delta_{R(\omega_o;\omega_m)}(\omega_i) L(\omega_i) <\omega_i, \omega_m> \mathrm{d} \omega_i = f(\omega_m, R(\omega_o;\omega_m), \omega_o) L(R(\omega_o;\omega_m)) <R(\omega_o;\omega_m), \omega_m>.
-$$
+\end{equation}
 
 Substituting the $L(\omega_o)$, we can get:
 
@@ -385,7 +398,7 @@ Perhaps we are quite unfamiliar with how to solve this derivative, but Heitz gav
     </div>
 </div>
 <div class="caption">
-    The illustration from Heitz<d-cite key="heitz2015Microfacet"></d-cite>.
+    The illustration from Heitz<d-cite key="2014Understanding"></d-cite>.
 </div>
 
 We can directly realize the relationship between $\mathrm{d}\omega_o$ and $\mathrm{d}\omega_h$:
@@ -402,7 +415,21 @@ $$
 
 ### The microfacet BRDF
 
-TODO:
-1. complete the final derivation
-2. Add the shadow masking function
-3. Add the symbol.
+We are almost here! By substituting the microsurface brdf in the \eqref{eq: Statistical Microfacet BRDF}, we could get:
+
+$$
+f_r(\omega_i, \omega_o) = \frac{1}{<\omega_i, \omega_g><\omega_o, \omega_g>} \int_{\Omega} G(\omega_m, \omega_i, \omega_o) \frac{F(\omega_m, \omega_i)\delta_{\omega_m}(\omega_h)}{<\omega_i, \omega_m>} \frac{1}{4|\omega_h\cdot\omega_o|} D(\omega_m) <\omega_m, \omega_o> <\omega_m, \omega_i> \mathrm{d} \omega_m .
+$$
+
+Since the delta term, we could solve this integral and get:
+
+$$
+f_r(\omega_i, \omega_o) = \frac{1}{<\omega_i, \omega_g><\omega_o, \omega_g>} G(\omega_h, \omega_i,\omega_o) \frac{F(\omega_h, \omega_i)}{<\omega_i, \omega_h>} \frac{1}{4|\omega_h\cdot\omega_o|} D(\omega_h) <\omega_h, \omega_o> <\omega_h, \omega_i>.
+$$
+
+And now we get the microfacet BRDF:
+
+\begin{equation}
+\label{eq: Microfacet BRDF}
+f_r(\omega_i, \omega_o) = \frac{F(\omega_h, \omega_i)G(\omega_h, \omega_i, \omega_o) D(\omega_h) }{4<\omega_i, \omega_g><\omega_o, \omega_g>}.
+\end{equation}
