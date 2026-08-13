@@ -10,14 +10,13 @@ profile:
   image_circular: false # crops the image to make it circular
   more_info: >
     <p>duyouyang957 at gmail</p>
-    <p>1500 Shunhua Rd.</p>
-    <p>Jinan, Shandong, China</p>
+
 
 news: true # includes a list of news items
 selected_papers: true # includes a list of papers marked as "selected={true}"
 social: true # includes social icons at the bottom of the page
 ---
 
-Hello! My name is Youyang Du (pronounced "You Young, Do"). I earned my Bachelor's degree from Shandong University, where I am currently a Master's student under the supervision of Prof. [Lu Wang](https://wanglusdu.github.io). I am also fortunate to be remotely co-advised by Prof. [Beibei Wang](https://wangningbei.github.io) and Prof. [Lingqi Yan](https://sites.cs.ucsb.edu/~lingqi/).
+Hello! My name is Youyang Du (pronounced "You Young, Do"). I earned my Bachelor's and Master's degrees from Shandong University, where during MS I was supervised by Prof. [Lu Wang](https://wanglusdu.github.io). I am currently a PhD student at [MBZUAI](https://mbzuai.ac.ae), under the supervision of Prof. [Lingqi Yan](https://lingqiyan.github.io).
 
-My research interests include Neural-Aided Offline Rendering, Neural Scene Representation, and emerging topics such as AIGC enhancement guided by Computer Graphics.
+My research interests include Offline Rendering and Neural-Aided Real-time Rendering.
