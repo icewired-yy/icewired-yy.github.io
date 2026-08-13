@@ -5,3 +5,5 @@ repo_description_lines_max: 2
 
 github_repos:
   - icewired-yy/image-toolkit
+  - icewired-yy/Polyhaven-EnvMap-1K-Fetcher
+  - icewired-yy/Phong-Tessellation

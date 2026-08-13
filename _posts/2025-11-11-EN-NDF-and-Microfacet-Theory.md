@@ -32,9 +32,9 @@ toc:
     # subsections:
     #   - name: Example Child Subsection 1
     #   - name: Example Child Subsection 2
-  - name: Micro-surface & Macro-surface
+  - name: Microsurface and Geometric surface
   - name: Normal Distribution Function
-  - name: Masking Funtion
+  - name: Masking Function
     #  - name: View-dependent Projected Area
     #   - name: Outgoing Radiance
     #   - name: Geometric Masking
@@ -50,7 +50,7 @@ The target of writing this post is to record my understanding of microfacet theo
 
 ---
 
-## Micro-surface & Macro-surface
+## Microsurface and Geometric surface
 
 | Symbol            | Definition                            |
 | ------            | ----------                            |
@@ -72,7 +72,7 @@ Before get deeper into the microfacet theory, we need to answer why we need this
     The observer receives the light from a pixel, whose footprint covers a large area of surface with complex microstructure.
 </div>
 
-We called the area of the object surface that covered by one pixel the `footprint`. As illustrated in the figure, there are many complex microstructures within that footprint, we call them `microsurface`. Due to these microstructures, the appearance of this area should be highly spatial-varying. However, since **one pixel can only return one RGB**, we need to summarize the appearance of these microstructures with only one RGB value. Obviously, we need to derive the statistical (or aggregated) properities of the microsurface from its spatial properities. Once we have its statistical properites, we can assume that the area within the footprint is flat, which can use only one normal vector to describe it. called `macrosurface` or `geometric surface`. This assumed macrosurface needs a complex microfacet theory that summarizes the appearance into one value from its statistical properties. That's why we need the microfacet model.
+We called the area of the object surface that covered by one pixel the `footprint`. As illustrated in the figure, there are many complex microstructures within that footprint, we call them `microsurface`. Due to these microstructures, the appearance of this area should be highly spatial-varying. However, since **one pixel can only return one RGB**, we need to summarize the appearance of these microstructures with only one RGB value. Obviously, we need to derive the statistical (or aggregated) properities of the microsurface from its spatial properities. Once we have its statistical properites, we can assume that the area within the footprint is flat, which can use only one normal vector to describe it. called `geometric surface` or `macrosurface`. This assumed macrosurface needs a complex microfacet theory that summarizes the appearance into one value from its statistical properties. That's why we need the microfacet model.
 
 <div class="row mt-3">
     <div class="col-sm mt-3 mt-md-0">

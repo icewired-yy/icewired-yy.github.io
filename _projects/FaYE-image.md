@@ -4,7 +4,7 @@ title: FaYE-image
 description: with background image
 img: assets/img/12.jpg
 importance: 1
-category: opensource
+category: private
 related_publications: false
 ---
 
