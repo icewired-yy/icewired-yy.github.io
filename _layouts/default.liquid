@@ -1,3 +1,7 @@
+{% assign contemplative_notes_surface = false %}
+{% if page.url contains '/blog/' or page.permalink contains '/blog/' %}
+  {% assign contemplative_notes_surface = true %}
+{% endif %}
 <!doctype html>
 <html lang="{{ site.lang }}">
   <!-- Head -->
@@ -16,12 +20,22 @@
   </head>
 
   <!-- Body -->
-  <body class="{% if site.navbar_fixed %}fixed-top-nav{% endif %} {% unless site.footer_fixed %}sticky-bottom-footer{% endunless %}">
+  <body class="{% if site.navbar_fixed %}fixed-top-nav{% endif %} {% unless site.footer_fixed %}sticky-bottom-footer{% endunless %}{% if contemplative_notes_surface %} contemplative-notes-surface{% endif %}">
+    {% if contemplative_notes_surface %}
+      {% include contemplative-effects.liquid %}
+    {% endif %}
+
     <!-- Header -->
     {% include header.liquid %}
 
     <!-- Content -->
-    <div class="container mt-5" role="main">
+    <div
+      {% if contemplative_notes_surface %}
+        id="main-content" class="container mt-5 contemplative-notes-main" role="main"
+      {% else %}
+        class="container mt-5"
+      {% endif %}
+    >
       {% if page.toc and page.toc.sidebar %}
         {% if page.toc.sidebar == 'right' %}
           <div class="row">

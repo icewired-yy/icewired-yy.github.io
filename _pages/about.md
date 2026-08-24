@@ -12,7 +12,7 @@ profile:
     <p>duyouyang957 at gmail</p>
 
 
-news: true # includes a list of news items
+news: false # news data is retained, but the homepage section is intentionally hidden
 selected_papers: true # includes a list of papers marked as "selected={true}"
 social: true # includes social icons at the bottom of the page
 ---

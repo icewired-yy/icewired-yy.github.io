@@ -1,21 +1,49 @@
+{% assign contemplative_notes_surface = false %}
+{% if page.url contains '/blog/' or page.permalink contains '/blog/' %}
+  {% assign contemplative_notes_surface = true %}
+{% endif %}
+
 {% assign have_related_posts = false %}
-{% for post in site.related_posts | limit: site.related_blog_posts.max_related %}
-  {% unless have_related_posts %}
-    {% assign have_related_posts = true %}
-    <br>
-    <hr>
-    <br>
-    <ul class="list-disc pl-8"></ul>
+{% if contemplative_notes_surface %}
+  {% for post in site.related_posts limit: site.related_blog_posts.max_related %}
+    {% unless have_related_posts %}
+      {% assign have_related_posts = true %}
+      <section class="notes-related" aria-labelledby="related-notes-title">
+        <div class="notes-section-heading">
+          <h2 id="related-notes-title">Continue reading</h2>
+          <p>Nearby ideas from the notebook.</p>
+        </div>
+        <ul>
+    {% endunless %}
+          <li>
+            <time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: '%Y' }}</time>
+            <a href="{{ site.baseurl }}{{ post.url }}">{{ post.title }}</a>
+          </li>
+  {% endfor %}
+  {% if have_related_posts %}
+        </ul>
+      </section>
+  {% endif %}
+{% else %}
+  {% for post in site.related_posts limit: site.related_blog_posts.max_related %}
+    {% unless have_related_posts %}
+      {% assign have_related_posts = true %}
+      <br>
+      <hr>
+      <br>
+      <ul class="list-disc pl-8"></ul>
 
-    <!-- Adds related posts to the end of an article -->
-    <h2 class="text-3xl font-semibold mb-4 mt-12">Enjoy Reading This Article?</h2>
-    <p class="mb-2">Here are some more articles you might like to read next:</p>
-  {% endunless %}
+      <!-- Adds related posts to the end of an article -->
+      <h2 class="text-3xl font-semibold mb-4 mt-12">Enjoy Reading This Article?</h2>
+      <p class="mb-2">Here are some more articles you might like to read next:</p>
+    {% endunless %}
 
-  <li class="my-2">
-    <a class="text-pink-700 underline font-semibold hover:text-pink-800" href="{{ site.baseurl }}{{ post.url }}">{{ post.title }}</a>
-  </li>
-{% endfor %}
+    <li class="my-2">
+      <a class="text-pink-700 underline font-semibold hover:text-pink-800" href="{{ site.baseurl }}{{ post.url }}">{{ post.title }}</a>
+    </li>
+  {% endfor %}
+{% endif %}
+
 {% if site.newsletter.enabled and site.footer_fixed %}
   <p class="mb-2" style="margin-top: 1.5rem !important">Subscribe to be notified of future articles:</p>
   {% include scripts/newsletter.liquid left=true %}

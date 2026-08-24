@@ -1,0 +1,410 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta
+      name="description"
+      content="An isolated visual prototype for Youyang Du's academic homepage."
+    >
+    <title>Youyang Du · Homepage prototype</title>
+    <link rel="icon" href="assets/images/icon.png" type="image/png">
+    <link rel="stylesheet" href="styles.css">
+    <script src="script.js" defer></script>
+  </head>
+  <body>
+    <!--
+      THESIS: A personal research practice unfolds through quiet space, refusing newspaper and dashboard density.
+      OWN-WORLD: Mist ground, pine ink, teal light, restrained gold, borderless lists, calligraphic ghosts, and a bamboo-sword field.
+      STORY: A peer recognizes Youyang, previews current research, projects, notes, and life, then follows one focused route.
+      FIRST VIEWPORT: Minimal navigation sits above bilingual identity and one portrait; a research invitation closes the sparse frame.
+      FORM: Established contemplative-light experience; seed contemplative-light-approved.
+      FINISH: unreviewed and undocumented is unfinished; this build ends with the finish review, the verdict, DESIGN.md, and every shipping raster carrying its provenance
+    -->
+    <canvas class="light-field" id="light-field" aria-hidden="true"></canvas>
+    <img
+      class="canvas-asset"
+      id="sword-asset"
+      src="assets/images/bamboo-cloud-sword.png"
+      alt=""
+      aria-hidden="true"
+      decoding="async"
+    >
+
+    <a class="skip-link" href="#main-content">Skip to content</a>
+
+    <header class="site-header site-width" aria-label="Primary navigation">
+      <a class="site-mark" href="#top" aria-label="Back to the top">YD<span aria-hidden="true">.</span></a>
+      <nav class="site-nav" aria-label="Homepage sections">
+        <a href="#research">Research</a>
+        <a href="#projects">Projects</a>
+        <a href="#writing">Notes</a>
+        <a href="#life">Life</a>
+        <a href="https://icewired-yy.github.io/cv/" target="_blank" rel="noreferrer">CV</a>
+      </nav>
+    </header>
+
+    <main id="main-content">
+      <section class="hero" id="top" aria-labelledby="hero-title">
+        <div class="hero-inner site-width">
+          <div class="hero-copy">
+            <h1 id="hero-title">
+              <span>Youyang Du</span>
+              <span class="hero-name-cn" lang="zh-CN">杜悠扬</span>
+            </h1>
+            <p class="hero-role">
+              PhD Student at
+              <a href="https://mbzuai.ac.ae" target="_blank" rel="noreferrer">MBZUAI</a>
+            </p>
+            <p class="hero-focus">Offline Rendering · Neural-Aided Real-time Rendering</p>
+            <p class="hero-introduction">
+              I am currently a PhD student at MBZUAI, under the supervision of
+              Prof. Lingqi Yan.
+            </p>
+            <div class="hero-links" aria-label="Contact and profiles">
+              <a href="mailto:duyouyang957@gmail.com">Email</a>
+              <a href="https://github.com/icewired-yy" target="_blank" rel="noreferrer">GitHub</a>
+            </div>
+          </div>
+
+          <figure class="hero-portrait">
+            <img
+              src="assets/images/portrait.jpg"
+              width="1665"
+              height="2219"
+              alt="Youyang Du smiling outdoors beside a lake"
+              fetchpriority="high"
+            >
+          </figure>
+
+          <a class="scroll-invitation" href="#research">
+            <span>Explore research</span>
+            <svg viewBox="0 0 20 20" aria-hidden="true">
+              <path d="M10 3v13m0 0 5-5m-5 5-5-5" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"></path>
+            </svg>
+          </a>
+        </div>
+      </section>
+
+      <section class="section site-width research-preview" id="research" aria-labelledby="research-title">
+        <div class="section-heading">
+          <h2 class="section-title section-title-research" id="research-title">
+            <span class="section-title-foreground">Research</span>
+          </h2>
+          <p>
+            A preview of recent work in appearance modeling and rendering. Hover or
+            focus on an item to see more.
+          </p>
+        </div>
+
+        <div class="work-list research-list" aria-label="Recent research preview">
+          <article class="work-item research-item">
+            <a
+              class="work-media"
+              href="https://icewired-yy.github.io/papers/face_micro_detail_synthesis/"
+              target="_blank"
+              rel="noreferrer"
+              aria-label="Open the Facial Microscopic Structures project page"
+            >
+              <img
+                src="assets/images/facial-microstructures.jpg"
+                width="800"
+                height="450"
+                alt="Comparison of synthesized facial microscopic structures"
+                loading="lazy"
+              >
+            </a>
+            <div class="work-copy">
+              <p class="work-meta">SIGGRAPH 2025 · Conference Paper</p>
+              <h3>
+                <a
+                  href="https://icewired-yy.github.io/papers/face_micro_detail_synthesis/"
+                  target="_blank"
+                  rel="noreferrer"
+                >Facial Microscopic Structures Synthesis from a Single Unconstrained Image</a>
+              </h3>
+              <div class="work-detail">
+                <div class="work-detail-inner">
+                  <p class="work-authors">
+                    <strong>Youyang Du</strong>, Lu Wang, Beibei Wang
+                  </p>
+                  <p class="work-summary">
+                    A differentiable representation of facial wrinkles and pores that enables
+                    microscopic detail synthesis from naturally captured images.
+                  </p>
+                  <a
+                    class="text-link"
+                    href="https://icewired-yy.github.io/papers/face_micro_detail_synthesis/"
+                    target="_blank"
+                    rel="noreferrer"
+                  >Project page</a>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <article class="work-item research-item">
+            <a
+              class="work-media"
+              href="https://xingyouxin.github.io/works/DGRSISE/index.html"
+              target="_blank"
+              rel="noreferrer"
+              aria-label="Open the Diffusion-Guided Relighting project page"
+            >
+              <img
+                src="assets/images/diffusion-relighting.png"
+                width="1600"
+                height="900"
+                alt="Material relighting comparisons for SVBRDF estimation"
+                loading="lazy"
+              >
+            </a>
+            <div class="work-copy">
+              <p class="work-meta">SIGGRAPH Asia 2025 · Conference Paper</p>
+              <h3>
+                <a
+                  href="https://xingyouxin.github.io/works/DGRSISE/index.html"
+                  target="_blank"
+                  rel="noreferrer"
+                >Diffusion-Guided Relighting for Single-Image SVBRDF Estimation</a>
+              </h3>
+              <div class="work-detail">
+                <div class="work-detail-inner">
+                  <p class="work-authors">
+                    Youxin Xing, Zheng Zeng, <strong>Youyang Du</strong>, Lu Wang, Beibei Wang
+                  </p>
+                  <p class="work-summary">
+                    A diffusion-guided relighting method that produces stable material
+                    observations for highlight-free SVBRDF recovery.
+                  </p>
+                  <a
+                    class="text-link"
+                    href="https://xingyouxin.github.io/works/DGRSISE/index.html"
+                    target="_blank"
+                    rel="noreferrer"
+                  >Project page</a>
+                </div>
+              </div>
+            </div>
+          </article>
+
+        </div>
+
+        <div class="section-more">
+          <a class="section-more-link" href="research.html">
+            Explore all research
+            <svg class="link-arrow" viewBox="0 0 16 16" aria-hidden="true" focusable="false">
+              <path d="M4 12 12 4M6 4h6v6"></path>
+            </svg>
+          </a>
+        </div>
+      </section>
+
+      <section class="section site-width projects-preview" id="projects" aria-labelledby="projects-title">
+        <div class="section-heading">
+          <h2 class="section-title section-title-projects" id="projects-title">
+            <span class="section-title-foreground">Projects</span>
+          </h2>
+          <p>
+            Selected implementations and systems work beyond my research publications.
+            Hover or focus on an item to see more.
+          </p>
+        </div>
+
+        <div class="work-list project-list" aria-label="Selected projects preview">
+          <article class="work-item project-item work-item-reversed">
+            <a
+              class="work-media"
+              href="https://github.com/icewired-yy/BDPT-Nori"
+              target="_blank"
+              rel="noreferrer"
+              aria-label="Open the Bidirectional Path Tracing in Nori repository"
+            >
+              <img
+                src="assets/images/bdpt-ajax.png"
+                width="960"
+                height="540"
+                alt="Ajax scene rendered with bidirectional path tracing"
+                loading="lazy"
+              >
+            </a>
+            <div class="work-copy">
+              <p class="work-meta">Rendering Systems · Reference Implementation</p>
+              <h3>
+                <a
+                  href="https://github.com/icewired-yy/BDPT-Nori"
+                  target="_blank"
+                  rel="noreferrer"
+                >Bidirectional Path Tracing in Nori</a>
+              </h3>
+              <div class="work-detail">
+                <div class="work-detail-inner">
+                  <p class="work-authors"><strong>Youyang Du</strong></p>
+                  <p class="work-summary">
+                    A readable BDPT reference implementation with the minimal Nori
+                    extensions needed for light-image accumulation and the t=1 technique.
+                  </p>
+                  <a
+                    class="text-link"
+                    href="https://github.com/icewired-yy/BDPT-Nori"
+                    target="_blank"
+                    rel="noreferrer"
+                  >View repository</a>
+                </div>
+              </div>
+            </div>
+          </article>
+        </div>
+
+        <div class="section-more">
+          <a class="section-more-link" href="projects.html">
+            Explore all projects
+            <svg class="link-arrow" viewBox="0 0 16 16" aria-hidden="true" focusable="false">
+              <path d="M4 12 12 4M6 4h6v6"></path>
+            </svg>
+          </a>
+        </div>
+      </section>
+
+      <section class="section writing" id="writing" aria-labelledby="writing-title">
+        <div class="site-width">
+          <div class="section-heading writing-heading">
+            <h2 class="section-title section-title-notes" id="writing-title">
+              <span class="section-title-foreground">Notes</span>
+            </h2>
+            <p>
+              Working notes, derivations, and paper readings. The production blog keeps
+              its existing LaTeX and bibliography pipeline.
+            </p>
+          </div>
+
+          <div class="article-list">
+            <article class="article-entry">
+              <time datetime="2025-11-11">11 Nov 2025</time>
+              <div>
+                <h3>
+                  <a
+                    href="/blog/2025/EN-NDF-and-Microfacet-Theory/"
+                  >NDF and Microfacet Model</a>
+                </h3>
+                <p>
+                  A derivation-focused note on microsurfaces, normal distributions,
+                  masking, and the general microfacet model.
+                </p>
+              </div>
+              <span class="math-mark" aria-label="D of omega m">D(ωₘ)</span>
+            </article>
+
+            <article class="article-entry">
+              <time datetime="2025-10-02">02 Oct 2025</time>
+              <div>
+                <h3>
+                  <a
+                    href="/blog/2025/EN-paper-reading-compressive-rendering/"
+                  >PaperReading — Compressive Rendering Sensing</a>
+                </h3>
+                <p>
+                  Reframing rendering as a sparse reconstruction problem rather than
+                  producing every pixel before compression.
+                </p>
+              </div>
+            </article>
+
+            <article class="article-entry">
+              <time datetime="2025-08-17">17 Aug 2025</time>
+              <div>
+                <h3>
+                  <a
+                    href="/blog/2025/EN-paper-reading-compressive-light-transport-sensing/"
+                  >PaperReading — Compressive Light Transport Sensing</a>
+                </h3>
+                <p>
+                  From sparse signals and underdetermined systems to compressive
+                  measurements of light transport.
+                </p>
+              </div>
+            </article>
+          </div>
+
+          <div class="section-more">
+            <a class="section-more-link" href="notes.html">
+              Read all notes
+              <svg class="link-arrow" viewBox="0 0 16 16" aria-hidden="true" focusable="false">
+                <path d="M4 12 12 4M6 4h6v6"></path>
+              </svg>
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <section class="section site-width life" id="life" aria-labelledby="life-title">
+        <div class="section-heading">
+          <h2 class="section-title section-title-life" id="life-title">
+            <span class="section-title-foreground">Life, recently</span>
+          </h2>
+          <p>A quieter record beside the research.</p>
+        </div>
+
+        <div class="photo-rhythm" aria-label="Recent photo layout preview">
+          <figure class="photo-wide">
+            <img
+              src="assets/images/life-road.jpg"
+              width="800"
+              height="533"
+              alt="A mountain road curving toward a stone tunnel"
+              loading="lazy"
+            >
+          </figure>
+          <figure class="photo-tall">
+            <img
+              src="assets/images/life-hands.jpg"
+              width="800"
+              height="533"
+              alt="Two hands holding evergreen branches"
+              loading="lazy"
+            >
+          </figure>
+          <figure class="photo-small">
+            <img
+              src="assets/images/life-green-door.jpg"
+              width="800"
+              height="533"
+              alt="A green door and window on a white wall"
+              loading="lazy"
+            >
+          </figure>
+          <figure class="photo-long">
+            <img
+              src="assets/images/life-balloons.jpg"
+              width="800"
+              height="533"
+              alt="Hot-air balloons above a wide landscape"
+              loading="lazy"
+            >
+          </figure>
+        </div>
+
+        <div class="section-more">
+          <a class="section-more-link" href="gallery.html">
+            Enter the gallery
+            <svg class="link-arrow" viewBox="0 0 16 16" aria-hidden="true" focusable="false">
+              <path d="M4 12 12 4M6 4h6v6"></path>
+            </svg>
+          </a>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer site-width">
+      <div>
+        <p class="footer-name">Youyang Du <span lang="zh-CN">杜悠扬</span></p>
+        <p>Researching light, appearance, and rendering.</p>
+      </div>
+      <div class="footer-links">
+        <a href="mailto:duyouyang957@gmail.com">Email</a>
+        <a href="https://github.com/icewired-yy" target="_blank" rel="noreferrer">GitHub</a>
+        <a href="#top">Back to top</a>
+      </div>
+    </footer>
+  </body>
+</html>

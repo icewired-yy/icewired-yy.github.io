@@ -1,3 +1,32 @@
+{% assign contemplative_notes_surface = false %}
+{% if page.url contains '/blog/' or page.permalink contains '/blog/' %}
+  {% assign contemplative_notes_surface = true %}
+{% endif %}
+
+{% if contemplative_notes_surface %}
+  <header class="notes-site-header">
+    <nav id="navbar" class="notes-navbar" role="navigation" aria-label="Primary navigation">
+      <div class="notes-navbar-inner">
+        <a class="notes-site-mark" href="{{ '/' | relative_url }}" aria-label="Return to the homepage">
+          YD<span aria-hidden="true">.</span>
+        </a>
+        <div class="notes-site-nav">
+          <a href="{{ '/publications/' | relative_url }}">Research</a>
+          <a href="{{ '/projects/' | relative_url }}">Projects</a>
+          <a href="{{ '/blog/' | relative_url }}" aria-current="page">Notes</a>
+          <a href="{{ '/cv/' | relative_url }}">CV</a>
+        </div>
+      </div>
+    </nav>
+    {% if site.enable_progressbar %}
+      <progress id="progress" value="0">
+        <div class="progress-container">
+          <span class="progress-bar"></span>
+        </div>
+      </progress>
+    {% endif %}
+  </header>
+{% else %}
 <header>
   <!-- Nav Bar -->
   <nav id="navbar" class="navbar navbar-light navbar-expand-sm {% if site.navbar_fixed %}fixed-top{% else %}sticky-top{% endif %}" role="navigation">
@@ -139,3 +168,4 @@
     </progress>
   {% endif %}
 </header>
+{% endif %}

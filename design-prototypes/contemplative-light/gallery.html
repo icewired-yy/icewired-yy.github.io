@@ -1,0 +1,210 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta
+      name="description"
+      content="A static gallery layout prototype for Youyang Du's personal photo journal."
+    >
+    <title>Gallery · Youyang Du</title>
+    <link rel="icon" href="assets/images/icon.png" type="image/png">
+    <link rel="stylesheet" href="styles.css">
+    <script src="script.js" defer></script>
+  </head>
+  <body class="subpage gallery-page" id="top">
+    <!--
+      THESIS: A personal research practice unfolds through quiet space, refusing newspaper and dashboard density.
+      OWN-WORLD: Mist ground, pine ink, teal light, restrained gold, borderless lists, calligraphic ghosts, and a bamboo-sword field.
+      STORY: A peer recognizes Youyang, previews current research, projects, notes, and life, then follows one focused route.
+      FIRST VIEWPORT: Minimal navigation sits above a generous collection title and its concise purpose statement.
+      FORM: Established contemplative-light experience; seed contemplative-light-approved.
+      FINISH: unreviewed and undocumented is unfinished; this build ends with the finish review, the verdict, DESIGN.md, and every shipping raster carrying its provenance
+    -->
+    <canvas class="light-field" id="light-field" aria-hidden="true"></canvas>
+    <img
+      class="canvas-asset"
+      id="sword-asset"
+      src="assets/images/bamboo-cloud-sword.png"
+      alt=""
+      aria-hidden="true"
+      decoding="async"
+    >
+
+    <a class="skip-link" href="#main-content">Skip to content</a>
+
+    <header class="site-header site-width" aria-label="Primary navigation">
+      <a class="site-mark" href="index.html" aria-label="Return to the homepage">YD<span aria-hidden="true">.</span></a>
+      <nav class="site-nav" aria-label="Prototype pages">
+        <a href="research.html">Research</a>
+        <a href="projects.html">Projects</a>
+        <a href="notes.html">Notes</a>
+        <a href="gallery.html" aria-current="page">Gallery</a>
+        <a href="https://icewired-yy.github.io/cv/" target="_blank" rel="noreferrer">CV</a>
+      </nav>
+    </header>
+
+    <main class="page-main" id="main-content">
+      <header class="page-intro site-width">
+        <h1 class="page-title section-title section-title-life"><span>Gallery</span></h1>
+        <p class="page-lede">
+          A place for photographs, small observations, and the life surrounding the work.
+          The final archive can later be arranged by year with capture dates and notes.
+        </p>
+      </header>
+
+      <section class="section site-width page-collection gallery-collection" aria-labelledby="undated-studies-title">
+        <div class="section-heading collection-heading">
+          <h2 id="undated-studies-title">Undated studies</h2>
+          <p>
+            These twelve existing site images are layout placeholders, not a dated personal
+            archive. Dates, locations, and story captions are intentionally omitted until
+            verified source metadata is supplied.
+          </p>
+        </div>
+
+        <div class="gallery-grid" aria-label="Undated placeholder image studies">
+          <figure class="gallery-card gallery-card-wide">
+            <img
+              src="assets/images/life-road.jpg"
+              width="800"
+              height="534"
+              alt="A mountain road curving toward a stone tunnel"
+            >
+            <figcaption><span>Archive study 01</span><span>Metadata pending</span></figcaption>
+          </figure>
+          <figure class="gallery-card gallery-card-tall">
+            <img
+              src="assets/images/gallery-autumn.jpg"
+              width="800"
+              height="1200"
+              alt="Autumn leaves drifting through a sunlit forest"
+              loading="lazy"
+            >
+            <figcaption><span>Archive study 02</span><span>Metadata pending</span></figcaption>
+          </figure>
+          <figure class="gallery-card">
+            <img
+              src="assets/images/life-hands.jpg"
+              width="800"
+              height="533"
+              alt="Two hands holding evergreen branches"
+              loading="lazy"
+            >
+            <figcaption><span>Archive study 03</span><span>Metadata pending</span></figcaption>
+          </figure>
+          <figure class="gallery-card gallery-card-wide">
+            <img
+              src="assets/images/gallery-sunset.jpg"
+              width="800"
+              height="533"
+              alt="Sunset over waves breaking against a rocky shore"
+              loading="lazy"
+            >
+            <figcaption><span>Archive study 04</span><span>Metadata pending</span></figcaption>
+          </figure>
+          <figure class="gallery-card">
+            <img
+              src="assets/images/gallery-lake.jpg"
+              width="800"
+              height="533"
+              alt="A yellow canoe beside a calm mountain lake"
+              loading="lazy"
+            >
+            <figcaption><span>Archive study 05</span><span>Metadata pending</span></figcaption>
+          </figure>
+          <figure class="gallery-card">
+            <img
+              src="assets/images/life-balloons.jpg"
+              width="800"
+              height="533"
+              alt="Hot-air balloons above a wide landscape"
+              loading="lazy"
+            >
+            <figcaption><span>Archive study 06</span><span>Metadata pending</span></figcaption>
+          </figure>
+          <figure class="gallery-card gallery-card-wide">
+            <img
+              src="assets/images/gallery-mountains.jpg"
+              width="800"
+              height="533"
+              alt="A dark mountain ridge beneath a violet twilight sky"
+              loading="lazy"
+            >
+            <figcaption><span>Archive study 07</span><span>Metadata pending</span></figcaption>
+          </figure>
+          <figure class="gallery-card gallery-card-tall">
+            <img
+              src="assets/images/life-green-door.jpg"
+              width="800"
+              height="556"
+              alt="A green door and window on a white wall"
+              loading="lazy"
+            >
+            <figcaption><span>Archive study 08</span><span>Metadata pending</span></figcaption>
+          </figure>
+          <figure class="gallery-card">
+            <img
+              src="assets/images/gallery-notebook.jpg"
+              width="800"
+              height="533"
+              alt="An open lined notebook beside a cup of coffee"
+              loading="lazy"
+            >
+            <figcaption><span>Archive study 09</span><span>Metadata pending</span></figcaption>
+          </figure>
+          <figure class="gallery-card">
+            <img
+              src="assets/images/gallery-flatiron.jpg"
+              width="800"
+              height="533"
+              alt="An ornate wedge-shaped building against a clear sky"
+              loading="lazy"
+            >
+            <figcaption><span>Archive study 10</span><span>Metadata pending</span></figcaption>
+          </figure>
+          <figure class="gallery-card gallery-card-tall">
+            <img
+              src="assets/images/gallery-city.jpg"
+              width="800"
+              height="1118"
+              alt="A steep city street leading toward a pointed skyscraper"
+              loading="lazy"
+            >
+            <figcaption><span>Archive study 11</span><span>Metadata pending</span></figcaption>
+          </figure>
+          <figure class="gallery-card gallery-card-wide">
+            <img
+              src="assets/images/gallery-cup.jpg"
+              width="800"
+              height="533"
+              alt="A green cup beside a softly lit window"
+              loading="lazy"
+            >
+            <figcaption><span>Archive study 12</span><span>Metadata pending</span></figcaption>
+          </figure>
+        </div>
+
+        <aside class="archive-note" aria-label="Gallery prototype status">
+          <p>
+            Before publication, each image will need verified year, capture date, location,
+            descriptive text, and ownership or attribution metadata.
+          </p>
+        </aside>
+      </section>
+    </main>
+
+    <footer class="site-footer site-width">
+      <div>
+        <p class="footer-name">Youyang Du <span lang="zh-CN">杜悠扬</span></p>
+        <p>Researching light, appearance, and rendering.</p>
+      </div>
+      <div class="footer-links">
+        <a href="index.html">Home</a>
+        <a href="mailto:duyouyang957@gmail.com">Email</a>
+        <a href="https://github.com/icewired-yy" target="_blank" rel="noreferrer">GitHub</a>
+        <a href="#top">Back to top</a>
+      </div>
+    </footer>
+  </body>
+</html>

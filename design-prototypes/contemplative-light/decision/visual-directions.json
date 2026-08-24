@@ -1,0 +1,126 @@
+{
+  "title": "选择个人主页的视觉世界",
+  "question": "这些方向都保留现有学术内容、博客 LaTeX 与 Jekyll 数据规则；请选择最像你的一个世界。",
+  "options": [
+    {
+      "id": "aperture-room",
+      "label": "光阑静室 Aperture Room",
+      "kicker": "本轮主方向",
+      "lineage": "暗房光阑、清水混凝土静室与计算机图形学实验台",
+      "thesis": "一束受控的光，把论文、技术笔记与生活切片组织成同一场长期修行。",
+      "palette": ["#F0F3F0", "#141917", "#34483F", "#809DA4", "#D1B967"],
+      "materials": ["冷调矿物纸", "磨砂玻璃", "石墨细线", "窄幅光带"],
+      "viewport": "左侧先给出姓名、研究命题和当前关注，右侧生活肖像被一道竖直光阑裁切，光线继续落到精选成果。",
+      "risk": "留白控制不准时，会显得过于疏冷，研究信息密度也可能不足。",
+      "raised": [
+        {"from": "霓虹标牌", "raise": "只保留一个光子金色，并让它贯穿链接、时间和交互反馈。"},
+        {"from": "纸偶机关", "raise": "全站只使用一套如调节光阑般的展开与收拢运动。"},
+        {"from": "沉睡城市", "raise": "明暗主题必须像同一空间改变曝光，而不是两套换肤。"}
+      ],
+      "comp": ".impeccable/mocks/decision/aperture-room.png"
+    },
+    {
+      "id": "optical-bench-logbook",
+      "label": "光学平台手记 Optical Bench Logbook",
+      "kicker": "IMPECCABLE’S PICK",
+      "lineage": "光学平台、实验记录本、标定图与论文批注",
+      "thesis": "主页像一本正在使用的实验手记，每条光路都指向一项成果、一篇文章或一段生活。",
+      "palette": ["#F4F7F4", "#151A18", "#3E574D", "#7699A3", "#CDB35F"],
+      "materials": ["实验纸", "标定刻度", "蓝灰光路", "低反差照片"],
+      "viewport": "姓名与研究主题占据左上基准点，细光路连接当前工作、代表成果和最近笔记，生活照片作为一张贴入的观察记录。",
+      "risk": "若人物照片和文字语气不够温暖，容易像实验室仪器界面而不是个人主页。",
+      "comp": ".impeccable/mocks/decision/optical-bench-logbook.png"
+    },
+    {
+      "id": "research-index-mosaic",
+      "label": "研究索引拼贴 Research Index Mosaic",
+      "verdict": "competitive",
+      "lineage": "日本当代高密度网页、学会会刊目录与模块化编辑版式",
+      "thesis": "用高度纪律化的模块网格，让同行在十秒内定位论文、博客、近况与联系方式。",
+      "palette": ["#F4F3EF", "#111312", "#C8302D", "#707772"],
+      "materials": ["薄型会刊纸", "索引标签", "超细分隔线", "裁切照片"],
+      "viewport": "首屏以紧凑网格同时呈现身份、研究关键词、精选成果和最新条目，朱红标签只承担导航和状态。",
+      "case": "它最清楚也最高效，但克制感来自排版纪律，而不是禅意留白。",
+      "risk": "密度稍高就会削弱静心气质，并让生活照片沦为信息卡片。",
+      "comp": ".impeccable/mocks/decision/research-index-mosaic.png"
+    },
+    {
+      "id": "research-stack",
+      "label": "研究卡栈 Research Stack",
+      "verdict": "competitive",
+      "lineage": "HyperCard、学者卡片盒与个人知识索引",
+      "thesis": "把论文、博客与生活照片变成可翻阅的个人卡栈，让访问更像沿着研究者的思路漫游。",
+      "palette": ["#F2F1EA", "#111411", "#51665D", "#AFC1B7"],
+      "materials": ["单色屏幕", "卡片边缘", "像素图标", "手写批注"],
+      "viewport": "当前卡片呈现个人与研究主张，后方露出的卡沿分别通向 Publications、Notes 和 Life。",
+      "case": "它最有人格化的浏览结构，但需要克制怀旧符号才能维持当代学术可信度。",
+      "risk": "交互隐喻过强时，访问者会先研究网站玩法，再研究你的成果。",
+      "comp": ".impeccable/mocks/decision/research-stack.png"
+    },
+    {
+      "id": "research-event-display",
+      "label": "研究事件场 Research Event Display",
+      "verdict": "competitive",
+      "lineage": "粒子对撞事件显示、轨迹重建与科学监测界面",
+      "thesis": "把学术成果、技术写作和生活节点显示为从同一研究核心发出的轨迹。",
+      "palette": ["#0F1514", "#E7ECE7", "#6FA0A3", "#9FBE8D", "#D5B15B"],
+      "materials": ["低亮显示器", "矢量轨迹", "荧光标记", "测量刻度"],
+      "viewport": "姓名和研究主题位于事件核心，论文、博客与生活更新沿不同轨迹展开，右侧保留可快速扫描的文字清单。",
+      "case": "它最先表明科学研究者身份，但视觉语汇更像高能物理与科幻界面。",
+      "risk": "深色仪表盘会偏离安静、亲近的修行者气质，并压低照片的自然感。",
+      "comp": ".impeccable/mocks/decision/research-event-display.png"
+    },
+    {
+      "id": "desert-neon-program",
+      "label": "荒漠霓虹节目单",
+      "verdict": "declined",
+      "lineage": "公路霓虹招牌与夜间节目单",
+      "thesis": "用一套强烈的发光标识，把每项研究当作夜色中的单独信号。",
+      "palette": ["#101418", "#F1EDE4", "#66B8B3", "#E7B64F"],
+      "materials": ["霓虹玻璃", "氧化金属", "暗夜空气"],
+      "viewport": "一个大号发光姓名占据首屏，成果作为远近不一的路牌。",
+      "case": "辨识度高，但与研究同行的阅读任务和内敛人格不相符。",
+      "risk": "容易变成主题餐厅式的氛围包装。",
+      "kept": "保留它对单一强调色的彻底承诺。"
+    },
+    {
+      "id": "paper-automata-menagerie",
+      "label": "纸偶机关册",
+      "verdict": "declined",
+      "lineage": "纸艺机关书与博物图谱",
+      "thesis": "每次展开内容都像推动一枚机械纸偶。",
+      "palette": ["#EDEFE9", "#17201C", "#6F8E7D", "#C9AA60"],
+      "materials": ["压纹纸", "铆钉", "折页", "线描图"],
+      "viewport": "研究主题以可展开纸页呈现，人物照片藏在折页后。",
+      "case": "动态机制统一，但插画叙事会喧宾夺主。",
+      "risk": "过于玩具化，不利于成果的严肃呈现。",
+      "kept": "保留一套全站一致的展开运动。"
+    },
+    {
+      "id": "sleeping-city-fold",
+      "label": "沉睡城市折页",
+      "verdict": "declined",
+      "lineage": "夜间城市剖面与折叠建筑模型",
+      "thesis": "把研究与生活藏在一座随曝光变化的折叠城市里。",
+      "palette": ["#131817", "#E8ECE7", "#78929A", "#C2AC70"],
+      "materials": ["半透明建筑纸", "窗格", "夜雾", "漫反射光"],
+      "viewport": "城市剖面占据首屏，各扇窗通往成果与生活。",
+      "case": "明暗空间统一，但产品结构不够直观。",
+      "risk": "隐喻太远，读者难以快速找到论文与博客。",
+      "kept": "保留明暗主题共享同一空间结构的原则。"
+    }
+  ],
+  "reroll": {"registers": ["safer", "bolder"]},
+  "buildPath": {"value": "comp", "toggle": true},
+  "canon": true,
+  "canonCard": {
+    "label": "当代学术主页标准",
+    "thesis": "把 al-folio 的常见结构做得更精确、清爽和可靠。",
+    "palette": ["#FFFFFF", "#171A18", "#4D675D", "#E8ECE9"],
+    "materials": ["白色页面", "常规网格", "克制卡片", "清晰照片"],
+    "viewport": "左侧简介与头像，右侧研究兴趣，下方按常规顺序列出新闻和精选成果。",
+    "risk": "最容易使用，也最难形成只属于你的视觉记忆。",
+    "comp": ".impeccable/mocks/decision/canon.png"
+  },
+  "steer": true
+}

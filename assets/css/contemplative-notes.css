@@ -1,0 +1,1181 @@
+@font-face {
+  font-family: "Onest";
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url("../fonts/onest-latin-wght-normal.woff2") format("woff2");
+}
+
+/*
+ * Contemplative Notes surface
+ *
+ * This stylesheet is loaded only for `/blog/**`; presentation rules are also
+ * scoped through the `.contemplative-notes-surface` body class wherever the
+ * target allows it. It changes presentation only; Jekyll, Kramdown, MathJax,
+ * Distill, and bibliography markup remain the authoritative content and
+ * rendering layers.
+ */
+
+/* Keep the ordinary and Distill renderers on one rem scale at mobile widths. */
+html {
+  font-size: 16px !important;
+}
+
+body.contemplative-notes-surface {
+  --notes-background: #f4f6f3;
+  --notes-surface: #e9eeea;
+  --notes-surface-strong: #dfe7e2;
+  --notes-ink: #151916;
+  --notes-muted: #526159;
+  --notes-pine: #314f43;
+  --notes-glyph: #173d31;
+  --notes-spectral: #526f75;
+  --notes-gold: #c4a951;
+  --notes-focus: #1f6e58;
+  --notes-rule: rgb(49 79 67 / 0.2);
+  --notes-gutter: clamp(1.25rem, 4.2vw, 5.5rem);
+  --notes-reading-width: 72ch;
+  --notes-ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --notes-font: "Onest", "Noto Sans CJK SC", "Microsoft YaHei", sans-serif;
+  --notes-layer-content: 1;
+  --notes-layer-content-overlay: 5;
+  --notes-layer-effects: 10;
+  --notes-layer-navigation: 20;
+  --notes-layer-skip: 100;
+  --global-bg-color: var(--notes-background);
+  --global-code-bg-color: rgb(223 231 226 / 0.72);
+  --global-text-color: var(--notes-ink);
+  --global-text-color-light: var(--notes-muted);
+  --global-theme-color: var(--notes-pine);
+  --global-hover-color: var(--notes-focus);
+  --global-divider-color: var(--notes-rule);
+  --global-card-bg-color: var(--notes-surface);
+  --global-distill-app-color: var(--notes-muted);
+  color-scheme: light;
+  min-height: 100vh;
+  padding-bottom: 5.5rem;
+  background:
+    radial-gradient(circle at 78% 7%, rgb(120 154 161 / 0.11), transparent 27rem),
+    radial-gradient(circle at 18% 31%, rgb(196 169 81 / 0.06), transparent 22rem),
+    var(--notes-background);
+  color: var(--notes-ink);
+  font-family: var(--notes-font);
+  font-size: 1rem;
+  font-synthesis: none;
+  line-height: 1.68;
+  text-rendering: optimizeLegibility;
+  scrollbar-color: var(--notes-pine) var(--notes-background);
+  scrollbar-width: thin;
+}
+
+body.contemplative-notes-surface::-webkit-scrollbar {
+  width: 0.65rem;
+}
+
+body.contemplative-notes-surface::-webkit-scrollbar-track {
+  background: var(--notes-background);
+}
+
+body.contemplative-notes-surface::-webkit-scrollbar-thumb {
+  border: 0.18rem solid var(--notes-background);
+  border-radius: 999px;
+  background: var(--notes-pine);
+}
+
+.contemplative-notes-surface ::selection {
+  background: var(--notes-surface-strong);
+  color: var(--notes-ink);
+}
+
+.contemplative-notes-surface a {
+  color: inherit;
+  text-decoration-color: color-mix(in srgb, currentColor 42%, transparent);
+  text-decoration-thickness: 0.08em;
+  text-underline-offset: 0.24em;
+}
+
+.contemplative-notes-surface a:hover {
+  color: var(--notes-pine);
+  text-decoration-color: currentColor;
+}
+
+.contemplative-notes-surface a:focus-visible,
+.contemplative-notes-surface button:focus-visible {
+  border-radius: 0.2rem;
+  outline: 0.16rem solid var(--notes-focus);
+  outline-offset: 0.28rem;
+}
+
+.contemplative-notes-surface h1,
+.contemplative-notes-surface h2,
+.contemplative-notes-surface h3,
+.contemplative-notes-surface h4,
+.contemplative-notes-surface h5,
+.contemplative-notes-surface h6 {
+  color: var(--notes-ink);
+  font-family: var(--notes-font);
+  text-wrap: balance;
+}
+
+.contemplative-notes-surface img {
+  max-width: 100%;
+}
+
+/* Let pointer effects cross content surfaces while all site chrome stays above them. */
+.notes-light-field {
+  position: fixed;
+  inset: 0;
+  z-index: var(--notes-layer-effects);
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  opacity: 0.62;
+}
+
+.notes-skip-link {
+  position: fixed;
+  top: 1rem;
+  left: 1rem;
+  z-index: var(--notes-layer-skip);
+  padding: 0.65rem 0.9rem;
+  background: var(--notes-ink);
+  color: var(--notes-background) !important;
+  transform: translateY(-170%);
+  transition: transform 280ms var(--notes-ease-out);
+}
+
+.notes-skip-link:focus {
+  transform: translateY(0);
+}
+
+.contemplative-notes-surface .contemplative-notes-main,
+.contemplative-notes-surface .notes-distill-article {
+  position: relative;
+  z-index: var(--notes-layer-content);
+}
+
+.contemplative-notes-surface .notes-site-header {
+  position: relative;
+  z-index: var(--notes-layer-navigation);
+}
+
+.contemplative-notes-surface footer {
+  z-index: var(--notes-layer-navigation);
+}
+
+/* Keep library overlays with their article while preserving the site's root layer contract. */
+body.contemplative-notes-surface .medium-zoom-overlay,
+body.contemplative-notes-surface .medium-zoom-image--opened {
+  z-index: var(--notes-layer-content-overlay) !important;
+}
+
+body.contemplative-notes-surface #back-to-top {
+  z-index: var(--notes-layer-navigation) !important;
+}
+
+/* The blog uses the same lightweight navigation grammar as the approved prototype. */
+.notes-navbar {
+  position: fixed;
+  inset: 0 0 auto;
+  z-index: 50;
+  min-height: 4.5rem;
+  border: 0;
+  background: rgb(233 238 234 / 0.88);
+  box-shadow: 0 0.75rem 2rem rgb(23 61 49 / 0.05);
+  -webkit-backdrop-filter: saturate(112%) blur(18px);
+  backdrop-filter: saturate(112%) blur(18px);
+}
+
+.notes-navbar-inner {
+  display: flex;
+  width: min(100%, 94rem);
+  min-height: 4.5rem;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2rem;
+  margin-inline: auto;
+  padding-inline: var(--notes-gutter);
+}
+
+.notes-site-mark {
+  display: inline-flex;
+  min-width: 2.75rem;
+  min-height: 2.75rem;
+  align-items: center;
+  flex: 0 0 auto;
+  color: var(--notes-pine) !important;
+  font-size: 0.93rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  text-decoration: none;
+}
+
+.notes-site-mark span {
+  color: var(--notes-gold);
+}
+
+.notes-site-nav {
+  display: flex;
+  align-items: center;
+  gap: clamp(1rem, 2.6vw, 2.6rem);
+}
+
+.notes-site-nav a {
+  display: inline-flex;
+  min-width: 2.75rem;
+  min-height: 2.75rem;
+  align-items: center;
+  justify-content: center;
+  color: var(--notes-muted);
+  font-size: 0.9rem;
+  font-weight: 500;
+  text-decoration: none;
+}
+
+.notes-site-nav a:hover,
+.notes-site-nav a:focus-visible,
+.notes-site-nav a[aria-current="page"] {
+  color: var(--notes-pine);
+}
+
+.notes-site-nav a[aria-current="page"] {
+  text-decoration: underline;
+  text-decoration-color: var(--notes-gold);
+  text-decoration-thickness: 0.1rem;
+  text-underline-offset: 0.38rem;
+}
+
+.contemplative-notes-surface progress#progress {
+  z-index: 60;
+  color: var(--notes-gold);
+}
+
+.contemplative-notes-surface progress#progress::-webkit-progress-value {
+  background: var(--notes-gold);
+}
+
+.contemplative-notes-surface progress#progress::-moz-progress-bar {
+  background: var(--notes-gold);
+}
+
+.contemplative-notes-main {
+  width: min(100%, 94rem);
+  max-width: 94rem !important;
+  margin-top: 0 !important;
+  margin-inline: auto;
+  padding-inline: var(--notes-gutter);
+}
+
+/* Index */
+.notes-index {
+  width: min(100%, 80rem);
+  margin-inline: auto;
+  padding-bottom: clamp(6rem, 10vw, 10rem);
+}
+
+.notes-index-header {
+  position: relative;
+  display: flex;
+  min-height: clamp(31rem, 58svh, 44rem);
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: clamp(9rem, 15vw, 13rem) 0 clamp(4.5rem, 8vw, 7rem);
+}
+
+.notes-index-header::after {
+  position: absolute;
+  right: 0;
+  bottom: clamp(3rem, 5vw, 5rem);
+  width: clamp(4rem, 8vw, 7.5rem);
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--notes-gold));
+  content: "";
+  opacity: 0.78;
+}
+
+.notes-index-title {
+  position: relative;
+  max-width: 12ch;
+  margin: 0;
+  color: var(--notes-pine) !important;
+  font-size: clamp(4rem, 8.5vw, 6rem);
+  font-weight: 400;
+  letter-spacing: -0.04em;
+  line-height: 0.92;
+}
+
+.notes-index-title::before {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  z-index: 0;
+  width: clamp(18rem, 32vw, 30rem);
+  aspect-ratio: 2.25 / 1;
+  background-image: url("../img/section-xinde.png");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+  content: "";
+  filter: brightness(0) saturate(100%) invert(19%) sepia(15%) saturate(1112%) hue-rotate(103deg) brightness(91%);
+  opacity: 0.16;
+  transform: translate(clamp(2.75rem, 6vw, 7rem), -50%);
+}
+
+.notes-index-title > span {
+  position: relative;
+  z-index: 1;
+}
+
+.notes-index-description {
+  max-width: 58ch;
+  margin: clamp(1.75rem, 3vw, 2.75rem) 0 0;
+  color: var(--notes-muted);
+  font-size: clamp(1.04rem, 1.55vw, 1.28rem);
+}
+
+.notes-index-description strong {
+  color: var(--notes-pine);
+  font-weight: 600;
+}
+
+.notes-section-heading {
+  display: grid;
+  grid-template-columns: minmax(12rem, 0.6fr) minmax(18rem, 1fr);
+  gap: clamp(2rem, 6vw, 7rem);
+  align-items: end;
+  margin-bottom: clamp(4rem, 7vw, 7rem);
+}
+
+.notes-section-heading h2 {
+  margin: 0;
+  font-size: clamp(2.25rem, 4vw, 4.25rem);
+  font-weight: 400;
+  letter-spacing: -0.035em;
+  line-height: 1;
+}
+
+.notes-section-heading p {
+  max-width: 50ch;
+  margin: 0;
+  color: var(--notes-muted);
+}
+
+.notes-featured {
+  margin-bottom: clamp(8rem, 13vw, 13rem);
+}
+
+.notes-featured-list {
+  display: grid;
+  gap: 2rem;
+  width: min(100%, 76rem);
+  margin-left: auto;
+}
+
+.notes-featured-entry {
+  position: relative;
+  padding: clamp(2rem, 4vw, 4.5rem);
+  overflow: hidden;
+  border-radius: 14px;
+  background:
+    radial-gradient(circle at 86% 18%, rgb(196 169 81 / 0.1), transparent 18rem),
+    color-mix(in srgb, var(--notes-surface) 84%, transparent);
+}
+
+.notes-featured-entry h3 {
+  max-width: 20ch;
+  margin: 0;
+  font-size: clamp(2rem, 4.6vw, 4.8rem);
+  font-weight: 400;
+  letter-spacing: -0.035em;
+  line-height: 1.08;
+}
+
+.notes-featured-entry h3 a,
+.notes-index-entry h3 a {
+  text-decoration: none;
+}
+
+.notes-featured-entry > p {
+  max-width: 62ch;
+  margin: 1.5rem 0 0;
+  color: var(--notes-muted);
+  font-size: 1.05rem;
+}
+
+.notes-entry-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem 0.8rem;
+  align-items: center;
+  margin-top: 1.5rem;
+  color: var(--notes-muted);
+  font-size: 0.8rem;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.025em;
+}
+
+.notes-collection {
+  padding-top: clamp(1rem, 3vw, 3rem);
+}
+
+.notes-index-list {
+  display: grid;
+  gap: clamp(4.5rem, 7vw, 7rem);
+  width: min(100%, 76rem);
+  margin: 0 0 0 auto;
+  padding: 0;
+  list-style: none;
+}
+
+.notes-index-entry {
+  display: grid;
+  grid-template-columns: 9rem minmax(0, 1fr);
+  gap: clamp(1.5rem, 4vw, 4rem);
+  align-items: start;
+}
+
+.notes-index-entry-with-image {
+  grid-template-columns: 9rem minmax(0, 1fr) minmax(9rem, 14rem);
+}
+
+.notes-index-entry > time,
+.notes-archive-list time {
+  padding-top: 0.42rem;
+  color: var(--notes-muted);
+  font-size: 0.8rem;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.045em;
+}
+
+.notes-index-entry h3 {
+  margin: 0;
+  font-size: clamp(1.65rem, 3vw, 2.75rem);
+  font-weight: 500;
+  letter-spacing: -0.028em;
+  line-height: 1.16;
+}
+
+.notes-entry-summary {
+  max-width: 65ch;
+  margin: 1rem 0 0;
+  color: var(--notes-muted);
+}
+
+.notes-entry-topics {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.55rem 1.2rem;
+  margin-top: 1.1rem;
+}
+
+.notes-entry-topics a {
+  color: var(--notes-pine);
+  font-size: 0.78rem;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.notes-entry-image {
+  aspect-ratio: 8 / 5;
+  margin: 0;
+  overflow: hidden;
+  border-radius: 12px;
+  background: var(--notes-surface);
+}
+
+.notes-entry-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Pagination stays a control rather than becoming another content card. */
+.contemplative-notes-surface .pagination {
+  gap: 0.4rem;
+  margin-top: clamp(5rem, 9vw, 9rem);
+}
+
+.contemplative-notes-surface .pagination .page-link {
+  display: inline-flex;
+  min-width: 2.75rem;
+  min-height: 2.75rem;
+  align-items: center;
+  justify-content: center;
+  border: 0;
+  border-radius: 10px;
+  background: transparent;
+  color: var(--notes-muted);
+  box-shadow: none;
+}
+
+.contemplative-notes-surface .pagination .page-item.active .page-link {
+  background: var(--notes-surface-strong);
+  color: var(--notes-pine);
+}
+
+.contemplative-notes-surface .pagination .page-item.disabled .page-link {
+  opacity: 0.42;
+}
+
+/* Archives */
+.notes-archive {
+  width: min(100%, 76rem);
+  margin-inline: auto;
+  padding: clamp(8rem, 14vw, 13rem) 0 clamp(7rem, 11vw, 11rem);
+}
+
+.notes-archive-header {
+  max-width: 66rem;
+  margin-bottom: clamp(5rem, 9vw, 9rem);
+}
+
+.notes-breadcrumb {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.55rem;
+  align-items: center;
+  margin-bottom: clamp(1.75rem, 3vw, 3rem);
+  color: var(--notes-muted);
+  font-size: 0.8rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.notes-breadcrumb a {
+  color: var(--notes-pine);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.notes-archive .post-title {
+  max-width: 17ch;
+  margin: 0;
+  color: var(--notes-pine);
+  font-size: clamp(3.4rem, 8vw, 6rem);
+  font-weight: 400;
+  letter-spacing: -0.04em;
+  line-height: 0.98;
+}
+
+.notes-archive .post-description {
+  max-width: 54ch;
+  margin: 1.5rem 0 0;
+  color: var(--notes-muted);
+  font-size: clamp(1rem, 1.4vw, 1.2rem);
+}
+
+.notes-archive-list {
+  display: grid;
+  gap: clamp(3rem, 6vw, 5.5rem);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.notes-archive-list li {
+  display: grid;
+  grid-template-columns: 9rem minmax(0, 1fr);
+  gap: clamp(1.5rem, 4vw, 4rem);
+}
+
+.notes-archive-list .post-link {
+  font-size: clamp(1.4rem, 2.7vw, 2.35rem);
+  font-weight: 500;
+  letter-spacing: -0.025em;
+  line-height: 1.2;
+  text-decoration: none;
+}
+
+.notes-archive-list p {
+  max-width: 62ch;
+  margin: 0.8rem 0 0;
+  color: var(--notes-muted);
+}
+
+/* Standard Kramdown article */
+.notes-standard-article {
+  width: min(100%, 78rem);
+  margin-inline: auto;
+  padding: clamp(8rem, 14vw, 13rem) 0 clamp(7rem, 11vw, 11rem);
+}
+
+.notes-standard-article .post-header {
+  max-width: 68rem;
+  margin-bottom: clamp(4.5rem, 8vw, 8rem);
+}
+
+.notes-standard-article .post-title {
+  max-width: 20ch;
+  margin: 0;
+  color: var(--notes-pine);
+  font-size: clamp(2.8rem, 6.7vw, 6rem);
+  font-weight: 400;
+  letter-spacing: -0.04em;
+  line-height: 1.02;
+}
+
+.notes-standard-article .post-meta,
+.notes-standard-article .post-tags {
+  max-width: var(--notes-reading-width);
+  color: var(--notes-muted);
+  font-size: 0.82rem;
+  font-variant-numeric: tabular-nums;
+  line-height: 1.65;
+}
+
+.notes-standard-article .post-meta {
+  margin-top: 1.75rem;
+}
+
+.notes-standard-article .post-meta .notes-reading-time {
+  color: var(--notes-spectral);
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.notes-standard-article .post-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  align-items: center;
+  padding-top: 0.7rem;
+}
+
+.notes-standard-article .post-tags a {
+  color: var(--notes-pine);
+}
+
+.notes-standard-article .post-content,
+.notes-standard-article > .publications,
+.notes-standard-article > .notes-related,
+.notes-standard-article > #citation-code,
+.notes-standard-article > h2 {
+  width: min(100%, var(--notes-reading-width));
+  margin-inline: auto;
+}
+
+.notes-standard-article #markdown-content {
+  width: 100%;
+  max-width: var(--notes-reading-width);
+  margin-inline: auto;
+  font-size: clamp(1rem, 0.95rem + 0.22vw, 1.12rem);
+  line-height: 1.78;
+}
+
+.notes-standard-article #markdown-content > :first-child {
+  margin-top: 0;
+}
+
+.notes-standard-article #markdown-content h1,
+.notes-standard-article #markdown-content h2,
+.notes-standard-article #markdown-content h3,
+.notes-standard-article #markdown-content h4 {
+  scroll-margin-top: 6.5rem;
+  font-weight: 500;
+  letter-spacing: -0.025em;
+  line-height: 1.18;
+}
+
+.notes-standard-article #markdown-content h1 {
+  margin: 5rem 0 1.7rem;
+  font-size: clamp(2.15rem, 4vw, 3.8rem);
+}
+
+.notes-standard-article #markdown-content h2 {
+  margin: 4.25rem 0 1.35rem;
+  font-size: clamp(1.8rem, 3.1vw, 3rem);
+}
+
+.notes-standard-article #markdown-content h3 {
+  margin: 3.5rem 0 1.1rem;
+  font-size: clamp(1.45rem, 2.3vw, 2.15rem);
+}
+
+.notes-standard-article #markdown-content p,
+.notes-standard-article #markdown-content ul,
+.notes-standard-article #markdown-content ol {
+  margin-top: 0;
+  margin-bottom: 1.45rem;
+}
+
+.notes-standard-article #markdown-content p,
+.notes-standard-article #markdown-content li {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.notes-standard-article #markdown-content blockquote {
+  margin: 2.5rem 0;
+  padding: 1.1rem 1.35rem;
+  border-left: 1px solid var(--notes-pine);
+  background: color-mix(in srgb, var(--notes-surface) 58%, transparent);
+  color: var(--notes-muted);
+}
+
+.notes-standard-article #markdown-content pre,
+.notes-standard-article #markdown-content figure.highlight {
+  max-width: 100%;
+  overflow-x: auto;
+  border-radius: 12px;
+  background: color-mix(in srgb, var(--notes-surface-strong) 72%, transparent);
+  scrollbar-width: thin;
+}
+
+.notes-standard-article #markdown-content code {
+  color: var(--notes-pine);
+  background: color-mix(in srgb, var(--notes-surface-strong) 72%, transparent);
+}
+
+.notes-standard-article #markdown-content table {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  margin: 2.5rem 0;
+  overflow-x: auto;
+  border-collapse: collapse;
+  font-size: 0.94em;
+  white-space: nowrap;
+}
+
+.notes-standard-article #markdown-content th,
+.notes-standard-article #markdown-content td {
+  padding: 0.7rem 0.9rem;
+  border-color: var(--notes-rule);
+}
+
+.notes-standard-article #markdown-content img,
+.notes-standard-article #markdown-content figure {
+  height: auto;
+}
+
+.notes-standard-article #markdown-content figure {
+  margin: clamp(2.5rem, 5vw, 4rem) 0;
+}
+
+.notes-standard-article #markdown-content .caption,
+.notes-standard-article #markdown-content figcaption {
+  margin-top: 0.8rem;
+  color: var(--notes-muted);
+  font-size: 0.82rem;
+  line-height: 1.55;
+}
+
+.notes-standard-article mjx-container[display="true"] {
+  display: block;
+  max-width: 100%;
+  padding: 0.4rem 0 0.65rem;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scrollbar-width: thin;
+}
+
+.notes-standard-article #table-of-contents {
+  margin-bottom: 3.5rem;
+  padding: 1.4rem 1.6rem;
+  border-radius: 12px;
+  background: color-mix(in srgb, var(--notes-surface) 72%, transparent);
+}
+
+.notes-standard-article > h2 {
+  margin-top: 5rem;
+  margin-bottom: 2rem;
+  font-size: clamp(1.75rem, 3vw, 2.8rem);
+  font-weight: 500;
+  letter-spacing: -0.025em;
+}
+
+/* Related notes retain Jekyll's similarity ordering while using the new rhythm. */
+.notes-related {
+  margin-top: clamp(6rem, 10vw, 10rem);
+}
+
+.notes-related .notes-section-heading {
+  grid-template-columns: minmax(12rem, 0.7fr) minmax(16rem, 1fr);
+  margin-bottom: 3rem;
+}
+
+.notes-related .notes-section-heading h2 {
+  font-size: clamp(1.9rem, 3.5vw, 3.25rem);
+}
+
+.notes-related ul {
+  display: grid;
+  gap: 1.4rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.notes-related li {
+  display: grid;
+  grid-template-columns: 4rem minmax(0, 1fr);
+  gap: 1rem;
+  align-items: baseline;
+}
+
+.notes-related time {
+  color: var(--notes-muted);
+  font-size: 0.78rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.notes-related a {
+  font-size: clamp(1.05rem, 2vw, 1.35rem);
+  font-weight: 500;
+  text-decoration: none;
+}
+
+/* Distill keeps its custom-element topology; these rules only restyle it. */
+.notes-distill-article {
+  position: relative;
+  padding-bottom: clamp(7rem, 11vw, 11rem);
+  color: var(--notes-ink);
+  font-family: var(--notes-font);
+}
+
+.notes-distill-article d-title {
+  padding-top: clamp(8rem, 13vw, 12rem) !important;
+  padding-bottom: clamp(3rem, 6vw, 5.5rem) !important;
+}
+
+.notes-distill-article d-title h1 {
+  max-width: 20ch;
+  color: var(--notes-pine) !important;
+  font-family: var(--notes-font) !important;
+  font-size: clamp(2.8rem, 6.7vw, 6rem) !important;
+  font-weight: 400 !important;
+  letter-spacing: -0.04em !important;
+  line-height: 1.02 !important;
+}
+
+.notes-distill-article d-title p {
+  max-width: 58ch;
+  margin-top: 1.5rem !important;
+  color: var(--notes-muted) !important;
+  font-family: var(--notes-font) !important;
+  font-size: clamp(1rem, 1.4vw, 1.2rem) !important;
+  line-height: 1.65 !important;
+}
+
+.notes-distill-article d-title .notes-reading-time {
+  margin-top: 0.8rem !important;
+  color: var(--notes-spectral) !important;
+  font-size: 0.9rem !important;
+  font-weight: 500 !important;
+  line-height: 1.68 !important;
+}
+
+.notes-distill-article d-byline {
+  color: var(--notes-muted) !important;
+  font-family: var(--notes-font) !important;
+}
+
+.notes-distill-article d-article {
+  border-top-color: var(--notes-rule) !important;
+  color: var(--notes-ink) !important;
+  font-family: var(--notes-font) !important;
+  font-size: clamp(1rem, 0.95rem + 0.22vw, 1.12rem) !important;
+  line-height: 1.78 !important;
+}
+
+.notes-distill-article d-article p,
+.notes-distill-article d-article ul,
+.notes-distill-article d-article ol,
+.notes-distill-article d-article table {
+  color: var(--notes-ink) !important;
+  font-family: var(--notes-font) !important;
+}
+
+.notes-distill-article d-article h1,
+.notes-distill-article d-article h2,
+.notes-distill-article d-article h3,
+.notes-distill-article d-article h4 {
+  scroll-margin-top: 6.5rem;
+  color: var(--notes-ink) !important;
+  font-family: var(--notes-font) !important;
+  font-weight: 500 !important;
+  letter-spacing: -0.025em !important;
+  line-height: 1.18 !important;
+}
+
+.notes-distill-article d-article h2 {
+  margin-top: 4.5rem !important;
+  font-size: clamp(1.8rem, 3.1vw, 3rem) !important;
+}
+
+.notes-distill-article d-article h3 {
+  margin-top: 3.5rem !important;
+  font-size: clamp(1.45rem, 2.3vw, 2.15rem) !important;
+}
+
+.notes-distill-article d-article a,
+.notes-distill-article d-article d-cite a,
+.notes-distill-article d-article a.citation {
+  color: var(--notes-pine) !important;
+}
+
+.notes-distill-article d-article blockquote {
+  border-left: 1px solid var(--notes-pine) !important;
+  background: color-mix(in srgb, var(--notes-surface) 58%, transparent);
+  color: var(--notes-muted) !important;
+}
+
+.notes-distill-article d-article pre,
+.notes-distill-article d-article details {
+  max-width: 100%;
+  overflow-x: auto;
+  border-radius: 12px;
+  background: color-mix(in srgb, var(--notes-surface-strong) 72%, transparent) !important;
+}
+
+.notes-distill-article d-article table {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  overflow-x: auto;
+  white-space: nowrap;
+}
+
+.notes-distill-article d-article mjx-container[display="true"],
+.notes-distill-article d-article .katex-display {
+  display: block;
+  max-width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scrollbar-width: thin;
+}
+
+.notes-distill-article d-article d-contents {
+  border-color: var(--notes-rule) !important;
+  background: color-mix(in srgb, var(--notes-surface) 58%, transparent);
+}
+
+.notes-distill-article d-article d-contents nav h3,
+.notes-distill-article d-article d-contents nav div {
+  color: var(--notes-pine) !important;
+  font-family: var(--notes-font) !important;
+}
+
+.notes-distill-article d-appendix {
+  border-top-color: var(--notes-rule) !important;
+  color: var(--notes-muted) !important;
+  font-family: var(--notes-font) !important;
+}
+
+.notes-distill-article d-appendix h3,
+.notes-distill-article d-appendix li,
+.notes-distill-article d-appendix span,
+.notes-distill-article d-appendix a {
+  color: var(--notes-muted) !important;
+}
+
+/* The existing fixed footer remains functional but visually recedes. */
+.contemplative-notes-surface footer.fixed-bottom,
+.contemplative-notes-surface footer.sticky-bottom {
+  border: 0;
+  background: rgb(244 246 243 / 0.94);
+  color: var(--notes-muted);
+  box-shadow: 0 -0.75rem 2rem rgb(23 61 49 / 0.035);
+  backdrop-filter: blur(12px);
+}
+
+.contemplative-notes-surface footer .container {
+  max-width: 94rem;
+  padding-inline: var(--notes-gutter);
+  font-size: 0.76rem;
+}
+
+.contemplative-notes-surface footer a {
+  color: var(--notes-pine);
+}
+
+@media (max-width: 900px) {
+  .notes-section-heading,
+  .notes-related .notes-section-heading {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 1.25rem;
+  }
+
+  .notes-index-entry-with-image {
+    grid-template-columns: 7.5rem minmax(0, 1fr);
+  }
+
+  .notes-index-entry-with-image .notes-entry-image {
+    grid-column: 2;
+    width: min(100%, 20rem);
+    margin-top: 1.25rem;
+  }
+}
+
+@media (max-width: 640px) {
+  body.contemplative-notes-surface {
+    --notes-gutter: clamp(1.1rem, 5vw, 1.6rem);
+  }
+
+  .notes-navbar-inner {
+    gap: 0.5rem;
+  }
+
+  .notes-site-nav {
+    max-width: calc(100vw - 5.5rem);
+    gap: 0.25rem;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+
+  .notes-site-nav::-webkit-scrollbar {
+    display: none;
+  }
+
+  .notes-site-nav a {
+    min-width: 2.75rem;
+    padding-inline: 0.62rem;
+    font-size: 0.8rem;
+    white-space: nowrap;
+  }
+
+  .notes-index-header {
+    min-height: clamp(27rem, 62svh, 36rem);
+    padding-top: 9rem;
+    padding-bottom: 4.5rem;
+  }
+
+  .notes-index-header::after {
+    bottom: 2.75rem;
+  }
+
+  .notes-index-title {
+    font-size: clamp(3.35rem, 17vw, 5.2rem);
+  }
+
+  .notes-index-title::before {
+    width: min(86vw, 22rem);
+    opacity: 0.14;
+    transform: translate(1.75rem, -50%);
+  }
+
+  .notes-index-description {
+    padding-right: 1.25rem;
+    font-size: 1rem;
+  }
+
+  .notes-featured-entry {
+    padding: 2rem 1.5rem;
+  }
+
+  .notes-index-list {
+    gap: 4.5rem;
+  }
+
+  .notes-index-entry,
+  .notes-index-entry-with-image,
+  .notes-archive-list li {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0.85rem;
+  }
+
+  .notes-index-entry > time,
+  .notes-archive-list time {
+    padding: 0;
+  }
+
+  .notes-index-entry-with-image .notes-entry-image {
+    grid-column: 1;
+  }
+
+  .notes-standard-article,
+  .notes-archive {
+    padding-top: 7.5rem;
+  }
+
+  .notes-standard-article .post-title,
+  .notes-archive .post-title {
+    font-size: clamp(2.5rem, 12vw, 4.2rem);
+  }
+
+  .notes-standard-article .post-tags {
+    display: block;
+  }
+
+  .notes-standard-article #markdown-content {
+    font-size: 1rem;
+  }
+
+  .notes-related li {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0.3rem;
+  }
+
+  .notes-distill-article d-title {
+    padding-top: 7.5rem !important;
+  }
+
+  .notes-distill-article d-title h1 {
+    font-size: clamp(2.5rem, 12vw, 4.2rem) !important;
+  }
+}
+
+@media (max-width: 360px) {
+  .notes-site-nav a {
+    padding-inline: 0.48rem;
+    font-size: 0.75rem;
+  }
+
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .contemplative-notes-surface *,
+  .contemplative-notes-surface *::before,
+  .contemplative-notes-surface *::after {
+    scroll-behavior: auto !important;
+  }
+
+  .notes-light-field {
+    opacity: 0.18;
+  }
+
+  .notes-skip-link {
+    transition: none;
+  }
+}
+
+@media (forced-colors: active) {
+  .notes-light-field,
+  .notes-index-title::before,
+  .notes-index-header::after {
+    display: none;
+  }
+
+  .notes-navbar,
+  .notes-featured-entry,
+  .contemplative-notes-surface footer.fixed-bottom,
+  .contemplative-notes-surface footer.sticky-bottom {
+    border: 1px solid CanvasText;
+    background: Canvas;
+    box-shadow: none;
+  }
+}
+
+@media print {
+  .notes-site-header,
+  .notes-light-field,
+  .notes-skip-link,
+  .notes-index-title::before,
+  .notes-index-header::after,
+  .contemplative-notes-surface footer {
+    display: none !important;
+  }
+
+  body.contemplative-notes-surface {
+    padding: 0;
+    background: #fff;
+    color: #000;
+  }
+
+  .contemplative-notes-main,
+  .notes-standard-article,
+  .notes-distill-article {
+    width: 100%;
+    max-width: none !important;
+    padding: 0;
+  }
+}

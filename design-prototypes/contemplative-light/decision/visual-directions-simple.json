@@ -1,0 +1,54 @@
+{
+  "title": "更像个人主页，而不是一份报告",
+  "question": "这一轮刻意减少首屏内容与排版机制：没有报纸网格、没有成果卡片墙，只比较三种安静的个人表达。",
+  "options": [
+    {
+      "id": "light-field-whitespace",
+      "label": "留白光场 Light-field Whitespace",
+      "kicker": "IMPECCABLE’S PICK",
+      "lineage": "极简个人主页、摄影留白与低频光场响应",
+      "thesis": "页面本身极简，个人气质只由一片几乎不可见、会随视点轻微变化的光场承担。",
+      "palette": ["#F4F6F3", "#151916", "#3C5047", "#8FA8AD", "#D2BC72"],
+      "materials": ["冷白空间", "自然肖像", "柔和光晕", "无边界文字"],
+      "viewport": "首屏只放姓名、身份、两行研究方向、极简导航和一张大幅自然照片；滚动后才依次出现研究、博客与生活。",
+      "risk": "光场过强会像作品集特效，过弱又会失去个人辨识度。",
+      "comp": ".impeccable/mocks/decision/light-field-whitespace.png"
+    },
+    {
+      "id": "quiet-introduction",
+      "label": "静默自序 Quiet Introduction",
+      "lineage": "经典研究者主页、现代书籍扉页与安静的人像摄影",
+      "thesis": "让访问者先遇见一个真实的人，再自然向下读到他的研究、写作和生活。",
+      "palette": ["#F7F8F5", "#181C19", "#45584F", "#AAB4AE"],
+      "materials": ["纯净页面", "轻微纸感", "无框照片", "大段呼吸空间"],
+      "viewport": "左侧是克制的姓名、身份和研究兴趣，右侧是一张自然肖像；没有卡片和分栏目录，只有一个向下的阅读提示。",
+      "risk": "最稳定也最安静，但如果字体、照片和比例不够精确，就会接近普通模板。",
+      "comp": ".impeccable/mocks/decision/quiet-introduction.png"
+    },
+    {
+      "id": "surface-response",
+      "label": "表面响应 Surface Response",
+      "lineage": "材质外观研究、博物馆展签与单列个人叙事",
+      "thesis": "主页保持近乎素白，只有标题、照片和链接在交互时显露很轻的材质响应。",
+      "palette": ["#F1F3F0", "#121613", "#52655C", "#738F98", "#C8B36B"],
+      "materials": ["哑光白", "细微粗糙度", "低饱和照片", "局部高光"],
+      "viewport": "首屏以单列文字和靠下的人像建立节奏；页面不画边框，经过关键内容时才出现一层细微的各向异性高光。",
+      "risk": "静态截图不容易充分表达交互，实施时也必须严格控制性能和可访问性。",
+      "comp": ".impeccable/mocks/decision/surface-response.png"
+    }
+  ],
+  "reroll": {"registers": ["safer", "bolder"]},
+  "buildPath": {"value": "comp", "toggle": true},
+  "canon": true,
+  "canonCard": {
+    "label": "精修后的标准个人主页",
+    "thesis": "沿用同行熟悉的简介、论文、博客顺序，只把比例、字体和图片处理做到足够好。",
+    "palette": ["#FFFFFF", "#171A18", "#496057", "#E9EDEA"],
+    "materials": ["白色页面", "常规正文", "矩形照片", "普通链接"],
+    "viewport": "一段个人简介和一张照片构成首屏，成果、博客和生活使用单列列表在下方展开。",
+    "case": "它对照 al-folio、Lingqi Yan 与 Jon Barron 的内容优先范式，熟悉可靠但不刻意创造视觉世界。",
+    "risk": "最不容易出错，也最可能在看完之后没有留下只属于你的视觉记忆。",
+    "comp": ".impeccable/mocks/decision/personal-homepage-canon.png"
+  },
+  "steer": true
+}

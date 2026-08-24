@@ -1,0 +1,179 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta
+      name="description"
+      content="Selected publications by Youyang Du in appearance modeling and rendering."
+    >
+    <title>Research · Youyang Du</title>
+    <link rel="icon" href="assets/images/icon.png" type="image/png">
+    <link rel="stylesheet" href="styles.css">
+    <script src="script.js" defer></script>
+  </head>
+  <body class="subpage research-page" id="top">
+    <!--
+      THESIS: A personal research practice unfolds through quiet space, refusing newspaper and dashboard density.
+      OWN-WORLD: Mist ground, pine ink, teal light, restrained gold, borderless lists, calligraphic ghosts, and a bamboo-sword field.
+      STORY: A peer recognizes Youyang, previews current research, projects, notes, and life, then follows one focused route.
+      FIRST VIEWPORT: Minimal navigation sits above a generous collection title and its concise purpose statement.
+      FORM: Established contemplative-light experience; seed contemplative-light-approved.
+      FINISH: unreviewed and undocumented is unfinished; this build ends with the finish review, the verdict, DESIGN.md, and every shipping raster carrying its provenance
+    -->
+    <canvas class="light-field" id="light-field" aria-hidden="true"></canvas>
+    <img
+      class="canvas-asset"
+      id="sword-asset"
+      src="assets/images/bamboo-cloud-sword.png"
+      alt=""
+      aria-hidden="true"
+      decoding="async"
+    >
+
+    <a class="skip-link" href="#main-content">Skip to content</a>
+
+    <header class="site-header site-width" aria-label="Primary navigation">
+      <a class="site-mark" href="index.html" aria-label="Return to the homepage">YD<span aria-hidden="true">.</span></a>
+      <nav class="site-nav" aria-label="Prototype pages">
+        <a href="research.html" aria-current="page">Research</a>
+        <a href="projects.html">Projects</a>
+        <a href="notes.html">Notes</a>
+        <a href="gallery.html">Gallery</a>
+        <a href="https://icewired-yy.github.io/cv/" target="_blank" rel="noreferrer">CV</a>
+      </nav>
+    </header>
+
+    <main class="page-main" id="main-content">
+      <header class="page-intro site-width">
+        <h1 class="page-title section-title section-title-research"><span>Research</span></h1>
+        <p class="page-lede">
+          Recent work on recovering, representing, and rendering fine-scale appearance.
+          This page keeps the publication record concise while linking to the complete
+          project materials.
+        </p>
+      </header>
+
+      <section class="section site-width page-collection research-collection" aria-labelledby="published-work-title">
+        <div class="section-heading collection-heading">
+          <h2 id="published-work-title">Published work</h2>
+          <p>Two conference papers, shown in reverse chronological order.</p>
+        </div>
+
+        <div class="work-list research-list" aria-label="Research publications">
+          <article class="work-item research-item publication-entry">
+            <a
+              class="work-media"
+              href="https://icewired-yy.github.io/papers/face_micro_detail_synthesis/"
+              target="_blank"
+              rel="noreferrer"
+              aria-label="Open the Facial Microscopic Structures project page"
+            >
+              <img
+                src="assets/images/facial-microstructures.jpg"
+                width="800"
+                height="450"
+                alt="Comparison of synthesized facial microscopic structures"
+              >
+            </a>
+            <div class="work-copy">
+              <p class="work-meta">SIGGRAPH 2025 · Conference Paper</p>
+              <h3>
+                <a
+                  href="https://icewired-yy.github.io/papers/face_micro_detail_synthesis/"
+                  target="_blank"
+                  rel="noreferrer"
+                >Facial Microscopic Structures Synthesis from a Single Unconstrained Image</a>
+              </h3>
+              <div class="work-detail publication-detail">
+                <div class="work-detail-inner">
+                  <p class="work-authors"><strong>Youyang Du</strong>, Lu Wang, Beibei Wang</p>
+                  <p class="work-summary">
+                    A differentiable graph-based representation of facial wrinkles and
+                    pores that synthesizes microscopic structures from naturally captured,
+                    potentially blurry face images.
+                  </p>
+                  <div class="entry-links" aria-label="Facial Microscopic Structures resources">
+                    <a
+                      class="text-link"
+                      href="https://icewired-yy.github.io/papers/face_micro_detail_synthesis/"
+                      target="_blank"
+                      rel="noreferrer"
+                    >Project page</a>
+                    <a
+                      class="text-link"
+                      href="https://doi.org/10.1145/3721238.3730760"
+                      target="_blank"
+                      rel="noreferrer"
+                    >DOI</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <article class="work-item research-item publication-entry">
+            <a
+              class="work-media"
+              href="https://xingyouxin.github.io/works/DGRSISE/index.html"
+              target="_blank"
+              rel="noreferrer"
+              aria-label="Open the Diffusion-Guided Relighting project page"
+            >
+              <img
+                src="assets/images/diffusion-relighting.png"
+                width="1600"
+                height="900"
+                alt="Material relighting comparisons for SVBRDF estimation"
+                loading="lazy"
+              >
+            </a>
+            <div class="work-copy">
+              <p class="work-meta">SIGGRAPH Asia 2025 · Conference Paper</p>
+              <h3>
+                <a
+                  href="https://xingyouxin.github.io/works/DGRSISE/index.html"
+                  target="_blank"
+                  rel="noreferrer"
+                >Diffusion-Guided Relighting for Single-Image SVBRDF Estimation</a>
+              </h3>
+              <div class="work-detail publication-detail">
+                <div class="work-detail-inner">
+                  <p class="work-authors">
+                    Youxin Xing, Zheng Zeng, <strong>Youyang Du</strong>, Lu Wang, Beibei Wang
+                  </p>
+                  <p class="work-summary">
+                    Diffusion priors generate coherent observations under varied lighting,
+                    helping multi-image estimators recover highlight-free spatially varying
+                    reflectance from a single material image.
+                  </p>
+                  <div class="entry-links" aria-label="Diffusion-Guided Relighting resources">
+                    <a
+                      class="text-link"
+                      href="https://xingyouxin.github.io/works/DGRSISE/index.html"
+                      target="_blank"
+                      rel="noreferrer"
+                    >Project page</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </article>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer site-width">
+      <div>
+        <p class="footer-name">Youyang Du <span lang="zh-CN">杜悠扬</span></p>
+        <p>Researching light, appearance, and rendering.</p>
+      </div>
+      <div class="footer-links">
+        <a href="index.html">Home</a>
+        <a href="mailto:duyouyang957@gmail.com">Email</a>
+        <a href="https://github.com/icewired-yy" target="_blank" rel="noreferrer">GitHub</a>
+        <a href="#top">Back to top</a>
+      </div>
+    </footer>
+  </body>
+</html>

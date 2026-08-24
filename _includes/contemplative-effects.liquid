@@ -1,0 +1,20 @@
+{% if page.url contains '/blog/' or page.permalink contains '/blog/' %}
+  <!--
+    THESIS: Notes is a quiet research practice, not a newspaper index; writing and equations unfold through open space.
+    OWN-WORLD: Mist green ground, pine ink, restrained gold detail, borderless records, and one bamboo-sword light field.
+    STORY: Readers identify the topic, choose a note, and retain every route into its technical rendering and references.
+    FIRST VIEWPORT: A light navigation rail sits above both article content and the pointer-transparent bamboo-sword field.
+    FORM: Inherits the approved contemplative-light world; seed key established-world-notes-migration.
+    FINISH: unreviewed and undocumented is unfinished; this build ends with the finish review, the verdict, DESIGN.md, and every shipping raster carrying its provenance
+  -->
+  <a class="notes-skip-link" href="#main-content">Skip to content</a>
+  <canvas id="light-field" class="notes-light-field" aria-hidden="true"></canvas>
+  <img
+    id="sword-asset"
+    src="{{ '/assets/img/bamboo-cloud-sword.png' | relative_url }}"
+    alt=""
+    decoding="async"
+    hidden
+  >
+  <script defer src="{{ '/assets/js/contemplative-effects.js' | relative_url }}"></script>
+{% endif %}

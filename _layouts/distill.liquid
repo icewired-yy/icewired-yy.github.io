@@ -1,5 +1,10 @@
+{% assign contemplative_notes_surface = false %}
+{% if page.url contains '/blog/' or page.permalink contains '/blog/' %}
+  {% assign contemplative_notes_surface = true %}
+{% endif %}
+{% assign read_time = content | number_of_words | divided_by: 180 | plus: 1 %}
 <!doctype html>
-<html>
+<html lang="{{ site.lang }}">
   <head>
     {% include head.liquid %}
     {% if site.enable_medium_zoom %}
@@ -25,6 +30,8 @@
       </style>
     {% endif %}
   </head>
+
+  <body class="{% if site.navbar_fixed %}fixed-top-nav{% endif %} {% unless site.footer_fixed %}sticky-bottom-footer{% endunless %}{% if contemplative_notes_surface %} contemplative-notes-surface{% endif %}">
 
   <d-front-matter>
     <script async type="text/json">
@@ -63,16 +70,27 @@
           }
     </script>
   </d-front-matter>
+    {% if contemplative_notes_surface %}
+      {% include contemplative-effects.liquid %}
+    {% endif %}
 
-  <body class="{% if site.navbar_fixed %}fixed-top-nav{% endif %} {% unless site.footer_fixed %}sticky-bottom-footer{% endunless %}">
     <!-- Header -->
     {% include header.liquid %}
 
     <!-- Content -->
-    <div class="post distill">
+    <div
+      {% if contemplative_notes_surface %}
+        id="main-content" class="post distill contemplative-notes notes-article notes-distill-article" role="main"
+      {% else %}
+        class="post distill"
+      {% endif %}
+    >
       <d-title>
         <h1>{{ page.title }}</h1>
         <p>{{ page.description }}</p>
+        {% if contemplative_notes_surface %}
+          <p class="notes-reading-time">Estimated reading time: {{ read_time }} min</p>
+        {% endif %}
       </d-title>
       {% if page.authors %}
         <d-byline></d-byline>
