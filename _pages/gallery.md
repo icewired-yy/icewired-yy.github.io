@@ -7,6 +7,7 @@ nav: true
 nav_order: 4
 contemplative_surface: true
 gallery_surface: true
+nav_key: gallery
 ---
 
 {% assign gallery_published = site.gallery | where: 'published', true | sort: 'date' | reverse %}

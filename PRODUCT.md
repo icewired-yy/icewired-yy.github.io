@@ -38,9 +38,9 @@ following a paper, author, blog, or collaboration link.
   LaTeX, bibliography, and technical-article rendering behavior.
 - The visual identity, composition, typography, color, and presentation may be
   replaced completely.
-- Build and review the redesign in an isolated prototype directory. Do not
-  connect it to the production layouts, includes, Sass, or deployment workflow
-  until the user explicitly approves the final direction.
+- Keep the approved isolated prototype as the visual reference. Production
+  routes opt into the same system through scoped layouts, includes, and styles
+  while their existing Jekyll data sources and public URLs remain authoritative.
 
 ## Brand Commitments
 
@@ -74,4 +74,5 @@ following a paper, author, blog, or collaboration link.
 3. Preserve generated content and technical publishing behavior as the source
    of truth.
 4. Spend visual boldness on one meaningful, graphics-specific signature.
-5. Keep the prototype reversible until the user approves synchronization.
+5. Ship the approved prototype through scoped production surfaces without
+   replacing the repository's content, rendering, or update pipelines.

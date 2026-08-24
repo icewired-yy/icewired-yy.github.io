@@ -1,0 +1,38 @@
+{% comment %}
+  Render a compact homepage preview from the existing post collection.
+
+  Parameters:
+  - limit: positive integer maximum; defaults to three entries.
+
+  Chinese translations remain available on `/blog/`, while this bilingual
+  homepage preview avoids showing two translations of the same topic beside
+  each other by selecting non-`cn-blog` records in normal post order.
+{% endcomment %}
+{% assign notes_preview_limit = include.limit | default: 3 %}
+{% assign notes_preview_count = 0 %}
+<div class="article-list" data-notes-preview>
+  {% for post in site.posts %}
+    {% assign notes_preview_tags = post.tags | join: ' ' %}
+    {% unless notes_preview_tags contains 'cn-blog' %}
+      {% if notes_preview_count < notes_preview_limit %}
+        {% assign notes_read_time = post.content | number_of_words | divided_by: 180 | plus: 1 %}
+        <article class="article-entry">
+          <div class="article-entry__date">
+            <time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: '%d %b %Y' }}</time>
+            <span>{{ notes_read_time }} min read</span>
+          </div>
+          <div class="article-entry__copy">
+            <h3><a href="{{ post.url | relative_url }}">{{ post.title | escape }}</a></h3>
+            {% if post.description %}
+              <p>{{ post.description | escape }}</p>
+            {% endif %}
+          </div>
+          {% if post.layout == 'distill' %}
+            <span class="article-entry__mark" aria-hidden="true">D(ωₘ)</span>
+          {% endif %}
+        </article>
+        {% assign notes_preview_count = notes_preview_count | plus: 1 %}
+      {% endif %}
+    {% endunless %}
+  {% endfor %}
+</div>

@@ -1,0 +1,107 @@
+{% comment %}
+  Render the public project collection as contemplative work rows.
+
+  Optional parameters:
+  - categories: ordered category array. Defaults to page.display_categories.
+  - limit: maximum number of rows. Defaults to every visible project.
+  - heading_level: HTML heading tag used for project titles. Defaults to h3.
+  - loading: image loading strategy. Defaults to lazy.
+{% endcomment %}
+{% assign display_categories = include.categories %}
+{% if display_categories == nil %}
+  {% assign display_categories = page.display_categories %}
+{% endif %}
+{% assign visible_projects = '' | split: '' %}
+
+{% comment %}Build one ordered public list without ever admitting the private category.{% endcomment %}
+{% if display_categories and display_categories != empty %}
+  {% for category in display_categories %}
+    {% unless category == 'private' %}
+      {% assign category_projects = site.projects | where: 'category', category | sort: 'importance' %}
+      {% assign visible_projects = visible_projects | concat: category_projects %}
+    {% endunless %}
+  {% endfor %}
+{% else %}
+  {% assign visible_projects = site.projects | where_exp: 'project', "project.category != 'private'" | sort: 'importance' %}
+{% endif %}
+
+{% comment %}Apply the optional preview limit only after visibility and ordering are resolved.{% endcomment %}
+{% assign projects_to_render = visible_projects %}
+{% if include.limit != nil %}
+  {% assign project_limit = include.limit | plus: 0 %}
+  {% if project_limit > 0 %}
+    {% assign projects_to_render = visible_projects | slice: 0, project_limit %}
+  {% else %}
+    {% assign projects_to_render = '' | split: '' %}
+  {% endif %}
+{% endif %}
+{% assign project_heading_level = include.heading_level | default: 'h3' %}
+{% assign image_loading = include.loading | default: 'lazy' %}
+
+<div class="collection-list" data-project-count="{{ projects_to_render.size }}">
+  {% if projects_to_render.size > 0 %}
+    <div class="work-list project-list" aria-label="Selected software projects">
+      {% for project in projects_to_render %}
+        {% comment %}Resolve internal and external destinations before rendering the row.{% endcomment %}
+        {% assign project_is_external = false %}
+        {% if project.redirect %}
+          {% if project.redirect contains '://' %}
+            {% assign project_href = project.redirect %}
+            {% assign project_is_external = true %}
+          {% else %}
+            {% assign project_href = project.redirect | relative_url %}
+          {% endif %}
+        {% else %}
+          {% assign project_href = project.url | relative_url %}
+        {% endif %}
+
+        <article class="work-item work-item-reverse work-item-reversed project-item project-entry">
+          {% if project.img %}
+            <a
+              class="work-image"
+              href="{{ project_href }}"
+              {% if project_is_external %}target="_blank" rel="external nofollow noopener"{% endif %}
+              aria-label="Open {{ project.title | escape }}"
+            >
+              <img
+                src="{{ project.img | relative_url }}"
+                alt="{{ project.title | escape }} project preview"
+                loading="{{ image_loading }}"
+                decoding="async"
+              >
+            </a>
+          {% endif %}
+
+          <div class="work-content">
+            <span class="work-index" aria-hidden="true">{% if forloop.index < 10 %}0{% endif %}{{ forloop.index }}</span>
+            <p class="work-meta">{{ project.category }}</p>
+            <{{ project_heading_level }} class="work-title">
+              <a
+                href="{{ project_href }}"
+                {% if project_is_external %}target="_blank" rel="external nofollow noopener"{% endif %}
+              >{{ project.title }}</a>
+            </{{ project_heading_level }}>
+
+            <div class="work-detail project-detail">
+              <div class="work-detail-inner">
+                {% if project.description %}<p class="work-summary">{{ project.description }}</p>{% endif %}
+                <div class="work-links">
+                  <a
+                    class="text-link"
+                    href="{{ project_href }}"
+                    {% if project_is_external %}target="_blank" rel="external nofollow noopener"{% endif %}
+                  >{% if project.redirect contains 'github.com' %}View repository{% else %}View project{% endif %}</a>
+                  {% if project.github and project.github != project.redirect %}
+                    <a class="text-link" href="{{ project.github }}" target="_blank" rel="external nofollow noopener">GitHub</a>
+                  {% endif %}
+                </div>
+              </div>
+            </div>
+          </div>
+        </article>
+      {% endfor %}
+    </div>
+  {% else %}
+    <p class="collection-empty">No public projects are listed in this collection yet.</p>
+  {% endif %}
+</div>

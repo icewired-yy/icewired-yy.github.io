@@ -1,33 +1,32 @@
 ---
 layout: default
 ---
-{% unless site.data.resume %}
-  <div class="post">
-    <header class="post-header">
-      <h1 class="post-title">
-        {{ page.title }}
-        {% if page.cv_pdf %}
-          <a
-            href="{{ page.cv_pdf | prepend: 'assets/pdf/' | relative_url}}"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="float-right"
-            ><i class="fa-solid fa-file-pdf"></i
-          ></a>
-        {% endif %}
-      </h1>
-      {% if page.description %}
-        <p class="post-description">{{ page.description }}</p>
-      {% endif %}
-    </header>
+{% comment %}
+  Restyle both CV data pipelines without changing their authority. Sites using
+  the local `_data/cv.yml` path and sites using JSON Resume continue to render
+  through the original focused includes below.
+{% endcomment %}
+<div class="contemplative-page-main contemplative-cv" data-cv-source="{% if site.data.resume %}resume{% else %}cv{% endif %}">
+  <header class="page-intro">
+    <h1 class="page-title"><span>{{ page.title | upcase | escape }}</span></h1>
+    {% if page.description %}<p class="page-lede">{{ page.description | escape }}</p>{% endif %}
+    {% if page.cv_pdf %}
+      <p class="page-intro__action">
+        <a class="section-more-link" href="{{ page.cv_pdf | prepend: '/assets/pdf/' | relative_url }}" target="_blank" rel="noopener noreferrer">
+          Download PDF
+          <svg viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M8 2v9m0 0 4-4m-4 4L4 7M3 14h10"></path></svg>
+        </a>
+      </p>
+    {% endif %}
+  </header>
 
-    <article>
+  <section class="cv-collection" aria-label="Curriculum vitae">
+    {% unless site.data.resume %}
       <div class="cv">
         {% for entry in site.data.cv %}
-          <a class="anchor" id="{{ entry.title }}"></a>
-          <div class="card mt-3 p-3">
-            <h3 class="card-title font-weight-medium">{{ entry.title }}</h3>
-            <div>
+          <article class="cv-section card" id="{{ entry.title | slugify }}">
+            <h2 class="card-title">{{ entry.title }}</h2>
+            <div class="cv-section__content">
               {% if entry.type == 'list' %}
                 {% include cv/list.liquid %}
               {% elsif entry.type == 'map' %}
@@ -42,44 +41,19 @@ layout: default
                 {{ entry.contents }}
               {% endif %}
             </div>
-          </div>
+          </article>
         {% endfor %}
       </div>
-    </article>
-  </div>
-{% else %}
-  <div class="post">
-    <header class="post-header">
-      <h1 class="post-title">
-        {{ page.title }}
-        {% if page.cv_pdf %}
-          <a
-            href="{{ page.cv_pdf | prepend: 'assets/pdf/' | relative_url}}"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="float-right"
-            ><i class="fa-solid fa-file-pdf"></i
-          ></a>
-        {% endif %}
-      </h1>
-      {% if page.description %}
-        <p class="post-description">{{ page.description }}</p>
-      {% endif %}
-    </header>
-
-    <article>
+    {% else %}
       <div class="cv">
         {% for data in site.data.resume %}
           {% if site.jsonresume and site.jsonresume.size > 0 %}
-            {% unless site.jsonresume contains data[0] %}
-              {% continue %}
-            {% endunless %}
+            {% unless site.jsonresume contains data[0] %}{% continue %}{% endunless %}
           {% endif %}
-          {% if data[0] == 'meta' or data[1].size == 0 %} {% continue %} {% endif %}
-          <a class="anchor" id="{{ data[0] }}"></a>
-          <div class="card mt-3 p-3">
-            <h3 class="card-title font-weight-medium">{{ data[0] | capitalize }}</h3>
-            <div>
+          {% if data[0] == 'meta' or data[1].size == 0 %}{% continue %}{% endif %}
+          <article class="cv-section card" id="{{ data[0] | slugify }}">
+            <h2 class="card-title">{{ data[0] | capitalize }}</h2>
+            <div class="cv-section__content">
               {% case data[0] %}
                 {% when 'basics' %}
                   {% include resume/basics.liquid %}
@@ -105,13 +79,11 @@ layout: default
                   {% include resume/certificates.liquid %}
                 {% when 'references' %}
                   {% include resume/references.liquid %}
-                {% else %}
-
               {% endcase %}
             </div>
-          </div>
+          </article>
         {% endfor %}
       </div>
-    </article>
-  </div>
-{% endunless %}
+    {% endunless %}
+  </section>
+</div>

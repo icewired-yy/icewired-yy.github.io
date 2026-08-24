@@ -4,8 +4,9 @@ permalink: /cv/
 title: cv
 nav: true
 nav_order: 5
-cv_pdf: example_pdf.pdf
-description: 
-toc:
-  sidebar: left
+description: Education, experience, projects, and academic interests.
+contemplative_surface: true
+site_surface: true
+cv_surface: true
+nav_key: cv
 ---

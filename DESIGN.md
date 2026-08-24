@@ -157,7 +157,7 @@ The palette stays close to pale natural paper and deep plant ink, using teal as 
 
 **Body Font:** Onest, with Noto Sans CJK SC and Microsoft YaHei fallbacks.
 
-**Character:** One low-contrast sans family carries both identity and technical prose. Large titles gain character from compact tracking and scale, while the CJK fallback preserves the bilingual name and calligraphic relationship without introducing a decorative display face. The homepage prototype loads the variable builds as Onest Variable and Noto Sans SC Variable; production Notes uses the locally shipped Onest face.
+**Character:** One low-contrast sans family carries both identity and technical prose. Large titles gain character from compact tracking and scale, while the CJK fallback preserves the bilingual name and calligraphic relationship without introducing a decorative display face. The prototype retains its packaged variable builds; the formal Jekyll surfaces load the locally shipped Onest face and use the documented CJK fallback chain.
 
 ### Hierarchy
 
@@ -185,7 +185,7 @@ Every navigation and pagination control maintains a 2.75rem (44px) minimum targe
 
 ## Elevation & Depth
 
-The system is flat and tonal by default. Depth comes from pale surface shifts, two very low-energy radial fields, image masks, translucent canvas strokes, and the occasional gold line. Only the fixed translucent Notes navigation and footer use soft ambient shadows with backdrop blur; they float just enough to preserve reading orientation and never become glossy panels.
+The system is flat and tonal by default. Depth comes from pale surface shifts, two very low-energy radial fields, image masks, translucent canvas strokes, and the occasional gold line. Only the fixed translucent formal-site navigation and footer use soft ambient shadows with backdrop blur; they float just enough to preserve reading orientation and never become glossy panels.
 
 ### Shadow Vocabulary
 
@@ -208,9 +208,9 @@ Image geometry remains rectilinear and cropping-led: research media changes from
 
 Quiet, compact, and always subordinate to identity or reading.
 
-- **Shape:** Borderless links inside a 4.5rem Notes bar or an absolute homepage header; each link keeps the 44px target floor.
+- **Shape:** Borderless links inside the shared 4.5rem translucent formal-site bar; each link keeps the 44px target floor.
 - **Color:** Quiet Ink at rest, Pine on hover/focus, and Pine plus a restrained Gold underline for the current route.
-- **Behavior:** Homepage navigation wraps only at its narrowest breakpoint; Notes navigation becomes a horizontally scrollable strip at 640px. Visible focus uses the Focus Teal outline.
+- **Behavior:** Formal-site navigation becomes a horizontally scrollable strip at 640px and preserves a route-specific current state. Visible focus uses the Focus Teal outline.
 
 ### Calligraphic Heading
 
@@ -254,7 +254,7 @@ Technically capable, spacious, and subordinate to comprehension.
 
 ### Light-Field Signature
 
-One shared, fixed, pointer-transparent canvas ties active homepage and Notes routes together without taking over interaction. Its root layer sits above document content so authored swords and leaves remain visible across images, cards, and technical insets, while navigation, footer chrome, and the skip link remain above the canvas.
+One shared, fixed, pointer-transparent canvas ties the formal Home, Research, Projects, Notes, Gallery, and CV routes together without taking over interaction. Its root layer sits above document content so authored swords and leaves remain visible across images, cards, and technical insets, while navigation, footer chrome, and the skip link remain above the canvas.
 
 - **Atmosphere:** Two low-alpha teal interference lobes and a spectral focus share the effects layer at 0.62 canvas opacity. The stacking contract is content (1), body-mounted content overlays (5), effects (10), navigation/footer chrome (20), and skip link (100).
 - **Authored Motion:** Fine-pointer movement may emit at most 9 bamboo leaves and lead a 6-sword trail; rest forms a 16-sword wheel, and renewed travel peels the same six identities back into the trail.

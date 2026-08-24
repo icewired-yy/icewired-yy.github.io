@@ -4,9 +4,9 @@
 {% assign gallery_home_small = gallery_published | where: 'home_slot', 'small' | first %}
 {% assign gallery_home_long = gallery_published | where: 'home_slot', 'long' | first %}
 {% if gallery_home_wide and gallery_home_tall and gallery_home_small and gallery_home_long %}
-  <section class="gallery-home-preview" aria-labelledby="gallery-home-title">
-    <div class="gallery-home-preview__heading">
-      <h2 id="gallery-home-title">Life, recently</h2>
+  <section class="gallery-home-preview home-section" id="life" aria-labelledby="gallery-home-title">
+    <div class="gallery-home-preview__heading section-heading">
+      <h2 class="section-title section-title-life" id="gallery-home-title"><span>Life, recently</span></h2>
       <p>A quieter record beside the research.</p>
     </div>
 
@@ -17,8 +17,8 @@
       {% include figure.liquid path=gallery_home_long.image alt=gallery_home_long.alt width=gallery_home_long.width height=gallery_home_long.height figure_class='photo-long' sizes='(min-width: 701px) 40vw, 48vw' loading='lazy' decoding='async' %}
     </div>
 
-    <p class="gallery-home-preview__link">
-      <a href="{{ '/gallery/' | relative_url }}">
+    <p class="gallery-home-preview__link section-more">
+      <a class="section-more-link" href="{{ '/gallery/' | relative_url }}">
         Enter the gallery
         <svg viewBox="0 0 16 16" aria-hidden="true" focusable="false">
           <path d="M4 12 12 4M6 4h6v6"></path>

@@ -11,11 +11,11 @@
           YD<span aria-hidden="true">.</span>
         </a>
         <div class="notes-site-nav">
-          <a href="{{ '/publications/' | relative_url }}">Research</a>
-          <a href="{{ '/projects/' | relative_url }}">Projects</a>
-          <a href="{{ '/blog/' | relative_url }}"{% if page.url contains '/blog/' %} aria-current="page"{% endif %}>Notes</a>
-          <a href="{{ '/gallery/' | relative_url }}"{% if page.gallery_surface %} aria-current="page"{% endif %}>Gallery</a>
-          <a href="{{ '/cv/' | relative_url }}">CV</a>
+          <a href="{{ '/publications/' | relative_url }}"{% if page.nav_key == 'research' %} aria-current="page"{% endif %}>Research</a>
+          <a href="{{ '/projects/' | relative_url }}"{% if page.nav_key == 'projects' %} aria-current="page"{% endif %}>Projects</a>
+          <a href="{{ '/blog/' | relative_url }}"{% if page.url contains '/blog/' or page.nav_key == 'notes' %} aria-current="page"{% endif %}>Notes</a>
+          <a href="{{ '/gallery/' | relative_url }}"{% if page.gallery_surface or page.nav_key == 'gallery' %} aria-current="page"{% endif %}>Gallery</a>
+          <a href="{{ '/cv/' | relative_url }}"{% if page.nav_key == 'cv' %} aria-current="page"{% endif %}>CV</a>
         </div>
       </div>
     </nav>

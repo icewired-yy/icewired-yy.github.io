@@ -1,0 +1,90 @@
+---
+layout: default
+---
+{% comment %}
+  Compose the approved contemplative homepage from the repository's existing
+  data sources. Publications, projects, posts, and photographs remain owned by
+  Jekyll Scholar and their respective collections; this layout controls only
+  their presentation and preview limits.
+{% endcomment %}
+<div class="contemplative-home" data-contemplative-home>
+  <section class="home-hero" id="top" aria-labelledby="home-hero-title">
+    <div class="home-hero__copy">
+      <h1 id="home-hero-title">
+        <span>{{ page.hero_name | default: site.first_name | escape }}</span>
+        {% if page.hero_name_zh %}<span class="home-hero__name-zh" lang="zh-CN">{{ page.hero_name_zh | escape }}</span>{% endif %}
+      </h1>
+      {% if page.hero_role %}<p class="home-hero__role">{{ page.hero_role | escape }}</p>{% endif %}
+      {% if page.hero_focus %}<p class="home-hero__focus">{{ page.hero_focus | escape }}</p>{% endif %}
+      <div class="home-hero__introduction">{{ content }}</div>
+      <div class="home-hero__links" aria-label="Contact and profiles">
+        {% if site.email %}<a href="mailto:{{ site.email | escape }}">Email</a>{% endif %}
+        {% if site.github_username %}
+          <a href="https://github.com/{{ site.github_username | escape }}" target="_blank" rel="noopener noreferrer">GitHub</a>
+        {% endif %}
+      </div>
+    </div>
+
+    {% if page.profile.image %}
+      {% assign home_profile_path = page.profile.image | prepend: '/assets/img/' %}
+      {% include figure.liquid path=home_profile_path figure_class='home-hero__portrait' class='home-hero__portrait-image' width='1276' height='1702' alt=page.profile.image_alt sizes='(min-width: 981px) 31vw, (min-width: 701px) 42vw, 100vw' loading='eager' decoding='async' fetchpriority='high' cache_bust=true %}
+    {% endif %}
+
+    <a class="home-hero__invitation" href="#research">
+      <span>Explore research</span>
+      <svg viewBox="0 0 20 20" aria-hidden="true" focusable="false">
+        <path d="M10 3v13m0 0 5-5m-5 5-5-5"></path>
+      </svg>
+    </a>
+  </section>
+
+  {% if page.selected_papers %}
+    <section class="home-section home-research" id="research" aria-labelledby="home-research-title">
+      <div class="section-heading">
+        <h2 class="section-title section-title-research" id="home-research-title"><span>Research</span></h2>
+        <p>A preview of recent work in appearance modeling and rendering. Hover or focus on an item to see more.</p>
+      </div>
+      <div class="work-list research-list" aria-label="Recent research preview">
+        {% bibliography --group_by none --query @*[selected=true]* --template bib-contemplative %}
+      </div>
+      <div class="section-more">
+        <a class="section-more-link" href="{{ '/publications/' | relative_url }}">
+          Explore all research
+          <svg viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M4 12 12 4M6 4h6v6"></path></svg>
+        </a>
+      </div>
+    </section>
+  {% endif %}
+
+  <section class="home-section home-projects" id="projects" aria-labelledby="home-projects-title">
+    <div class="section-heading">
+      <h2 class="section-title section-title-projects" id="home-projects-title"><span>Projects</span></h2>
+      <p>Selected implementations and systems work beyond my research publications.</p>
+    </div>
+    {% include contemplative-project-list.liquid limit=page.project_preview_limit heading_level='h3' loading='lazy' %}
+    <div class="section-more">
+      <a class="section-more-link" href="{{ '/projects/' | relative_url }}">
+        Explore all projects
+        <svg viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M4 12 12 4M6 4h6v6"></path></svg>
+      </a>
+    </div>
+  </section>
+
+  <section class="home-section home-notes" id="notes" aria-labelledby="home-notes-title">
+    <div class="section-heading">
+      <h2 class="section-title section-title-notes" id="home-notes-title"><span>Notes</span></h2>
+      <p>Working notes, derivations, and paper readings, rendered through the existing LaTeX and bibliography pipeline.</p>
+    </div>
+    {% include contemplative-notes-preview.liquid limit=page.notes_preview_limit %}
+    <div class="section-more">
+      <a class="section-more-link" href="{{ '/blog/' | relative_url }}">
+        Read all notes
+        <svg viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M4 12 12 4M6 4h6v6"></path></svg>
+      </a>
+    </div>
+  </section>
+
+  {% if page.gallery_preview %}
+    {% include gallery-preview.liquid %}
+  {% endif %}
+</div>

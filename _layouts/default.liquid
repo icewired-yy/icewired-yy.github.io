@@ -20,7 +20,7 @@
   </head>
 
   <!-- Body -->
-  <body class="{% if site.navbar_fixed %}fixed-top-nav{% endif %} {% unless site.footer_fixed %}sticky-bottom-footer{% endunless %}{% if contemplative_notes_surface %} contemplative-notes-surface{% endif %}{% if page.gallery_surface %} contemplative-gallery-surface{% endif %}">
+  <body class="{% if site.navbar_fixed %}fixed-top-nav{% endif %} {% unless site.footer_fixed %}sticky-bottom-footer{% endunless %}{% if contemplative_notes_surface %} contemplative-notes-surface{% endif %}{% if page.site_surface %} contemplative-site-surface{% endif %}{% if page.gallery_surface %} contemplative-gallery-surface{% endif %}">
     {% if contemplative_notes_surface %}
       {% include contemplative-effects.liquid %}
     {% endif %}
@@ -31,7 +31,7 @@
     <!-- Content -->
     <div
       {% if contemplative_notes_surface %}
-        id="main-content" class="container mt-5 contemplative-notes-main" role="main"
+        id="main-content" class="container mt-5 contemplative-notes-main{% if page.site_surface %} contemplative-site-main{% endif %}" role="main"
       {% else %}
         class="container mt-5"
       {% endif %}

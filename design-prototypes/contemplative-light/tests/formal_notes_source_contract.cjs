@@ -321,7 +321,9 @@ function _main() {
   _assert_contains_all(default_layout_source, [
     "contemplative-notes-surface",
     "{% include contemplative-effects.liquid %}",
-    "id=\"main-content\" class=\"container mt-5 contemplative-notes-main\" role=\"main\"",
+    "id=\"main-content\" class=\"container mt-5 contemplative-notes-main",
+    "{% if page.site_surface %} contemplative-site-main{% endif %}",
+    "role=\"main\"",
   ], "default Notes shell");
   _assert_contains_all(head_source, [
     "page.url contains '/blog/' or page.permalink contains '/blog/'",
