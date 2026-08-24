@@ -14,6 +14,7 @@ profile:
 
 news: false # news data is retained, but the homepage section is intentionally hidden
 selected_papers: true # includes a list of papers marked as "selected={true}"
+gallery_preview: true # renders only when all four reviewed homepage slots exist
 social: true # includes social icons at the bottom of the page
 ---
 

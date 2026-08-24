@@ -11,6 +11,7 @@ on:
       - "**.html"
       - "**.js"
       - "**.liquid"
+      - "**/*.rb"
       - "**/*.md"
       - "**.yml"
       - "Gemfile"
@@ -38,6 +39,7 @@ on:
       - "**.html"
       - "**.js"
       - "**.liquid"
+      - "**/*.rb"
       - "**/*.md"
       - "**.yml"
       - "Gemfile"
@@ -83,6 +85,7 @@ jobs:
         run: |
           pip3 install --upgrade jupyter
           export JEKYLL_ENV=production
+          ruby bin/gallery.rb check --production
           bundle exec jekyll build
       - name: Purge unused CSS 🧹
         run: |

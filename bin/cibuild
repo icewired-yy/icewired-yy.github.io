@@ -1,1 +1,6 @@
+# Reject malformed metadata, private image metadata, and unpublished assets
+# before Jekyll copies anything into the production destination.
+ruby bin/gallery.rb check --production
+
+# Build the validated site through its existing Jekyll pipeline.
 bundle exec jekyll build

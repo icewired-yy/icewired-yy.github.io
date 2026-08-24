@@ -1,5 +1,5 @@
 {% assign contemplative_notes_surface = false %}
-{% if page.url contains '/blog/' or page.permalink contains '/blog/' %}
+{% if page.url contains '/blog/' or page.permalink contains '/blog/' or page.contemplative_surface %}
   {% assign contemplative_notes_surface = true %}
 {% endif %}
 <!doctype html>
@@ -20,7 +20,7 @@
   </head>
 
   <!-- Body -->
-  <body class="{% if site.navbar_fixed %}fixed-top-nav{% endif %} {% unless site.footer_fixed %}sticky-bottom-footer{% endunless %}{% if contemplative_notes_surface %} contemplative-notes-surface{% endif %}">
+  <body class="{% if site.navbar_fixed %}fixed-top-nav{% endif %} {% unless site.footer_fixed %}sticky-bottom-footer{% endunless %}{% if contemplative_notes_surface %} contemplative-notes-surface{% endif %}{% if page.gallery_surface %} contemplative-gallery-surface{% endif %}">
     {% if contemplative_notes_surface %}
       {% include contemplative-effects.liquid %}
     {% endif %}

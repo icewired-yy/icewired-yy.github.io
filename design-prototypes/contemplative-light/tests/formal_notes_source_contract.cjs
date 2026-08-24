@@ -159,7 +159,7 @@ function _assert_liquid_balance(source_text, label) {
  *   protected path matches the checked-in worktree state.
  * @throws {Error} If Git cannot inspect the repository or returns non-zero.
  * @example
- * const changes = _read_git_changes(["_posts", "_config.yml"]);
+ * const changes = _read_git_changes(["_posts", "assets/js/distillpub"]);
  * @sideEffects Spawns one read-only local Git process.
  */
 function _read_git_changes(protected_paths) {
@@ -388,12 +388,13 @@ function _main() {
   ], "Notes accessibility and overflow CSS");
   assert(!/(^|\})\s*(body|a|h[1-6])\s*\{/m.test(notes_css_source), "Notes CSS must not introduce unscoped body or content rules");
 
-  // Guard the existing content, site configuration, and Distill vendor runtime.
-  const protected_changes = _read_git_changes(["_posts", "_config.yml", "assets/js/distillpub"]);
+  // Guard authored content and the vendored Distill runtime while allowing
+  // independent site features to extend the shared Jekyll configuration.
+  const protected_changes = _read_git_changes(["_posts", "assets/js/distillpub"]);
   assert.deepEqual(
     protected_changes,
     [],
-    `content/config/Distill vendor files must remain untouched: ${protected_changes.join(", ")}`,
+    `content and Distill vendor files must remain untouched: ${protected_changes.join(", ")}`,
   );
 
   // Validate every migrated Liquid surface as the final syntax-level gate.

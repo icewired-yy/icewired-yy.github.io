@@ -1,0 +1,45 @@
+{% assign gallery_item = include.item %}
+{% assign gallery_variant = gallery_item.variant | default: 'standard' %}
+{% assign gallery_figure_class = 'gallery-card gallery-card--' | append: gallery_variant %}
+{% if gallery_variant == 'wide' %}
+  {% assign gallery_sizes = '(min-width: 1101px) 62vw, (min-width: 701px) 92vw, 96vw' %}
+{% else %}
+  {% assign gallery_sizes = '(min-width: 1101px) 31vw, (min-width: 481px) 46vw, 96vw' %}
+{% endif %}
+{% capture gallery_caption %}
+  <div class="gallery-card__meta">
+    <time datetime="{{ gallery_item.date | date: '%Y-%m-%d' }}">{{ gallery_item.date | date: '%B %d, %Y' }}</time>
+    {% if gallery_item.location and gallery_item.location != empty %}
+      <span>{{ gallery_item.location | escape }}</span>
+    {% endif %}
+  </div>
+  <h3 class="gallery-card__title">{{ gallery_item.title | escape }}</h3>
+  {% assign gallery_story = gallery_item.content | strip %}
+  {% if gallery_story != empty %}
+    <div class="gallery-card__story">{{ gallery_item.content }}</div>
+  {% endif %}
+  {% if gallery_item.rights == 'licensed' and gallery_item.credit %}
+    <p class="gallery-card__credit">
+      Photograph:
+      {% if gallery_item.source_url %}
+        <a href="{{ gallery_item.source_url | escape }}" rel="noreferrer">{{ gallery_item.credit | escape }}</a>
+      {% else %}
+        {{ gallery_item.credit | escape }}
+      {% endif %}
+    </p>
+  {% endif %}
+{% endcapture %}
+{% include figure.liquid
+  path=gallery_item.image
+  alt=gallery_item.alt
+  width=gallery_item.width
+  height=gallery_item.height
+  class='gallery-card__image'
+  figure_class=gallery_figure_class
+  caption=gallery_caption
+  sizes=gallery_sizes
+  loading=include.loading
+  decoding='async'
+  fetchpriority=include.fetchpriority
+  zoomable=true
+%}

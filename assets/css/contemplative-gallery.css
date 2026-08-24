@@ -1,0 +1,477 @@
+/*
+ * Contemplative Gallery surface
+ *
+ * The archive and homepage preview consume the same `site.gallery` collection.
+ * Rules are scoped to Gallery components so the production al-folio surfaces
+ * remain intact until the approved homepage world is migrated in full.
+ */
+
+body.contemplative-gallery-surface {
+  --gallery-background: var(--notes-background, #f4f6f3);
+  --gallery-surface: var(--notes-surface, #e9eeea);
+  --gallery-surface-strong: var(--notes-surface-strong, #dfe7e2);
+  --gallery-ink: var(--notes-ink, #151916);
+  --gallery-muted: var(--notes-muted, #526159);
+  --gallery-pine: var(--notes-pine, #314f43);
+  --gallery-spectral: var(--notes-spectral, #526f75);
+  --gallery-gold: var(--notes-gold, #c4a951);
+  --gallery-rule: var(--notes-rule, rgb(49 79 67 / 0.2));
+  --gallery-ease-out: var(--notes-ease-out, cubic-bezier(0.16, 1, 0.3, 1));
+  padding-bottom: 0;
+}
+
+/* A photographic archive needs an unobstructed viewport edge. Keep the shared
+   footer styling, but place it after the archive instead of over its images. */
+body.contemplative-gallery-surface footer.fixed-bottom {
+  position: relative !important;
+  inset: auto !important;
+  margin-top: 0;
+}
+
+.contemplative-gallery-surface .contemplative-notes-main {
+  overflow: clip;
+}
+
+.gallery-page {
+  width: min(100%, 80rem);
+  margin-inline: auto;
+  padding-bottom: clamp(6rem, 10vw, 10rem);
+}
+
+.gallery-page__intro {
+  position: relative;
+  display: flex;
+  min-height: clamp(31rem, 57svh, 43rem);
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: clamp(10rem, 18vw, 15rem) 0 clamp(5rem, 8vw, 7.5rem);
+}
+
+.gallery-page__intro::after {
+  position: absolute;
+  right: 0;
+  bottom: clamp(3.5rem, 7vw, 7rem);
+  width: clamp(4rem, 8vw, 7.5rem);
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--gallery-gold));
+  content: "";
+  opacity: 0.78;
+}
+
+.gallery-page__title {
+  position: relative;
+  isolation: isolate;
+  max-width: 12ch;
+  margin: 0;
+  padding-block: clamp(1.1rem, 2.1vw, 1.8rem);
+  color: var(--gallery-pine) !important;
+  font-size: clamp(3.8rem, 8.5vw, 6rem);
+  font-weight: 445;
+  letter-spacing: -0.04em;
+  line-height: 0.92;
+}
+
+.gallery-page__title::before {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  z-index: 0;
+  width: clamp(19rem, 32vw, 32rem);
+  aspect-ratio: 16 / 9;
+  background: url("../img/section-hongchen.png") center / 135% auto no-repeat;
+  content: "";
+  filter: brightness(0) saturate(100%) invert(19%) sepia(19%) saturate(1173%)
+    hue-rotate(102deg) brightness(91%) contrast(87%);
+  opacity: 0.18;
+  pointer-events: none;
+  transform: translate(clamp(2.75rem, 6vw, 7rem), -50%);
+}
+
+.gallery-page__title span {
+  position: relative;
+  z-index: 1;
+}
+
+.gallery-page__lede {
+  max-width: 58ch;
+  margin: clamp(1.75rem, 3vw, 2.75rem) 0 0;
+  color: var(--gallery-muted);
+  font-size: clamp(1.04rem, 1.55vw, 1.28rem);
+}
+
+.gallery-page__archive {
+  display: grid;
+  gap: clamp(7rem, 12vw, 12rem);
+  padding-top: clamp(4rem, 7vw, 7rem);
+}
+
+.gallery-year {
+  min-width: 0;
+}
+
+.gallery-year__heading {
+  display: grid;
+  grid-template-columns: minmax(10rem, 0.7fr) minmax(14rem, 1.3fr);
+  gap: clamp(2rem, 7vw, 8rem);
+  align-items: baseline;
+  margin-bottom: clamp(3.5rem, 7vw, 6rem);
+}
+
+.gallery-year__heading h2,
+.gallery-empty h2 {
+  margin: 0;
+  color: var(--gallery-pine);
+  font-size: clamp(2.25rem, 4vw, 4.1rem);
+  font-variant-numeric: tabular-nums;
+  font-weight: 470;
+  letter-spacing: -0.035em;
+  line-height: 1.02;
+}
+
+.gallery-year__heading p {
+  margin: 0;
+  color: var(--gallery-muted);
+  font-size: 0.88rem;
+}
+
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: clamp(2.25rem, 4.5vw, 4.75rem) clamp(0.9rem, 1.6vw, 1.5rem);
+}
+
+.gallery-card {
+  display: grid;
+  min-width: 0;
+  grid-column: span 4;
+  grid-template-rows: auto 1fr;
+  align-content: start;
+  margin: 0;
+}
+
+.gallery-card--wide {
+  grid-column: span 8;
+}
+
+.gallery-card picture {
+  display: block;
+  overflow: hidden;
+  background: var(--gallery-surface-strong);
+}
+
+.gallery-card--standard picture {
+  aspect-ratio: 4 / 3;
+}
+
+.gallery-card--wide picture {
+  aspect-ratio: 16 / 9;
+}
+
+.gallery-card--tall picture {
+  aspect-ratio: 3 / 4;
+}
+
+.gallery-card__image {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: saturate(0.8) contrast(0.97);
+  transition: filter 420ms var(--gallery-ease-out), transform 720ms var(--gallery-ease-out);
+}
+
+.gallery-card > .caption {
+  margin: 0;
+  padding: 0.85rem 0 0;
+  color: var(--gallery-muted);
+  font-size: 0.82rem;
+  line-height: 1.55;
+  text-align: left;
+}
+
+.gallery-card__meta {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 0.25rem 1rem;
+  color: var(--gallery-spectral);
+  font-size: 0.74rem;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.025em;
+}
+
+.gallery-card__title {
+  margin: 0.72rem 0 0;
+  color: var(--gallery-ink);
+  font-size: clamp(1.05rem, 1.35vw, 1.3rem);
+  font-weight: 590;
+  letter-spacing: -0.015em;
+  line-height: 1.28;
+  overflow-wrap: anywhere;
+}
+
+.gallery-card__story {
+  max-width: 65ch;
+  margin-top: 0.48rem;
+  color: var(--gallery-muted);
+  overflow-wrap: anywhere;
+}
+
+.gallery-card__story > :first-child {
+  margin-top: 0;
+}
+
+.gallery-card__story > :last-child {
+  margin-bottom: 0;
+}
+
+.gallery-card__credit {
+  margin: 0.55rem 0 0;
+  color: var(--gallery-muted);
+  font-size: 0.75rem;
+}
+
+.gallery-empty {
+  width: min(100%, 58rem);
+  margin-inline: auto;
+  padding: clamp(8rem, 15vw, 14rem) 0;
+  border-block: 1px solid var(--gallery-rule);
+}
+
+.gallery-empty h2 {
+  max-width: 16ch;
+}
+
+.gallery-empty p {
+  max-width: 58ch;
+  margin: 1.25rem 0 0;
+  color: var(--gallery-muted);
+}
+
+/* The homepage preview keeps the approved four-slot composition. It renders
+   only when validation confirms that all four slots are present exactly once. */
+.gallery-home-preview {
+  --gallery-preview-surface: #dfe7e2;
+  --gallery-preview-ink: #151916;
+  --gallery-preview-muted: #526159;
+  --gallery-preview-pine: #314f43;
+  --gallery-preview-gold: #c4a951;
+  --gallery-preview-ease: cubic-bezier(0.16, 1, 0.3, 1);
+  clear: both;
+  margin-top: clamp(5.5rem, 10vw, 9rem);
+  padding-block: clamp(4rem, 8vw, 7rem);
+}
+
+.gallery-home-preview__heading {
+  display: grid;
+  grid-template-columns: minmax(13rem, 0.7fr) minmax(20rem, 1.3fr);
+  gap: clamp(2rem, 7vw, 8rem);
+  align-items: start;
+  margin-bottom: clamp(4rem, 7vw, 6rem);
+}
+
+.gallery-home-preview__heading h2 {
+  max-width: 12ch;
+  margin: 0;
+  color: var(--gallery-preview-pine);
+  font-size: clamp(2.7rem, 5vw, 5.4rem);
+  font-weight: 470;
+  letter-spacing: -0.035em;
+  line-height: 1.02;
+}
+
+.gallery-home-preview__heading p {
+  max-width: 56ch;
+  margin: 0.75rem 0 0;
+  color: var(--gallery-preview-muted);
+  font-size: clamp(1.05rem, 1.6vw, 1.28rem);
+}
+
+.photo-rhythm {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  grid-template-rows: repeat(12, minmax(1.75rem, 3.2vw));
+  gap: clamp(0.7rem, 1.4vw, 1.4rem);
+}
+
+.photo-rhythm figure {
+  margin: 0;
+  overflow: hidden;
+  background: var(--gallery-preview-surface);
+}
+
+.photo-rhythm picture {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.photo-rhythm img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: saturate(0.78) contrast(0.96);
+  transition: filter 420ms var(--gallery-preview-ease);
+}
+
+.photo-wide {
+  grid-column: 1 / 8;
+  grid-row: 1 / 8;
+}
+
+.photo-tall {
+  grid-column: 9 / 13;
+  grid-row: 2 / 10;
+}
+
+.photo-small {
+  grid-column: 2 / 6;
+  grid-row: 9 / 13;
+}
+
+.photo-long {
+  grid-column: 7 / 12;
+  grid-row: 10 / 13;
+}
+
+.gallery-home-preview__link {
+  display: flex;
+  justify-content: flex-end;
+  margin: clamp(2.6rem, 5vw, 4.5rem) 0 0;
+}
+
+.gallery-home-preview__link a {
+  display: inline-flex;
+  min-height: 2.75rem;
+  align-items: center;
+  gap: 0.65rem;
+  color: var(--gallery-preview-pine);
+  font-size: 0.84rem;
+  font-weight: 650;
+  letter-spacing: 0.04em;
+  text-decoration: none;
+}
+
+.gallery-home-preview__link svg {
+  width: 1rem;
+  height: 1rem;
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 1.3;
+  transition: transform 280ms var(--gallery-preview-ease);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .gallery-card:hover .gallery-card__image {
+    filter: saturate(1) contrast(1);
+    transform: scale(1.006);
+  }
+
+  .photo-rhythm figure:hover img {
+    filter: saturate(0.98) contrast(1);
+  }
+
+  .gallery-home-preview__link a:hover svg {
+    transform: translate(0.14rem, -0.14rem);
+  }
+}
+
+@media (max-width: 1100px) {
+  .gallery-grid {
+    grid-template-columns: repeat(8, minmax(0, 1fr));
+  }
+
+  .gallery-card {
+    grid-column: span 4;
+  }
+
+  .gallery-card--wide {
+    grid-column: span 8;
+  }
+}
+
+@media (max-width: 700px) {
+  .gallery-page__intro {
+    min-height: auto;
+    padding: 9rem 0 5.25rem;
+  }
+
+  .gallery-page__intro::after {
+    bottom: 2.7rem;
+  }
+
+  .gallery-page__title::before {
+    width: clamp(15rem, 70vw, 21rem);
+    transform: translate(clamp(1rem, 5vw, 2rem), -50%);
+  }
+
+  .gallery-year__heading,
+  .gallery-home-preview__heading {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0.7rem;
+  }
+
+  .gallery-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 3.5rem 0.85rem;
+  }
+
+  .gallery-card {
+    grid-column: span 1;
+  }
+
+  .gallery-card--wide {
+    grid-column: span 2;
+  }
+
+  .gallery-card > .caption {
+    font-size: 0.8rem;
+  }
+
+  .photo-rhythm {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-rows: 14rem 10rem 14rem;
+  }
+
+  .photo-wide {
+    grid-column: 1 / 3;
+    grid-row: 1;
+  }
+
+  .photo-tall {
+    grid-column: 1;
+    grid-row: 2 / 4;
+  }
+
+  .photo-small {
+    grid-column: 2;
+    grid-row: 2;
+  }
+
+  .photo-long {
+    grid-column: 2;
+    grid-row: 3;
+  }
+}
+
+@media (max-width: 480px) {
+  .gallery-card,
+  .gallery-card--wide {
+    grid-column: span 2;
+  }
+
+  .gallery-home-preview {
+    padding-block: 3rem 4.5rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .gallery-card__image,
+  .photo-rhythm img,
+  .gallery-home-preview__link svg {
+    transition: none;
+  }
+}

@@ -1,5 +1,5 @@
 {% assign contemplative_notes_surface = false %}
-{% if page.url contains '/blog/' or page.permalink contains '/blog/' %}
+{% if page.url contains '/blog/' or page.permalink contains '/blog/' or page.contemplative_surface %}
   {% assign contemplative_notes_surface = true %}
 {% endif %}
 
@@ -13,7 +13,8 @@
         <div class="notes-site-nav">
           <a href="{{ '/publications/' | relative_url }}">Research</a>
           <a href="{{ '/projects/' | relative_url }}">Projects</a>
-          <a href="{{ '/blog/' | relative_url }}" aria-current="page">Notes</a>
+          <a href="{{ '/blog/' | relative_url }}"{% if page.url contains '/blog/' %} aria-current="page"{% endif %}>Notes</a>
+          <a href="{{ '/gallery/' | relative_url }}"{% if page.gallery_surface %} aria-current="page"{% endif %}>Gallery</a>
           <a href="{{ '/cv/' | relative_url }}">CV</a>
         </div>
       </div>
