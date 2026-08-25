@@ -18,7 +18,8 @@ group :jekyll_plugins do
     gem 'jekyll-toc'
     gem 'jekyll-twitter-plugin'
     gem 'jemoji'
-    gem 'mini_racer'
+    # Use the installed Node.js runtime on Windows because libv8-node does not ship an x64-mingw-ucrt binary.
+    gem 'mini_racer', '0.13.0', platforms: :mri
     gem 'unicode_utils'
     gem 'webrick'
 end
