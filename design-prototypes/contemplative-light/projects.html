@@ -1,0 +1,165 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta
+      name="description"
+      content="Selected graphics and software projects by Youyang Du."
+    >
+    <title>Projects · Youyang Du</title>
+    <link rel="icon" href="assets/images/icon.png" type="image/png">
+    <link rel="stylesheet" href="styles.css">
+    <script src="script.js" defer></script>
+  </head>
+  <body class="subpage projects-page" id="top">
+    <!--
+      THESIS: A personal research practice unfolds through quiet space, refusing newspaper and dashboard density.
+      OWN-WORLD: Mist ground, pine ink, teal light, restrained gold, borderless lists, calligraphic ghosts, and a bamboo-sword field.
+      STORY: A peer recognizes Youyang, previews current research, projects, notes, and life, then follows one focused route.
+      FIRST VIEWPORT: Minimal navigation sits above a generous collection title and its concise purpose statement.
+      FORM: Established contemplative-light experience; seed contemplative-light-approved.
+      FINISH: unreviewed and undocumented is unfinished; this build ends with the finish review, the verdict, DESIGN.md, and every shipping raster carrying its provenance
+    -->
+    <canvas class="light-field" id="light-field" aria-hidden="true"></canvas>
+    <img
+      class="canvas-asset"
+      id="sword-asset"
+      src="assets/images/bamboo-cloud-sword.png"
+      alt=""
+      aria-hidden="true"
+      decoding="async"
+    >
+
+    <a class="skip-link" href="#main-content">Skip to content</a>
+
+    <header class="site-header site-width" aria-label="Primary navigation">
+      <a class="site-mark" href="index.html" aria-label="Return to the homepage">YD<span aria-hidden="true">.</span></a>
+      <nav class="site-nav" aria-label="Prototype pages">
+        <a href="research.html">Research</a>
+        <a href="projects.html" aria-current="page">Projects</a>
+        <a href="notes.html">Notes</a>
+        <a href="gallery.html">Gallery</a>
+        <a href="https://icewired-yy.github.io/cv/" target="_blank" rel="noreferrer">CV</a>
+      </nav>
+    </header>
+
+    <main class="page-main" id="main-content">
+      <header class="page-intro site-width">
+        <h1 class="page-title section-title section-title-projects"><span>Projects</span></h1>
+        <p class="page-lede">
+          Systems built to make rendering ideas inspectable and everyday image work
+          more direct. Projects remain separate from the publication record.
+        </p>
+      </header>
+
+      <section class="section site-width page-collection projects-collection" aria-labelledby="selected-projects-title">
+        <div class="section-heading collection-heading">
+          <h2 id="selected-projects-title">Selected builds</h2>
+          <p>Open implementations for learning, experimentation, and practical use.</p>
+        </div>
+
+        <div class="work-list project-list" aria-label="Selected software projects">
+          <article class="work-item project-item work-item-reversed project-entry">
+            <a
+              class="work-media"
+              href="https://github.com/icewired-yy/BDPT-Nori"
+              target="_blank"
+              rel="noreferrer"
+              aria-label="Open the Bidirectional Path Tracing in Nori repository"
+            >
+              <img
+                src="assets/images/bdpt-ajax.png"
+                width="960"
+                height="540"
+                alt="Ajax scene rendered with bidirectional path tracing"
+              >
+            </a>
+            <div class="work-copy">
+              <p class="work-meta">Rendering Systems · Reference Implementation</p>
+              <h3>
+                <a
+                  href="https://github.com/icewired-yy/BDPT-Nori"
+                  target="_blank"
+                  rel="noreferrer"
+                >Bidirectional Path Tracing in Nori</a>
+              </h3>
+              <div class="work-detail project-detail">
+                <div class="work-detail-inner">
+                  <p class="work-authors"><strong>Youyang Du</strong></p>
+                  <p class="work-summary">
+                    A learning-oriented BDPT reference built on the Nori educational
+                    renderer, including the minimal light-image accumulation and
+                    infrastructure extensions required by the implementation.
+                  </p>
+                  <a
+                    class="text-link"
+                    href="https://github.com/icewired-yy/BDPT-Nori"
+                    target="_blank"
+                    rel="noreferrer"
+                  >View repository</a>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <article class="work-item project-item work-item-reversed project-entry">
+            <a
+              class="work-media"
+              href="https://github.com/icewired-yy/image-toolkit"
+              target="_blank"
+              rel="noreferrer"
+              aria-label="Open the FaYE-image repository"
+            >
+              <img
+                src="assets/images/gallery-cup.jpg"
+                width="800"
+                height="533"
+                alt="A green cup beside a softly lit window"
+                loading="lazy"
+              >
+            </a>
+            <div class="work-copy">
+              <p class="work-meta">Image Tools · Open Source</p>
+              <h3>
+                <a
+                  href="https://github.com/icewired-yy/image-toolkit"
+                  target="_blank"
+                  rel="noreferrer"
+                >FaYE-image</a>
+              </h3>
+              <div class="work-detail project-detail">
+                <div class="work-detail-inner">
+                  <p class="work-authors"><strong>Youyang Du</strong></p>
+                  <p class="work-summary">
+                    A compact image toolkit for converting supported image formats with
+                    a single line of code.
+                  </p>
+                  <a
+                    class="text-link"
+                    href="https://github.com/icewired-yy/image-toolkit"
+                    target="_blank"
+                    rel="noreferrer"
+                  >View repository</a>
+                </div>
+              </div>
+            </div>
+          </article>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer site-width">
+      <div>
+        <p class="footer-name">Youyang Du <span lang="zh-CN">杜悠扬</span></p>
+        <p>Researching light, appearance, and rendering.</p>
+      </div>
+      <div class="footer-links">
+        <a href="index.html">Home</a>
+        <a href="mailto:duyouyang957@gmail.com">Email</a>
+        <a href="https://github.com/icewired-yy" target="_blank" rel="noreferrer">GitHub</a>
+        <a href="#top">Back to top</a>
+      </div>
+    </footer>
+  </body>
+</html>

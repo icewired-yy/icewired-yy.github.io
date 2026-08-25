@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta
+      name="description"
+      content="Rendering notes, derivations, and paper readings by Youyang Du."
+    >
+    <title>Notes · Youyang Du</title>
+    <link rel="icon" href="assets/images/icon.png" type="image/png">
+    <link rel="stylesheet" href="styles.css">
+    <script src="script.js" defer></script>
+  </head>
+  <body class="subpage notes-page" id="top">
+    <!--
+      THESIS: A personal research practice unfolds through quiet space, refusing newspaper and dashboard density.
+      OWN-WORLD: Mist ground, pine ink, teal light, restrained gold, borderless lists, calligraphic ghosts, and a bamboo-sword field.
+      STORY: A peer recognizes Youyang, previews current research, projects, notes, and life, then follows one focused route.
+      FIRST VIEWPORT: Minimal navigation sits above a generous collection title and its concise purpose statement.
+      FORM: Established contemplative-light experience; seed contemplative-light-approved.
+      FINISH: unreviewed and undocumented is unfinished; this build ends with the finish review, the verdict, DESIGN.md, and every shipping raster carrying its provenance
+    -->
+    <canvas class="light-field" id="light-field" aria-hidden="true"></canvas>
+    <img
+      class="canvas-asset"
+      id="sword-asset"
+      src="assets/images/bamboo-cloud-sword.png"
+      alt=""
+      aria-hidden="true"
+      decoding="async"
+    >
+
+    <a class="skip-link" href="#main-content">Skip to content</a>
+
+    <header class="site-header site-width" aria-label="Primary navigation">
+      <a class="site-mark" href="index.html" aria-label="Return to the homepage">YD<span aria-hidden="true">.</span></a>
+      <nav class="site-nav" aria-label="Prototype pages">
+        <a href="research.html">Research</a>
+        <a href="projects.html">Projects</a>
+        <a href="notes.html" aria-current="page">Notes</a>
+        <a href="gallery.html">Gallery</a>
+        <a href="https://icewired-yy.github.io/cv/" target="_blank" rel="noreferrer">CV</a>
+      </nav>
+    </header>
+
+    <main class="page-main" id="main-content">
+      <header class="page-intro site-width">
+        <h1 class="page-title section-title section-title-notes"><span>Notes</span></h1>
+        <p class="page-lede">
+          Working notes on rendering theory and papers, organized by topic rather than
+          by language. This index now carries the new visual direction while every article
+          continues to open under the established /blog/ routes with its existing LaTeX,
+          citations, and renderer intact.
+        </p>
+      </header>
+
+      <section class="section writing page-collection notes-collection" aria-labelledby="note-topics-title">
+        <div class="site-width">
+          <div class="section-heading collection-heading writing-heading">
+            <h2 id="note-topics-title">Three threads</h2>
+            <p>Five article editions across three related rendering topics.</p>
+          </div>
+
+          <div class="article-list note-topic-list">
+            <article class="article-entry note-topic">
+              <time datetime="2025-11-11">11 Nov 2025</time>
+              <div>
+                <p class="note-topic-label">Appearance theory</p>
+                <h3>
+                  <a
+                    href="/blog/2025/EN-NDF-and-Microfacet-Theory/"
+                  >NDF and Microfacet Model</a>
+                </h3>
+                <p>
+                  A derivation-focused note on microsurfaces, normal distributions,
+                  masking, and the general microfacet model.
+                </p>
+                <div class="language-links" aria-label="Available languages">
+                  <a
+                    href="/blog/2025/EN-NDF-and-Microfacet-Theory/"
+                    hreflang="en"
+                  >English</a>
+                </div>
+              </div>
+              <span class="math-mark" aria-label="D of omega m">D(ωₘ)</span>
+            </article>
+
+            <article class="article-entry note-topic">
+              <time datetime="2025-10-02">02 Oct 2025</time>
+              <div>
+                <p class="note-topic-label">Compressive sensing · Rendering</p>
+                <h3>Compressive Rendering Sensing</h3>
+                <p>
+                  Reframing rendering as sparse reconstruction instead of producing
+                  every pixel before compression.
+                </p>
+                <div class="language-links" aria-label="Available languages">
+                  <a
+                    href="/blog/2025/EN-paper-reading-compressive-rendering/"
+                    hreflang="en"
+                  >English</a>
+                  <a
+                    href="/blog/2025/paper-reading-compressive-rendering/"
+                    hreflang="zh-CN"
+                    lang="zh-CN"
+                  >中文</a>
+                </div>
+              </div>
+            </article>
+
+            <article class="article-entry note-topic">
+              <time datetime="2025-08-17">17 Aug 2025</time>
+              <div>
+                <p class="note-topic-label">Compressive sensing · Light transport</p>
+                <h3>Compressive Light Transport Sensing</h3>
+                <p>
+                  From sparse signals and underdetermined systems to compressive
+                  measurements of light transport.
+                </p>
+                <div class="language-links" aria-label="Available languages">
+                  <a
+                    href="/blog/2025/EN-paper-reading-compressive-light-transport-sensing/"
+                    hreflang="en"
+                  >English</a>
+                  <a
+                    href="/blog/2025/paper-reading-compressive-light-transport-sensing/"
+                    hreflang="zh-CN"
+                    lang="zh-CN"
+                  >中文</a>
+                </div>
+              </div>
+            </article>
+          </div>
+
+          <aside class="archive-note" aria-label="Production blog note">
+            <p>
+              The Notes index has moved into the new visual system. Article parsing,
+              mathematical typesetting, citations, and future updates continue to be handled
+              by the established al-folio /blog/ pipeline.
+            </p>
+            <a
+              class="section-more-link"
+              href="/blog/"
+            >Open Notes on /blog/
+              <svg class="link-arrow" viewBox="0 0 16 16" aria-hidden="true" focusable="false">
+                <path d="M4 12 12 4M6 4h6v6"></path>
+              </svg>
+            </a>
+          </aside>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer site-width">
+      <div>
+        <p class="footer-name">Youyang Du <span lang="zh-CN">杜悠扬</span></p>
+        <p>Researching light, appearance, and rendering.</p>
+      </div>
+      <div class="footer-links">
+        <a href="index.html">Home</a>
+        <a href="mailto:duyouyang957@gmail.com">Email</a>
+        <a href="https://github.com/icewired-yy" target="_blank" rel="noreferrer">GitHub</a>
+        <a href="#top">Back to top</a>
+      </div>
+    </footer>
+  </body>
+</html>
