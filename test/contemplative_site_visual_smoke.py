@@ -687,6 +687,38 @@ def _assert_route_content(
         )
         assert page.locator(".home-news a[href='/news/']").count() == 1
 
+        # Keep every authored helper caption hidden and reclaim its former grid track.
+        homepage_caption_states = page.locator(
+            ".contemplative-home .section-heading > p"
+        ).evaluate_all(
+            """elements => elements.map(element => ({
+              display: getComputedStyle(element).display,
+              visible: Boolean(
+                element.offsetWidth || element.offsetHeight || element.getClientRects().length
+              ),
+            }))"""
+        )
+        assert len(homepage_caption_states) >= 4, homepage_caption_states
+        assert all(
+            state["display"] == "none" and not state["visible"]
+            for state in homepage_caption_states
+        ), homepage_caption_states
+        homepage_heading_track_counts = page.locator(
+            ".contemplative-home .section-heading"
+        ).evaluate_all(
+            r"""elements => elements.map(element =>
+              getComputedStyle(element).gridTemplateColumns
+                .trim()
+                .split(/\s+/)
+                .filter(Boolean)
+                .length
+            )"""
+        )
+        assert len(homepage_heading_track_counts) >= 4, homepage_heading_track_counts
+        assert all(
+            track_count == 1 for track_count in homepage_heading_track_counts
+        ), homepage_heading_track_counts
+
         # Preserve one semantic reading order for layout, focus, and assistive tech.
         homepage_section_ids = page.locator(
             ".contemplative-home > .home-section"
@@ -735,6 +767,12 @@ def _assert_route_content(
             news_contract["archive_dates"]
         )
         return
+
+    # Ensure the homepage-only rule never hides collection guidance on child pages.
+    if route_name in {"research", "projects"}:
+        collection_caption = page.locator(".collection-heading > p")
+        assert collection_caption.count() == 1
+        assert collection_caption.is_visible()
 
     # Require every Research record to come from the two-entry bibliography.
     if route_name == "research":

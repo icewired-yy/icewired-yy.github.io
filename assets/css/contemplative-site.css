@@ -199,6 +199,16 @@ body.contemplative-site-surface {
   font-size: clamp(1.05rem, 1.6vw, 1.28rem);
 }
 
+/* Keep homepage captions authored for later reuse while presenting quieter titles. */
+.contemplative-home .section-heading {
+  grid-template-columns: minmax(0, 1fr);
+  gap: 0;
+}
+
+.contemplative-home .section-heading > p {
+  display: none;
+}
+
 .section-title {
   --section-glyph: none;
   position: relative;

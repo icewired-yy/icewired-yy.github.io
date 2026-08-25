@@ -51,6 +51,11 @@ class ContemplativeSiteSourceContractTest < Minitest::Test
     assert_match(/include\s+contemplative-news-list\.liquid/, homepage_source)
     assert_match(/include\s+gallery-preview\.liquid/, homepage_source)
 
+    # Keep the temporary caption treatment scoped to the homepage surface.
+    site_styles = source("assets/css/contemplative-site.css")
+    assert_match(/\.contemplative-home\s+\.section-heading\s*\{[^}]*grid-template-columns:\s*minmax\(0,\s*1fr\);[^}]*gap:\s*0;/m, site_styles)
+    assert_match(/\.contemplative-home\s+\.section-heading\s*>\s*p\s*\{[^}]*display:\s*none;/m, site_styles)
+
     # Reject prototype-only placeholders and copied content records in templates.
     refute_includes homepage_source.downcase, "images.unsplash.com"
     (RESEARCH_TITLES + PROJECT_TITLES).each do |title|

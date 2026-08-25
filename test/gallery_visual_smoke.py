@@ -320,7 +320,8 @@ def _assert_homepage(page: Page, expected_count: int, gallery_sources: set[str])
 
     Raises:
         AssertionError: If an empty collection leaks a preview, a populated
-            fixture lacks slots, identities differ, or the page overflows.
+            fixture lacks slots, identities differ, its homepage caption is
+            visible, or the page overflows.
 
     Side effects:
         Reads DOM state without mutation.
@@ -345,6 +346,20 @@ def _assert_homepage(page: Page, expected_count: int, gallery_sources: set[str])
             for index in range(figures.count())
         }
         assert home_sources.issubset(gallery_sources), (home_sources, gallery_sources)
+
+        # Keep the optional Gallery caption aligned with every other homepage title.
+        gallery_heading = preview.locator(".gallery-home-preview__heading")
+        gallery_caption = gallery_heading.locator(":scope > p")
+        assert gallery_caption.count() == 1
+        assert gallery_caption.evaluate("element => getComputedStyle(element).display") == "none"
+        gallery_heading_track_count = gallery_heading.evaluate(
+            r"""element => getComputedStyle(element).gridTemplateColumns
+              .trim()
+              .split(/\s+/)
+              .filter(Boolean)
+              .length"""
+        )
+        assert gallery_heading_track_count == 1, gallery_heading_track_count
 
     # Ensure the optional section cannot force the legacy homepage wider.
     widths = page.evaluate(
