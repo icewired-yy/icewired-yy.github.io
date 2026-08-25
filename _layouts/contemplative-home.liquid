@@ -56,22 +56,6 @@ layout: default
     </section>
   {% endif %}
 
-  {% if page.news and site.announcements.enabled %}
-    <section class="home-section home-news news-preview" id="news" aria-labelledby="home-news-title">
-      <div class="section-heading">
-        <h2 class="section-title section-title-news" id="home-news-title"><span>News</span></h2>
-        <p>Recent milestones from research, study, and the path between them.</p>
-      </div>
-      {% include contemplative-news-list.liquid limit=true %}
-      <div class="section-more">
-        <a class="section-more-link" href="{{ '/news/' | relative_url }}">
-          Explore all news
-          <svg viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M4 12 12 4M6 4h6v6"></path></svg>
-        </a>
-      </div>
-    </section>
-  {% endif %}
-
   <section class="home-section home-projects" id="projects" aria-labelledby="home-projects-title">
     <div class="section-heading">
       <h2 class="section-title section-title-projects" id="home-projects-title"><span>Projects</span></h2>
@@ -99,6 +83,22 @@ layout: default
       </a>
     </div>
   </section>
+
+  {% if page.news and site.announcements.enabled %}
+    <section class="home-section home-news news-preview" id="news" aria-labelledby="home-news-title">
+      <div class="section-heading">
+        <h2 class="section-title section-title-news" id="home-news-title"><span>News</span></h2>
+        <p>Recent milestones from research, study, and the path between them.</p>
+      </div>
+      {% include contemplative-news-list.liquid limit=true %}
+      <div class="section-more">
+        <a class="section-more-link" href="{{ '/news/' | relative_url }}">
+          Explore all news
+          <svg viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M4 12 12 4M6 4h6v6"></path></svg>
+        </a>
+      </div>
+    </section>
+  {% endif %}
 
   {% if page.gallery_preview %}
     {% include gallery-preview.liquid %}

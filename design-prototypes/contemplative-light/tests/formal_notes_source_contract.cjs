@@ -339,6 +339,29 @@ function _main() {
     6,
     "contemplative navigation must expose exactly six destination links",
   );
+  const navigation_route_order = [...contemplative_header_branch.matchAll(
+    /href="\{\{\s*'([^']+)'\s*\|\s*relative_url\s*\}\}"/g,
+  )]
+    .map((match) => match[1])
+    .filter((route) => route !== "/");
+  assert.deepEqual(
+    navigation_route_order,
+    ["/publications/", "/projects/", "/blog/", "/news/", "/gallery/", "/cv/"],
+    "formal navigation must keep Notes immediately before News and Gallery",
+  );
+  const homepage_order_positions = [
+    "home-research",
+    "home-projects",
+    "home-notes",
+    "home-news",
+    "gallery-preview.liquid",
+  ].map((marker) => homepage_layout_source.indexOf(marker));
+  assert(homepage_order_positions.every((position) => position >= 0), "homepage order markers missing");
+  assert.deepEqual(
+    homepage_order_positions,
+    [...homepage_order_positions].sort((left, right) => left - right),
+    "homepage must place News below Notes and above Gallery",
+  );
 
   /*
    * Prove the formal pages own one conditional ambient-effects include and

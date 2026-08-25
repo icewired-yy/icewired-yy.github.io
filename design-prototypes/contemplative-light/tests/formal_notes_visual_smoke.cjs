@@ -112,8 +112,8 @@ function _build_fixture_document(page_title, rendered_content, content_owns_main
           <div class="notes-site-nav">
             <a href="/publications/">Research</a>
             <a href="/projects/">Projects</a>
-            <a href="/news/">News</a>
             <a href="/blog/" aria-current="page">Notes</a>
+            <a href="/news/">News</a>
             <a href="/gallery/">Gallery</a>
             <a href="/cv/">CV</a>
           </div>
@@ -600,6 +600,11 @@ async function _exercise_fixture(
     assert.equal(await page.locator("script[src='/assets/js/contemplative-effects.js']").count(), 1, `${label}: wrong formal script`);
     assert.equal(await page.locator(".notes-site-nav a").count(), 6, `${label}: navigation must contain six items`);
     assert.equal(await page.locator(".notes-site-nav a[href='/news/']").count(), 1, `${label}: News link missing`);
+    assert.deepEqual(
+      await page.locator(".notes-site-nav a").evaluateAll((links) => links.map((link) => link.getAttribute("href"))),
+      ["/publications/", "/projects/", "/blog/", "/news/", "/gallery/", "/cv/"],
+      `${label}: navigation information order drifted`,
+    );
     assert.equal(await page.locator(".notes-site-nav a[aria-current='page']").count(), 1, `${label}: invalid current-link count`);
     assert.equal(
       await page.locator(".notes-site-nav a[aria-current='page']").getAttribute("href"),

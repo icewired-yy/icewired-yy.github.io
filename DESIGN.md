@@ -113,7 +113,7 @@ components:
 
 This system frames research as a personal practice carried by mist ground, pine ink, teal light, and restrained gold. It feels contemplative, restrained, spacious, natural, and academically legible: the practitioner is present, but the interface never slips into literal Zen or religious decoration.
 
-Quiet space is the organizing material. Sparse first views establish Youyang's bilingual identity, research focus, and one portrait; research, News, projects, Notes, and life then unfold as focused routes rather than competing panels. Borderless lists, calligraphic raster ghosts, and the shared bamboo-sword light field give the work an authored world without weakening technical readability.
+Quiet space is the organizing material. Sparse first views establish Youyang's bilingual identity, research focus, and one portrait; research, projects, Notes, News, and life then unfold as focused routes rather than competing panels. Borderless lists, calligraphic raster ghosts, and the shared bamboo-sword light field give the work an authored world without weakening technical readability.
 
 The system refuses newspaper, report, and dashboard density, generic technology styling, and ornamental religion. Interaction comes from spacing, focus, subtle expansion, and authored motion instead of card chrome.
 
@@ -188,7 +188,7 @@ Notes uses its own content-first thresholds. Two-column section headings and ima
 
 Every navigation and pagination control maintains a 2.75rem (44px) minimum target in each dimension. Technical tables, displayed mathematics, code, and media may scroll horizontally inside the 72ch reading route instead of forcing the page wider.
 
-**The Quiet Sequence Rule.** Keep the first viewport sparse, then let research, News, projects, Notes, and life unfold vertically; do not compress them into a dashboard grid.
+**The Quiet Sequence Rule.** Keep the first viewport sparse, then let research, projects, Notes, News, and life unfold vertically; do not compress them into a dashboard grid.
 
 ## Elevation & Depth
 
@@ -269,7 +269,7 @@ Technically capable, spacious, and subordinate to comprehension.
 
 ### Light-Field Signature
 
-One shared, fixed, pointer-transparent canvas ties the formal Home, Research, Projects, News, Notes, Gallery, and CV routes together without taking over interaction. Its root layer sits above document content so authored swords and leaves remain visible across images, cards, and technical insets, while navigation, footer chrome, and the skip link remain above the canvas.
+One shared, fixed, pointer-transparent canvas ties the formal Home, Research, Projects, Notes, News, Gallery, and CV routes together without taking over interaction. Its root layer sits above document content so authored swords and leaves remain visible across images, cards, and technical insets, while navigation, footer chrome, and the skip link remain above the canvas.
 
 - **Atmosphere:** Two low-alpha teal interference lobes and a spectral focus share the effects layer at 0.62 canvas opacity. The stacking contract is content (1), body-mounted content overlays (5), effects (10), navigation/footer chrome (20), and skip link (100).
 - **Authored Motion:** Fine-pointer movement may emit at most 9 bamboo leaves and lead a 6-sword trail; rest forms a 16-sword wheel, and renewed travel peels the same six identities back into the trail.

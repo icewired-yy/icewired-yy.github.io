@@ -76,14 +76,14 @@ ROUTES = (
     },
 )
 
-EXPECTED_NAVIGATION_HREFS = {
+EXPECTED_NAVIGATION_HREFS = (
     "/publications/",
     "/projects/",
-    "/news/",
     "/blog/",
+    "/news/",
     "/gallery/",
     "/cv/",
-}
+)
 LIBERTINUS_ASSET_PATHS = {
     "/assets/fonts/libertinus-sans-regular.ttf",
     "/assets/fonts/libertinus-sans-bold.ttf",
@@ -579,7 +579,7 @@ def _assert_shared_surface(
     assert "contemplative-notes-surface" in measurements["bodyClasses"], measurements
     assert measurements["rootCount"] == 1, measurements
     assert measurements["navCount"] == 6, measurements
-    assert set(measurements["navHrefs"]) == EXPECTED_NAVIGATION_HREFS, measurements
+    assert measurements["navHrefs"] == list(EXPECTED_NAVIGATION_HREFS), measurements
     expected_current = route_specification["current"]
     assert measurements["currentHrefs"] == ([] if expected_current is None else [expected_current])
     assert measurements["minimumNavHeight"] >= 44, measurements
@@ -686,6 +686,19 @@ def _assert_route_content(
             news_contract["home_dates"]
         )
         assert page.locator(".home-news a[href='/news/']").count() == 1
+
+        # Preserve one semantic reading order for layout, focus, and assistive tech.
+        homepage_section_ids = page.locator(
+            ".contemplative-home > .home-section"
+        ).evaluate_all("elements => elements.map(element => element.id)")
+        assert homepage_section_ids[:4] == [
+            "research",
+            "projects",
+            "notes",
+            "news",
+        ], homepage_section_ids
+        if "life" in homepage_section_ids:
+            assert homepage_section_ids.index("news") < homepage_section_ids.index("life")
 
         # Confirm Research stays image-left and Projects image-right at desktop width.
         if viewport_name == "desktop":
@@ -839,9 +852,9 @@ def _inspect_route(
     if route_specification["name"] == "home" and viewport["name"] == "desktop":
         for section_name, selector in (
             ("research", ".home-research"),
-            ("news", ".home-news"),
             ("projects", ".home-projects"),
             ("notes", ".home-notes"),
+            ("news", ".home-news"),
         ):
             section = page.locator(selector)
             section.scroll_into_view_if_needed()
