@@ -30,12 +30,17 @@ class ContemplativeSiteSourceContractTest < Minitest::Test
   # Confirms the homepage is a presentation layer over existing site data.
   #
   # @return [void]
-  # @note Reads the homepage layout and all statically named Liquid includes.
+  # @note Reads the homepage layout, profile asset, and statically named Liquid includes.
   def test_homepage_uses_dynamic_identity_and_collection_hooks
     # Expand the production homepage surface so delegated includes remain visible.
     about_front_matter = front_matter("_pages/about.md")
     assert_equal "contemplative-home", about_front_matter.fetch("layout")
     homepage_source = expanded_layout_source(about_front_matter.fetch("layout"))
+
+    # Fail before Jekyll cache busting if the authored portrait path drifts.
+    profile_image = about_front_matter.fetch("profile").fetch("image")
+    profile_path = REPOSITORY_ROOT.join("assets", "img", profile_image)
+    assert profile_path.file?, "Homepage portrait does not exist: #{profile_path.relative_path_from(REPOSITORY_ROOT)}"
 
     # Preserve authored identity, profile, contact, and every collection boundary.
     %w[page.profile.image site.email site.github_username].each do |hook|

@@ -11,7 +11,7 @@ hero_role: PhD Student at MBZUAI
 hero_focus: Offline Rendering · Appearance Modelling · Real-time Rendering
 
 profile:
-  image: me_2026.jpg
+  image: me_2026.png
   image_alt: Youyang Du
 
 news: true # renders the five newest records from the existing _news collection
