@@ -69,6 +69,15 @@
 {% if page.url contains '/blog/' or page.permalink contains '/blog/' or page.contemplative_surface %}
   <link rel="stylesheet" href="{{ '/assets/css/contemplative-notes.css' | relative_url | bust_file_cache }}">
 {% endif %}
+{% if page.url contains '/blog/' or page.permalink contains '/blog/' %}
+  <link
+    rel="preload"
+    href="{{ '/assets/fonts/libertinus-sans-regular.ttf' | relative_url }}"
+    as="font"
+    type="font/ttf"
+    crossorigin
+  >
+{% endif %}
 {% if page.site_surface %}
   <link rel="stylesheet" href="{{ '/assets/css/contemplative-site.css' | relative_url | bust_file_cache }}">
 {% endif %}

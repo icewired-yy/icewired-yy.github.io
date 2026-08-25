@@ -94,7 +94,7 @@ function _build_fixture_document(page_title, rendered_content, content_owns_main
       .notes-distill-article d-title,
       .notes-distill-article d-byline,
       .notes-distill-article d-article,
-      .notes-distill-article d-appendix { width: min(calc(100% - 2 * var(--notes-gutter)), 72ch); margin-inline: auto; }
+      .notes-distill-article d-appendix { width: min(calc(100% - 2 * var(--notes-gutter)), 68ch); margin-inline: auto; }
       .notes-distill-article d-byline { display: flex; flex-wrap: wrap; gap: 0.75rem; }
       .render-fixture-wide-content { display: inline-block; width: 76rem; }
     </style>
@@ -110,10 +110,12 @@ function _build_fixture_document(page_title, rendered_content, content_owns_main
         <div class="notes-navbar-inner">
           <a class="notes-site-mark" href="#main-content" aria-label="Return to the fixture content">YD<span aria-hidden="true">.</span></a>
           <div class="notes-site-nav">
-            <a href="#main-content">Research</a>
-            <a href="#main-content">Projects</a>
-            <a href="#main-content" aria-current="page">Notes</a>
-            <a href="#main-content">CV</a>
+            <a href="/publications/">Research</a>
+            <a href="/projects/">Projects</a>
+            <a href="/news/">News</a>
+            <a href="/blog/" aria-current="page">Notes</a>
+            <a href="/gallery/">Gallery</a>
+            <a href="/cv/">CV</a>
           </div>
         </div>
       </nav>
@@ -388,6 +390,61 @@ async function _assert_minimum_targets(page, label) {
 }
 
 /**
+ * Require each Notes renderer to use and fetch the local Libertinus family.
+ *
+ * @param {import("playwright").Page} page - Loaded fixture page whose Notes CSS
+ *   and local font assets are served from the current generated site.
+ * @param {string} label - Non-empty fixture/viewport label used in failures.
+ * @param {string} content_selector - Selector for visible English prose whose
+ *   computed family must begin with Libertinus Sans.
+ * @returns {Promise<{fontFamily: string, loadCounts: number[], resources: string[]}>}
+ *   Computed stack, matched FontFace counts, and local font request paths.
+ * @throws {AssertionError} If priority, CJK fallbacks, variants, or requests fail.
+ * @example
+ * const state = await _assert_notes_font(page, "standard-mobile", "#markdown-content p");
+ * @sideEffects Loads regular, bold, and italic local faces through FontFaceSet.
+ */
+async function _assert_notes_font(page, label, content_selector) {
+  // Force all three authored variants so an unused broken file cannot pass silently.
+  const font_state = await page.evaluate(async (selector) => {
+    const load_results = await Promise.all([
+      document.fonts.load('400 16px "Libertinus Sans"', "Regular typography probe"),
+      document.fonts.load('700 16px "Libertinus Sans"', "Bold typography probe"),
+      document.fonts.load('italic 400 16px "Libertinus Sans"', "Italic typography probe"),
+    ]);
+    await document.fonts.ready;
+
+    // Read the declared family and exact same-origin font resources after loading.
+    const content = document.querySelector(selector);
+    return {
+      fontFamily: getComputedStyle(content).fontFamily,
+      loadCounts: load_results.map((faces) => faces.length),
+      resources: performance.getEntriesByType("resource")
+        .map((entry) => new URL(entry.name).pathname)
+        .filter((pathname) => pathname.startsWith("/assets/fonts/")),
+    };
+  }, content_selector);
+
+  // Enforce the Latin priority and retain the established CJK fallback chain.
+  const first_family = font_state.fontFamily.split(",", 1)[0].trim().replace(/^['"]|['"]$/g, "");
+  assert.equal(first_family, "Libertinus Sans", `${label}: ${font_state.fontFamily}`);
+  assert(font_state.fontFamily.includes("Noto Sans CJK SC"), `${label}: missing Noto CJK fallback`);
+  assert(font_state.fontFamily.includes("Microsoft YaHei"), `${label}: missing YaHei fallback`);
+  assert.deepEqual(font_state.loadCounts, [1, 1, 1], `${label}: incomplete FontFace matches`);
+
+  // Require every requested file while ensuring the former Onest face is unused.
+  for (const required_path of [
+    "/assets/fonts/libertinus-sans-regular.ttf",
+    "/assets/fonts/libertinus-sans-bold.ttf",
+    "/assets/fonts/libertinus-sans-italic.ttf",
+  ]) {
+    assert(font_state.resources.includes(required_path), `${label}: missing font request ${required_path}`);
+  }
+  assert(!font_state.resources.some((resource) => /onest/i.test(resource)), `${label}: Onest was requested`);
+  return font_state;
+}
+
+/**
  * Activate and inspect the formal bamboo-leaf and flying-sword canvas runtime.
  *
  * @param {import("playwright").Page} page - Loaded fixture page with the formal
@@ -498,7 +555,7 @@ async function _assert_local_horizontal_scroll(page, selector, label) {
  * @param {import("playwright").Browser} browser - Open Chromium browser shared
  *   by the smoke run.
  * @param {object} fixture_case - Immutable route case with `name`, `filename`,
- *   `contentSelector`, and boolean `technicalContent` members.
+ *   `contentSelector`, `fontSelector`, and boolean `technicalContent` members.
  * @param {object} viewport_case - Immutable viewport case with `name`, positive
  *   integer `width`, and positive integer `height` members.
  * @param {string} fixture_url - Absolute HTTP URL to the generated fixture.
@@ -541,15 +598,23 @@ async function _exercise_fixture(
     assert.equal(await page.locator("#light-field").count(), 1, `${label}: duplicate/missing canvas`);
     assert.equal(await page.locator("#sword-asset").count(), 1, `${label}: duplicate/missing sword asset`);
     assert.equal(await page.locator("script[src='/assets/js/contemplative-effects.js']").count(), 1, `${label}: wrong formal script`);
-    assert.equal(await page.locator("#news, a[href='/news/']").count(), 0, `${label}: News must remain hidden`);
+    assert.equal(await page.locator(".notes-site-nav a").count(), 6, `${label}: navigation must contain six items`);
+    assert.equal(await page.locator(".notes-site-nav a[href='/news/']").count(), 1, `${label}: News link missing`);
+    assert.equal(await page.locator(".notes-site-nav a[aria-current='page']").count(), 1, `${label}: invalid current-link count`);
+    assert.equal(
+      await page.locator(".notes-site-nav a[aria-current='page']").getAttribute("href"),
+      "/blog/",
+      `${label}: Notes must remain current on every Notes renderer`,
+    );
 
     // Measure the formal CSS variables and responsive interaction contract.
     const reading_width_token = await page.evaluate(() => (
       getComputedStyle(document.body).getPropertyValue("--notes-reading-width").trim()
     ));
-    assert.equal(reading_width_token, "72ch", `${label}: reading-width token changed`);
+    assert.equal(reading_width_token, "68ch", `${label}: reading-width token changed`);
     const width_state = await _assert_no_horizontal_overflow(page, label);
     const target_states = await _assert_minimum_targets(page, label);
+    const font_state = await _assert_notes_font(page, label, fixture_case.fontSelector);
     const effect_state = await _assert_effect_active(page, label, require_complete_wheel);
 
     // Exercise formula and table overflow only on article fixtures that own them.
@@ -578,6 +643,7 @@ async function _exercise_fixture(
       readingWidthToken: reading_width_token,
       widthState: width_state,
       targetStates: target_states,
+      fontState: font_state,
       effectState: effect_state,
       technicalState: technical_state,
       screenshotPath: screenshot_path,
@@ -611,9 +677,27 @@ async function _main() {
     "/design-prototypes/contemplative-light/test-artifacts/formal-notes-fixtures"
   );
   const fixture_cases = [
-    { name: "index", filename: fixture_output.fixtureFiles.get("index"), contentSelector: ".notes-index", technicalContent: false },
-    { name: "standard", filename: fixture_output.fixtureFiles.get("standard"), contentSelector: ".notes-standard-article", technicalContent: true },
-    { name: "distill", filename: fixture_output.fixtureFiles.get("distill"), contentSelector: ".notes-distill-article", technicalContent: true },
+    {
+      name: "index",
+      filename: fixture_output.fixtureFiles.get("index"),
+      contentSelector: ".notes-index",
+      fontSelector: ".notes-index-description",
+      technicalContent: false,
+    },
+    {
+      name: "standard",
+      filename: fixture_output.fixtureFiles.get("standard"),
+      contentSelector: ".notes-standard-article",
+      fontSelector: ".notes-standard-article #markdown-content p",
+      technicalContent: true,
+    },
+    {
+      name: "distill",
+      filename: fixture_output.fixtureFiles.get("distill"),
+      contentSelector: ".notes-distill-article",
+      fontSelector: ".notes-distill-article d-article p",
+      technicalContent: true,
+    },
   ];
   const viewport_cases = [
     { name: "desktop", width: 1440, height: 900 },

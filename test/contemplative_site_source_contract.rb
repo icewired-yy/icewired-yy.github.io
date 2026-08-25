@@ -13,10 +13,11 @@ require "yaml"
 # motion, and responsive behaviour to the browser smoke suite.
 class ContemplativeSiteSourceContractTest < Minitest::Test
   REPOSITORY_ROOT = Pathname.new(__dir__).parent.freeze
-  FORMAL_SURFACE_PAGES = %w[about publications projects cv].freeze
+  FORMAL_SURFACE_PAGES = %w[about publications projects news cv].freeze
   SECTION_ASSETS = %w[
     section-shentong.png
     section-gubao.png
+    section-chuanyin.png
     section-xinde.png
     section-hongchen.png
   ].freeze
@@ -45,13 +46,44 @@ class ContemplativeSiteSourceContractTest < Minitest::Test
     assert_match(/\{%\s*bibliography\b[^%]*selected\s*=\s*true[^%]*--template\s+bib-contemplative[^%]*%\}/m, homepage_source)
     assert_includes homepage_source, "site.projects"
     assert_includes homepage_source, "site.posts"
+    assert_includes homepage_source, "site.news"
     assert_includes homepage_source, "site.gallery"
+    assert_match(/include\s+contemplative-news-list\.liquid/, homepage_source)
     assert_match(/include\s+gallery-preview\.liquid/, homepage_source)
 
     # Reject prototype-only placeholders and copied content records in templates.
     refute_includes homepage_source.downcase, "images.unsplash.com"
     (RESEARCH_TITLES + PROJECT_TITLES).each do |title|
       refute_includes homepage_source, title
+    end
+  end
+
+  # Confirms News is public while both views remain collection-driven.
+  #
+  # @return [void]
+  # @note Reads News/home front matter, the shared list include, and navigation.
+  def test_news_page_and_home_preview_use_the_news_collection
+    # Require both public entry points to opt into the formal contemplative shell.
+    news_front_matter = front_matter("_pages/news.md")
+    assert_equal "/news/", news_front_matter.fetch("permalink")
+    refute_equal false, news_front_matter["published"]
+    assert_equal true, news_front_matter.fetch("contemplative_surface")
+    assert_equal true, news_front_matter.fetch("site_surface")
+    assert_equal "news", news_front_matter.fetch("nav_key")
+    assert_equal true, front_matter("_pages/about.md").fetch("news")
+
+    # Keep one shared presentation include over the original collection and limit.
+    homepage_source = expanded_layout_source(front_matter("_pages/about.md").fetch("layout"))
+    news_page_source = expanded_page_source("_pages/news.md")
+    [homepage_source, news_page_source].each do |surface_source|
+      assert_includes surface_source, "site.news"
+      assert_match(/include\s+contemplative-news-list\.liquid/, surface_source)
+    end
+    news_list = source("_includes/contemplative-news-list.liquid")
+    assert_match(/site\.news[^%\n]*\|\s*(?:sort:\s*["']date["'][^%\n]*\|\s*)?reverse/, news_list)
+    assert_includes news_list, "site.announcements.limit"
+    %w[date content url].each do |property|
+      assert_match(/\b[a-zA-Z_][\w-]*\.#{property}\b/, news_list)
     end
   end
 
@@ -184,10 +216,10 @@ class ContemplativeSiteSourceContractTest < Minitest::Test
 
     # Keep one fixed navigation with an explicit current state for every route.
     header = source("_includes/header.liquid")
-    %w[publications projects blog gallery cv].each do |route|
+    %w[publications projects news blog gallery cv].each do |route|
       assert_includes header, "'/#{route}/' | relative_url"
     end
-    assert_operator header.scan('aria-current="page"').size, :>=, 5
+    assert_operator header.scan('aria-current="page"').size, :>=, 6
 
     # Preserve the pointer-transparent light field and its single image asset.
     effects = source("_includes/contemplative-effects.liquid")
@@ -201,6 +233,53 @@ class ContemplativeSiteSourceContractTest < Minitest::Test
     notes_styles = source("assets/css/contemplative-notes.css")
     assert_match(/#back-to-top\s*\{[^}]*width:\s*2\.75rem[^}]*height:\s*2\.75rem/m, notes_styles)
     assert_match(/footer \.container\s*\{[^}]*color:\s*var\(--notes-muted\)\s*!important/m, notes_styles)
+  end
+
+  # Confirms the two requested Latin faces and the existing CJK fallback chain.
+  #
+  # @return [void]
+  # @note Reads production CSS and verifies the three self-hosted Notes assets.
+  def test_formal_and_notes_surfaces_use_the_requested_font_stacks
+    # Keep formal non-Notes pages on system Times New Roman with CJK fallbacks.
+    site_styles = source("assets/css/contemplative-site.css")
+    assert_match(
+      /(?:--[\w-]*font|font-family):\s*["']Times New Roman["'][^;]*["']Noto Sans CJK SC["'][^;]*["']Microsoft YaHei["']/,
+      site_styles
+    )
+
+    # Require all authored Notes prose to select the local Libertinus family.
+    notes_styles = source("assets/css/contemplative-notes.css")
+    assert_match(
+      /--notes-font:\s*["']Libertinus Sans["'][^;]*["']Noto Sans CJK SC["'][^;]*["']Microsoft YaHei["']/,
+      notes_styles
+    )
+    refute_match(/--notes-font:\s*["']Onest["']/, notes_styles)
+    assert_includes notes_styles, "--notes-reading-width: 68ch;"
+    assert_includes notes_styles, "font-synthesis: weight;"
+
+    # Pin regular, bold, and italic declarations to their committed local files.
+    font_variants = {
+      "regular" => ["normal", "400"],
+      "bold" => ["normal", "700"],
+      "italic" => ["italic", "400"]
+    }
+    font_variants.each do |variant, (style, weight)|
+      asset_name = "libertinus-sans-#{variant}.ttf"
+      assert_path_exists "assets/fonts/#{asset_name}"
+      assert_match(
+        /@font-face\s*\{(?=[^}]*font-family:\s*["']Libertinus Sans["'])(?=[^}]*font-style:\s*#{style})(?=[^}]*font-weight:\s*#{weight})(?=[^}]*font-display:\s*swap)[^}]*#{Regexp.escape(asset_name)}[^}]*\}/m,
+        notes_styles
+      )
+    end
+    assert_path_exists "assets/fonts/OFL-Libertinus.txt"
+    assert_empty REPOSITORY_ROOT.glob("assets/fonts/times*.ttf"), "licensed Windows Times files must not be redistributed"
+
+    # Gallery owns a separate scoped stylesheet but follows the same formal face.
+    gallery_styles = source("assets/css/contemplative-gallery.css")
+    assert_match(
+      /(?:--[\w-]*font|font-family):\s*["']Times New Roman["'][^;]*["']Noto Sans CJK SC["'][^;]*["']Microsoft YaHei["']/,
+      gallery_styles
+    )
   end
 
   # Confirms production pages reference every approved section illustration.

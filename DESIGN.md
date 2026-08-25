@@ -16,34 +16,40 @@ colors:
   code-wash: "rgb(223 231 226 / 0.72)"
 typography:
   display:
-    fontFamily: '"Onest", "Noto Sans CJK SC", "Microsoft YaHei", sans-serif'
+    fontFamily: '"Times New Roman", "Nimbus Roman No9 L", "Liberation Serif", Times, "Noto Sans CJK SC", "Microsoft YaHei", serif'
     fontSize: "clamp(4rem, 8.5vw, 6rem)"
     fontWeight: 400
-    lineHeight: 0.92
-    letterSpacing: "-0.04em"
+    lineHeight: 0.96
+    letterSpacing: "-0.025em"
   headline:
-    fontFamily: '"Onest", "Noto Sans CJK SC", "Microsoft YaHei", sans-serif'
+    fontFamily: '"Times New Roman", "Nimbus Roman No9 L", "Liberation Serif", Times, "Noto Sans CJK SC", "Microsoft YaHei", serif'
     fontSize: "clamp(2.25rem, 4vw, 4.25rem)"
     fontWeight: 400
     lineHeight: 1
-    letterSpacing: "-0.035em"
+    letterSpacing: "-0.02em"
   title:
-    fontFamily: '"Onest", "Noto Sans CJK SC", "Microsoft YaHei", sans-serif'
+    fontFamily: '"Times New Roman", "Nimbus Roman No9 L", "Liberation Serif", Times, "Noto Sans CJK SC", "Microsoft YaHei", serif'
     fontSize: "clamp(1.65rem, 3vw, 2.75rem)"
-    fontWeight: 500
-    lineHeight: 1.16
-    letterSpacing: "-0.028em"
-  body:
-    fontFamily: '"Onest", "Noto Sans CJK SC", "Microsoft YaHei", sans-serif'
-    fontSize: "clamp(1rem, 0.95rem + 0.22vw, 1.12rem)"
     fontWeight: 400
-    lineHeight: 1.78
+    lineHeight: 1.16
+    letterSpacing: "-0.015em"
+  body:
+    fontFamily: '"Times New Roman", "Nimbus Roman No9 L", "Liberation Serif", Times, "Noto Sans CJK SC", "Microsoft YaHei", serif'
+    fontSize: "clamp(1rem, 0.96rem + 0.18vw, 1.0625rem)"
+    fontWeight: 400
+    lineHeight: 1.68
     letterSpacing: "normal"
   label:
-    fontFamily: '"Onest", "Noto Sans CJK SC", "Microsoft YaHei", sans-serif'
+    fontFamily: '"Times New Roman", "Nimbus Roman No9 L", "Liberation Serif", Times, "Noto Sans CJK SC", "Microsoft YaHei", serif'
     fontSize: "0.9rem"
-    fontWeight: 500
+    fontWeight: 700
     lineHeight: 1.68
+    letterSpacing: "normal"
+  notes-body:
+    fontFamily: '"Libertinus Sans", "Segoe UI", "Noto Sans CJK SC", "Microsoft YaHei", sans-serif'
+    fontSize: "clamp(1.0625rem, 1.02rem + 0.2vw, 1.125rem)"
+    fontWeight: 400
+    lineHeight: 1.78
     letterSpacing: "normal"
 rounded:
   focus: "0.2rem"
@@ -91,8 +97,8 @@ components:
   notes-reading-surface:
     backgroundColor: "{colors.mist}"
     textColor: "{colors.pine-ink}"
-    typography: "{typography.body}"
-    width: "72ch"
+    typography: "{typography.notes-body}"
+    width: "68ch"
   light-field-signature:
     backgroundColor: "transparent"
     width: "100%"
@@ -107,7 +113,7 @@ components:
 
 This system frames research as a personal practice carried by mist ground, pine ink, teal light, and restrained gold. It feels contemplative, restrained, spacious, natural, and academically legible: the practitioner is present, but the interface never slips into literal Zen or religious decoration.
 
-Quiet space is the organizing material. Sparse first views establish Youyang's bilingual identity, research focus, and one portrait; research, projects, Notes, and life then unfold as focused routes rather than competing panels. Borderless lists, calligraphic raster ghosts, and the shared bamboo-sword light field give the work an authored world without weakening technical readability.
+Quiet space is the organizing material. Sparse first views establish Youyang's bilingual identity, research focus, and one portrait; research, News, projects, Notes, and life then unfold as focused routes rather than competing panels. Borderless lists, calligraphic raster ghosts, and the shared bamboo-sword light field give the work an authored world without weakening technical readability.
 
 The system refuses newspaper, report, and dashboard density, generic technology styling, and ornamental religion. Interaction comes from spacing, focus, subtle expansion, and authored motion instead of card chrome.
 
@@ -153,27 +159,28 @@ The palette stays close to pale natural paper and deep plant ink, using teal as 
 
 ## Typography
 
-**Display Font:** Onest, with Noto Sans CJK SC and Microsoft YaHei fallbacks.
+**Formal Site Font:** Times New Roman, followed by compatible system serif faces and then Noto Sans CJK SC or Microsoft YaHei for Chinese glyphs.
 
-**Body Font:** Onest, with Noto Sans CJK SC and Microsoft YaHei fallbacks.
+**Notes Font:** Self-hosted Libertinus Sans Regular, Bold, and Italic, with Segoe UI and the same CJK fallbacks.
 
-**Character:** One low-contrast sans family carries both identity and technical prose. Large titles gain character from compact tracking and scale, while the CJK fallback preserves the bilingual name and calligraphic relationship without introducing a decorative display face. The prototype retains its packaged variable builds; the formal Jekyll surfaces load the locally shipped Onest face and use the documented CJK fallback chain.
+**Character:** The formal homepage and collection routes use Times New Roman to give the academic overview a familiar, restrained serif cadence. Technical Notes switch to Libertinus Sans for longer reading, formula-adjacent prose, and denser navigation. Both families use explicit 400/700 roles; CJK glyphs continue through the documented Chinese fallback chain. Times is referenced as an installed system face and is not redistributed by the repository, while the OFL-licensed Libertinus files are shipped only for `/blog/**`. Because the supplied Libertinus set has no Bold Italic file, Notes permits weight-only synthesis for that rare combined emphasis while retaining authored Regular, Bold, and Italic faces everywhere else.
 
 ### Hierarchy
 
-- **Display** (400, clamp(4rem, 8.5vw, 6rem), 0.92, -0.04em): Notes and collection page titles; always capped at 6rem.
-- **Headline** (400, clamp(2.25rem, 4vw, 4.25rem), 1, -0.035em): Major section headings below the first view.
-- **Title** (500, clamp(1.65rem, 3vw, 2.75rem), 1.16, -0.028em): Article and list-entry titles.
-- **Body** (400, clamp(1rem, 0.95rem + 0.22vw, 1.12rem), 1.78): Long-form technical reading within a 72ch measure.
-- **Label** (500, 0.9rem, 1.68): Navigation and compact interface labels; metadata may tighten and space letters only in its implemented date/topic contexts.
+- **Display** (400, clamp(4rem, 8.5vw, 6rem), 0.96, -0.025em): Formal collection page titles; always capped at 6rem.
+- **Headline** (400, clamp(2.25rem, 4vw, 4.25rem), 1, -0.02em): Major formal-site section headings below the first view.
+- **Title** (400, clamp(1.65rem, 3vw, 2.75rem), 1.16, -0.015em): Formal-site article and list-entry titles.
+- **Body** (400, clamp(1rem, 0.96rem + 0.18vw, 1.0625rem), 1.68): Formal-site overview and collection prose.
+- **Notes Body** (400, clamp(1.0625rem, 1.02rem + 0.2vw, 1.125rem), 1.78): Long-form technical reading within a 68ch measure.
+- **Label** (700, 0.9rem, 1.68): Navigation and compact interface labels; quiet utility labels may use 400 where color already carries hierarchy.
 
-**The Six-Rem Ceiling Rule.** Page and Notes display titles cap at 6rem and use -0.04em tracking; never inflate them beyond the authored scale.
+**The Six-Rem Ceiling Rule.** Page and Notes display titles cap at 6rem. Formal Times headings stop at -0.025em tracking; Notes may retain the established -0.04em floor.
 
 **The No-Kicker Rule.** Do not add active page kickers above major titles; semantic titles and spatial rhythm carry hierarchy.
 
 ## Layout
 
-The shared site frame is fluid up to 94rem with a horizontal gutter of clamp(1.25rem, 4.2vw, 5.5rem). Homepage sections breathe with clamp(7rem, 12vw, 12rem) above and below, while the compact homepage reduces that cadence to clamp(5.5rem, 20vw, 8rem). Notes narrows its index to 80rem, its primary lists to 76rem, and technical prose to 72ch.
+The shared site frame is fluid up to 94rem with a horizontal gutter of clamp(1.25rem, 4.2vw, 5.5rem). Homepage sections breathe with clamp(7rem, 12vw, 12rem) above and below, while the compact homepage reduces that cadence to clamp(5.5rem, 20vw, 8rem). Notes narrows its index to 80rem, its primary lists to 76rem, and technical prose to 68ch.
 
 The first viewport keeps minimal navigation above a three-column identity composition: bilingual name and research focus at left, deliberate open space through the middle, and one portrait at right. At 980px the hero becomes two columns; at 700px it becomes a single stacked route with the introduction and scroll invitation removed. Work previews remain linear rather than becoming cards, and hover/focus expansion collapses to a compact, nonessential-detail-free row on small or coarse-pointer presentations.
 
@@ -181,7 +188,7 @@ Notes uses its own content-first thresholds. Two-column section headings and ima
 
 Every navigation and pagination control maintains a 2.75rem (44px) minimum target in each dimension. Technical tables, displayed mathematics, code, and media may scroll horizontally inside the 72ch reading route instead of forcing the page wider.
 
-**The Quiet Sequence Rule.** Keep the first viewport sparse, then let research, projects, Notes, and life unfold vertically; do not compress them into a dashboard grid.
+**The Quiet Sequence Rule.** Keep the first viewport sparse, then let research, News, projects, Notes, and life unfold vertically; do not compress them into a dashboard grid.
 
 ## Elevation & Depth
 
@@ -216,7 +223,7 @@ Quiet, compact, and always subordinate to identity or reading.
 
 Semantic English remains crisp in front while one authored raster glyph appears as a quiet spatial ghost behind it.
 
-- **Form:** Page and Notes titles cap at 6rem with -0.04em tracking; section ghosts use approximately 0.16–0.18 opacity and a consistent rightward offset.
+- **Form:** Page and Notes titles cap at 6rem; formal Times titles use no tighter than -0.025em, while Notes may use -0.04em. Section ghosts use approximately 0.16–0.18 opacity and a consistent rightward offset.
 - **Accessibility:** Ghosts are noninteractive and hidden in forced-colors and print. The English heading remains the accessible text.
 - **Assets:** Use the validated raster source for the matching concept; all 26 of 26 supplied raster assets have confirmed provenance.
 
@@ -227,6 +234,14 @@ A restrained borderless row becomes a focused research route through expansion r
 - **Rest:** Compact image-and-copy columns, desaturated media, hairline separators, and no persistent detail block.
 - **Hover / Focus:** Over 720ms, the media column and whitespace expand, the image restores saturation and scales by 1.018, the title grows, and details reveal; siblings recede to 0.52 opacity.
 - **Fallback:** Focus-within mirrors hover. Small screens and coarse pointers preserve the compact row and hide nonessential detail so all primary links remain available.
+
+### News Chronology
+
+A compact date-and-update ledger drawn directly from the existing `_news` collection.
+
+- **Structure:** The homepage shows the configured newest five records; `/news/` shows the complete reverse-chronological archive from the same source.
+- **Shape:** Borderless rows with one Pine-tinted separator, tabular Spectral dates, and no nested scroll region or card shell.
+- **Responsive:** At 700px and below, date and update become a single vertical reading unit while the six-route navigation remains horizontally reachable.
 
 ### Section Link
 
@@ -248,13 +263,13 @@ A rare tonal reading invitation, softly rounded without becoming a dashboard car
 
 Technically capable, spacious, and subordinate to comprehension.
 
-- **Measure:** 72ch maximum for metadata and article content; body text uses the 1.78 reading line-height.
+- **Measure:** 68ch maximum for metadata and article content; body text uses the 1.78 reading line-height.
 - **Technical Content:** Code, tables, displayed mathematics, figures, Distill elements, citations, and bibliography remain in their native rendering pipelines. Overflow is handled locally and code or contents surfaces use 12px rounding.
 - **Rhythm:** Headings gain strong top margins and compact tracking; body paragraphs and lists use a consistent 1.45rem lower rhythm.
 
 ### Light-Field Signature
 
-One shared, fixed, pointer-transparent canvas ties the formal Home, Research, Projects, Notes, Gallery, and CV routes together without taking over interaction. Its root layer sits above document content so authored swords and leaves remain visible across images, cards, and technical insets, while navigation, footer chrome, and the skip link remain above the canvas.
+One shared, fixed, pointer-transparent canvas ties the formal Home, Research, Projects, News, Notes, Gallery, and CV routes together without taking over interaction. Its root layer sits above document content so authored swords and leaves remain visible across images, cards, and technical insets, while navigation, footer chrome, and the skip link remain above the canvas.
 
 - **Atmosphere:** Two low-alpha teal interference lobes and a spectral focus share the effects layer at 0.62 canvas opacity. The stacking contract is content (1), body-mounted content overlays (5), effects (10), navigation/footer chrome (20), and skip link (100).
 - **Authored Motion:** Fine-pointer movement may emit at most 9 bamboo leaves and lead a 6-sword trail; rest forms a 16-sword wheel, and renewed travel peels the same six identities back into the trail.
@@ -269,7 +284,7 @@ One shared, fixed, pointer-transparent canvas ties the formal Home, Research, Pr
 ### Do:
 
 - **Do** preserve the mist, pine, teal, and gold hierarchy and spend gold only on rare signatures.
-- **Do** keep technical article text within 72ch with 1.78 line-height and allow code, tables, equations, and media to scroll or expand safely.
+- **Do** keep technical article text within 68ch with 1.78 line-height and allow code, tables, equations, and media to scroll or expand safely.
 - **Do** keep every navigation or pagination target at least 2.75rem (44px) in both dimensions.
 - **Do** use semantic English headings in front of the validated raster calligraphy, and hide the raster layer in forced-colors and print.
 - **Do** pair hover expansion with focus-within and provide a stable compact or coarse-pointer presentation.

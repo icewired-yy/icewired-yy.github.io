@@ -8,10 +8,14 @@
  */
 
 body.contemplative-site-surface {
+  --site-font: "Times New Roman", "Nimbus Roman No9 L", "Liberation Serif", Times, "Noto Sans CJK SC", "Microsoft YaHei", serif;
+  --notes-font: var(--site-font);
   --site-section-space: clamp(7rem, 12vw, 12rem);
   --site-content-width: 80rem;
   padding-top: 0;
   padding-bottom: 0;
+  font-family: var(--site-font);
+  font-size: clamp(1rem, 0.96rem + 0.18vw, 1.0625rem);
 }
 
 .contemplative-site-surface .contemplative-site-main {
@@ -54,16 +58,16 @@ body.contemplative-site-surface {
   margin: 0;
   color: var(--notes-pine);
   font-size: clamp(4rem, 7.4vw, 6rem);
-  font-weight: 420;
-  letter-spacing: -0.04em;
-  line-height: 0.92;
+  font-weight: 400;
+  letter-spacing: -0.025em;
+  line-height: 0.96;
 }
 
 .home-hero__name-zh {
   color: var(--notes-muted);
   font-family: "Noto Sans CJK SC", "Microsoft YaHei", var(--notes-font);
   font-size: 0.34em;
-  font-weight: 500;
+  font-weight: 400;
   letter-spacing: 0.08em;
 }
 
@@ -71,7 +75,7 @@ body.contemplative-site-surface {
   margin: clamp(1.8rem, 3vw, 2.8rem) 0 0;
   color: var(--notes-pine);
   font-size: clamp(1.03rem, 1.35vw, 1.2rem);
-  font-weight: 610;
+  font-weight: 700;
 }
 
 .home-hero__focus {
@@ -105,7 +109,7 @@ body.contemplative-site-surface {
   align-items: center;
   color: var(--notes-pine);
   font-size: 0.88rem;
-  font-weight: 620;
+  font-weight: 700;
 }
 
 .home-hero__portrait {
@@ -145,7 +149,7 @@ body.contemplative-site-surface {
   gap: 0.75rem;
   color: var(--notes-muted);
   font-size: 0.78rem;
-  font-weight: 590;
+  font-weight: 400;
   letter-spacing: 0.04em;
   text-decoration: none;
 }
@@ -183,8 +187,8 @@ body.contemplative-site-surface {
   margin: 0;
   color: var(--notes-pine);
   font-size: clamp(2.7rem, 5vw, 5.4rem);
-  font-weight: 430;
-  letter-spacing: -0.035em;
+  font-weight: 400;
+  letter-spacing: -0.02em;
   line-height: 1.02;
 }
 
@@ -227,6 +231,10 @@ body.contemplative-site-surface {
   --section-glyph: url("../img/section-shentong.png");
 }
 
+.section-title-news {
+  --section-glyph: url("../img/section-chuanyin.png");
+}
+
 .section-title-projects {
   --section-glyph: url("../img/section-gubao.png");
 }
@@ -237,6 +245,50 @@ body.contemplative-site-surface {
 
 .section-title-life {
   --section-glyph: url("../img/section-hongchen.png");
+}
+
+/* News stays a chronological, borderless ledger rather than becoming a card
+   grid. Both the homepage preview and archive read the same collection. */
+.contemplative-news-list {
+  width: min(100%, 68rem);
+  margin: 0 0 0 auto;
+  padding: 0;
+  border-bottom: 1px solid color-mix(in srgb, var(--notes-pine) 16%, transparent);
+  list-style: none;
+}
+
+.news-entry {
+  display: grid;
+  grid-template-columns: 9rem minmax(0, 1fr);
+  gap: clamp(1.5rem, 4vw, 4rem);
+  align-items: baseline;
+  padding: clamp(1.35rem, 2.4vw, 2rem) 0;
+  border-top: 1px solid color-mix(in srgb, var(--notes-pine) 16%, transparent);
+}
+
+.news-entry__date {
+  color: var(--notes-spectral);
+  font-size: 0.78rem;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.035em;
+  white-space: nowrap;
+}
+
+.news-entry__body {
+  max-width: 65ch;
+  color: var(--notes-ink);
+  font-size: clamp(1rem, 0.96rem + 0.18vw, 1.0625rem);
+  line-height: 1.62;
+}
+
+.news-entry__body a {
+  color: var(--notes-pine);
+  text-decoration-color: color-mix(in srgb, currentColor 34%, transparent);
+}
+
+.news-entry__body a:hover,
+.news-entry__body a:focus-visible {
+  text-decoration-color: currentColor;
 }
 
 /* Research and project previews are short rows at rest. Pointer and keyboard
@@ -351,7 +403,7 @@ body.contemplative-site-surface {
   margin: 0 0 0.7rem;
   color: var(--notes-spectral);
   font-size: 0.73rem;
-  font-weight: 650;
+  font-weight: 700;
   letter-spacing: 0.075em;
   text-transform: uppercase;
 }
@@ -369,8 +421,8 @@ body.contemplative-site-surface {
   margin: 0;
   color: var(--notes-ink);
   font-size: clamp(1.08rem, 1.55vw, 1.38rem);
-  font-weight: 520;
-  letter-spacing: -0.02em;
+  font-weight: 400;
+  letter-spacing: -0.015em;
   line-height: 1.25;
   text-wrap: balance;
   transition: color 360ms var(--notes-ease-out), font-size 620ms var(--notes-ease-out);
@@ -428,7 +480,7 @@ body.contemplative-site-surface {
 .work-authors strong,
 .work-content strong {
   color: var(--notes-ink);
-  font-weight: 690;
+  font-weight: 700;
 }
 
 .work-links,
@@ -442,7 +494,7 @@ body.contemplative-site-surface {
 .text-link {
   color: var(--notes-pine) !important;
   font-size: 0.82rem;
-  font-weight: 650;
+  font-weight: 700;
 }
 
 .work-bibtex {
@@ -465,7 +517,7 @@ body.contemplative-site-surface {
   border-bottom: 1px solid color-mix(in srgb, var(--notes-pine) 34%, transparent);
   color: var(--notes-pine) !important;
   font-size: 0.82rem;
-  font-weight: 650;
+  font-weight: 700;
   letter-spacing: 0.025em;
   text-decoration: none;
 }
@@ -529,8 +581,8 @@ body.contemplative-site-surface {
 .article-entry h3 {
   margin: 0;
   font-size: clamp(1.65rem, 3vw, 2.75rem);
-  font-weight: 520;
-  letter-spacing: -0.028em;
+  font-weight: 400;
+  letter-spacing: -0.015em;
   line-height: 1.16;
   text-wrap: balance;
 }
@@ -547,7 +599,7 @@ body.contemplative-site-surface {
 
 .article-entry__mark {
   color: var(--notes-gold);
-  font-family: Georgia, serif;
+  font-family: var(--site-font);
   font-size: clamp(1.05rem, 2.2vw, 1.8rem);
   font-style: italic;
   white-space: nowrap;
@@ -581,9 +633,9 @@ body.contemplative-site-surface {
   margin: 0;
   color: var(--notes-pine) !important;
   font-size: clamp(3.8rem, 8.5vw, 6rem);
-  font-weight: 430;
-  letter-spacing: -0.04em;
-  line-height: 0.92;
+  font-weight: 400;
+  letter-spacing: -0.025em;
+  line-height: 0.96;
 }
 
 .page-lede {
@@ -679,8 +731,8 @@ body.contemplative-site-surface {
   margin: 0;
   color: var(--notes-pine);
   font-size: clamp(1.45rem, 2.4vw, 2.25rem);
-  font-weight: 530;
-  letter-spacing: -0.025em;
+  font-weight: 700;
+  letter-spacing: -0.015em;
   line-height: 1.15;
 }
 
@@ -918,6 +970,16 @@ body.contemplative-site-surface footer .container {
 
   .article-entry__date {
     padding: 0;
+  }
+
+  .news-entry {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0.42rem;
+    align-items: start;
+  }
+
+  .news-entry__body {
+    font-size: 1.0625rem;
   }
 
   .article-entry__mark {

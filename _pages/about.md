@@ -14,7 +14,7 @@ profile:
   image: me.jpg
   image_alt: Youyang Du smiling outdoors beside a lake
 
-news: false # news data is retained, but the homepage section is intentionally hidden
+news: true # renders the five newest records from the existing _news collection
 selected_papers: true # includes a list of papers marked as "selected={true}"
 gallery_preview: true # renders only when all four reviewed homepage slots exist
 project_preview_limit: 1

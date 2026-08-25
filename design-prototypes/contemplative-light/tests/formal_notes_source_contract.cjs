@@ -7,7 +7,10 @@ const path = require("node:path");
 
 const repository_root = path.resolve(__dirname, "../../..");
 const liquid_contract_files = Object.freeze([
+  "_pages/about.md",
   "_pages/blog.md",
+  "_pages/news.md",
+  "_layouts/contemplative-home.liquid",
   "_layouts/post.liquid",
   "_layouts/distill.liquid",
   "_layouts/archive-year.liquid",
@@ -16,6 +19,7 @@ const liquid_contract_files = Object.freeze([
   "_layouts/default.liquid",
   "_includes/head.liquid",
   "_includes/header.liquid",
+  "_includes/contemplative-news-list.liquid",
   "_includes/related_posts.liquid",
   "_includes/contemplative-effects.liquid",
 ]);
@@ -78,7 +82,7 @@ function _assert_contains_all(source_text, required_fragments, label) {
  * @returns {void} No value is returned when every pattern matches.
  * @throws {AssertionError} If any required pattern does not match.
  * @example
- * _assert_matches_all(source, [/published:\s*false/], "hidden News");
+ * _assert_matches_all(source, [/nav_key:\s*news/], "public News");
  */
 function _assert_matches_all(source_text, required_patterns, label) {
   // Evaluate each independent invariant and preserve its pattern in failures.
@@ -191,7 +195,7 @@ function _read_git_changes(protected_paths) {
  * @returns {void} No value is returned after all source contracts pass; a JSON
  *   evidence summary is written to stdout.
  * @throws {Error|AssertionError} If routing, dynamic Liquid, article topology,
- *   Distill dependencies, archives, hidden News, effects, CSS, protected files,
+ *   Distill dependencies, archives, public News, effects, CSS, protected files,
  *   or Liquid balance diverge from the migration requirements.
  * @example
  * _main();
@@ -295,14 +299,46 @@ function _main() {
     ], archive_path);
   }
 
-  // Lock all three production-level News entry points to their hidden state.
+  // Keep the News archive, homepage preview, and shared navigation public.
   const news_page_source = _read_source("_pages/news.md");
   const about_page_source = _read_source("_pages/about.md");
   const header_source = _read_source("_includes/header.liquid");
-  _assert_matches_all(news_page_source, [/permalink:\s*\/news\//, /published:\s*false/], "hidden News page");
-  _assert_matches_all(about_page_source, [/^news:\s*false\b/m], "hidden homepage News section");
+  const homepage_layout_source = _read_source("_layouts/contemplative-home.liquid");
+  const news_list_source = _read_source("_includes/contemplative-news-list.liquid");
+  _assert_matches_all(news_page_source, [
+    /permalink:\s*\/news\//,
+    /contemplative_surface:\s*true/,
+    /site_surface:\s*true/,
+    /nav_key:\s*news/,
+  ], "public News page");
+  assert(!/published:\s*false\b/.test(news_page_source), "News page must be published");
+  _assert_matches_all(about_page_source, [/^news:\s*true\b/m], "public homepage News section");
+  _assert_contains_all(homepage_layout_source, [
+    "page.news",
+    "home-news",
+    "contemplative-news-list.liquid",
+    "'/news/' | relative_url",
+  ], "homepage News preview");
+  _assert_contains_all(news_list_source, [
+    "site.news",
+    "site.announcements.limit",
+  ], "dynamic News list");
+  _assert_matches_all(news_list_source, [
+    /site\.news[^%\n]*\|\s*(?:sort:\s*["']date["'][^%\n]*\|\s*)?reverse/,
+    /\b[a-zA-Z_][\w-]*\.date\b/,
+    /\b[a-zA-Z_][\w-]*\.content\b/,
+    /\b[a-zA-Z_][\w-]*\.url\b/,
+  ], "newest-first News list");
   const contemplative_header_branch = header_source.split("{% else %}")[0];
-  assert(!/news/i.test(contemplative_header_branch), "Notes navigation must not expose News");
+  _assert_contains_all(contemplative_header_branch, [
+    "'/news/' | relative_url",
+    "page.nav_key == 'news'",
+  ], "shared News navigation");
+  assert.equal(
+    (contemplative_header_branch.match(/<a\s+href=/g) || []).length,
+    6,
+    "contemplative navigation must expose exactly six destination links",
+  );
 
   /*
    * Prove the formal pages own one conditional ambient-effects include and
@@ -331,7 +367,10 @@ function _main() {
   ], "route-scoped Notes stylesheet");
   for (const required_asset of [
     "assets/css/contemplative-notes.css",
-    "assets/fonts/onest-latin-wght-normal.woff2",
+    "assets/fonts/libertinus-sans-regular.ttf",
+    "assets/fonts/libertinus-sans-bold.ttf",
+    "assets/fonts/libertinus-sans-italic.ttf",
+    "assets/fonts/OFL-Libertinus.txt",
     "assets/img/bamboo-cloud-sword.png",
     "assets/img/section-xinde.png",
     "assets/js/contemplative-effects.js",
@@ -357,7 +396,7 @@ function _main() {
   _assert_contains_all(notes_css_source, [
     "html {\n  font-size: 16px !important;\n}",
     "body.contemplative-notes-surface {",
-    "--notes-reading-width: 72ch;",
+    "--notes-reading-width: 68ch;",
     "--notes-layer-content: 1;",
     "--notes-layer-content-overlay: 5;",
     "--notes-layer-effects: 10;",
@@ -381,6 +420,30 @@ function _main() {
     ".notes-distill-article d-article table",
     "overflow-x: auto;",
   ], "Notes technical typography CSS");
+  _assert_matches_all(notes_css_source, [
+    /--notes-font:\s*["']Libertinus Sans["'][^;]*["']Noto Sans CJK SC["'][^;]*["']Microsoft YaHei["'][^;]*sans-serif/,
+  ], "Notes Libertinus and CJK stack");
+  for (const font_contract of [
+    { filename: "libertinus-sans-regular.ttf", style: "normal", weight: "400" },
+    { filename: "libertinus-sans-bold.ttf", style: "normal", weight: "700" },
+    { filename: "libertinus-sans-italic.ttf", style: "italic", weight: "400" },
+  ]) {
+    const font_face_pattern = new RegExp(
+      `@font-face\\s*\\{(?=[^}]*font-family:\\s*["']Libertinus Sans["'])`
+      + `(?=[^}]*font-style:\\s*${font_contract.style})`
+      + `(?=[^}]*font-weight:\\s*${font_contract.weight})`
+      + `(?=[^}]*font-display:\\s*swap)[^}]*${font_contract.filename.replaceAll(".", "\\.")}[^}]*\\}`,
+      "s",
+    );
+    assert.match(notes_css_source, font_face_pattern, `${font_contract.filename}: invalid @font-face`);
+  }
+  assert(!/--notes-font:\s*["']Onest["']/.test(notes_css_source), "Onest must not remain the Notes primary font");
+
+  // Keep non-Notes formal surfaces on system Times while preserving CJK fallbacks.
+  const site_css_source = _read_source("assets/css/contemplative-site.css");
+  _assert_matches_all(site_css_source, [
+    /(?:--[\w-]*font|font-family):\s*["']Times New Roman["'][^;]*["']Noto Sans CJK SC["'][^;]*["']Microsoft YaHei["']/,
+  ], "formal Times New Roman stack");
   _assert_matches_all(notes_css_source, [
     /\.notes-site-mark\s*\{[\s\S]*?min-width:\s*2\.75rem;[\s\S]*?min-height:\s*2\.75rem;/,
     /\.notes-site-nav a\s*\{[\s\S]*?min-width:\s*2\.75rem;[\s\S]*?min-height:\s*2\.75rem;/,
@@ -413,7 +476,8 @@ function _main() {
     ordinary_post: true,
     distill_post: true,
     archives: 3,
-    news_hidden: true,
+    news_visible: true,
+    fonts: { formal: "Times New Roman", notes: "Libertinus Sans" },
     swords: { wheel: 16, trail: 6, prototype_match: true },
     protected_changes,
     liquid_counts,
