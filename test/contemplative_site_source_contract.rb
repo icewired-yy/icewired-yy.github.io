@@ -258,6 +258,14 @@ class ContemplativeSiteSourceContractTest < Minitest::Test
     assert_includes effects, "/assets/js/contemplative-effects.js"
     assert_path_exists "assets/img/bamboo-cloud-sword.png"
     assert_path_exists "assets/js/contemplative-effects.js"
+    homepage_layout = source("_layouts/contemplative-home.liquid")
+    figure_include = source("_includes/figure.liquid")
+    effect_script = source("assets/js/contemplative-effects.js")
+    assert_includes homepage_layout, "data_sword_unlock=true"
+    assert_includes figure_include, "data-sword-unlock"
+    assert_includes effect_script, "const sword_unlock_hold_duration_ms = 10000"
+    assert_includes effect_script, "if (!sword_effect_unlocked || reduced_motion_query.matches)"
+    assert_includes effect_script, "window.localStorage.setItem(sword_unlock_storage_key, \"1\")"
 
     # Keep legacy utility chrome legible and large enough on the formal mist surface.
     notes_styles = source("assets/css/contemplative-notes.css")

@@ -139,6 +139,38 @@ body.contemplative-site-surface {
   filter: saturate(0.88) contrast(0.96) brightness(1.02);
 }
 
+/* Keep the sword unlock invisible at rest, then acknowledge an intentional hold. */
+.home-hero__portrait[data-sword-unlock] {
+  --sword-unlock-progress: 0;
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-touch-callout: none;
+}
+
+.home-hero__portrait[data-sword-unlock]::after {
+  position: absolute;
+  right: 14%;
+  bottom: 0;
+  left: 14%;
+  height: 1px;
+  background: var(--notes-gold);
+  content: "";
+  opacity: 0;
+  pointer-events: none;
+  transform: scaleX(var(--sword-unlock-progress));
+  transform-origin: center;
+  transition: opacity 320ms var(--notes-ease-out);
+}
+
+.home-hero__portrait[data-sword-unlock].is-sword-unlock-pressing::after {
+  opacity: 0.72;
+}
+
+.home-hero__portrait[data-sword-unlock].is-sword-unlock-confirmed::after {
+  background: var(--notes-pine);
+  opacity: 0.9;
+}
+
 .home-hero__invitation {
   position: absolute;
   bottom: clamp(1.8rem, 3.5vw, 3.25rem);

@@ -271,6 +271,8 @@ Technically capable, spacious, and subordinate to comprehension.
 
 One shared, fixed, pointer-transparent canvas ties the formal Home, Research, Projects, Notes, News, Gallery, and CV routes together without taking over interaction. Its root layer sits above document content so authored swords and leaves remain visible across images, cards, and technical insets, while navigation, footer chrome, and the skip link remain above the canvas.
 
+The ambient optical field and bamboo leaves remain immediately available, while the flying swords are a hidden signature. They unlock only after an uninterrupted ten-second hold on the homepage portrait; releasing, moving away, or backgrounding the page cancels the attempt. The completed unlock is stored locally so the swords remain available across formal routes and later visits without changing any public content or navigation.
+
 - **Atmosphere:** Two low-alpha teal interference lobes and a spectral focus share the effects layer at 0.62 canvas opacity. The stacking contract is content (1), body-mounted content overlays (5), effects (10), navigation/footer chrome (20), and skip link (100).
 - **Authored Motion:** Fine-pointer movement may emit at most 9 bamboo leaves and lead a 6-sword trail; rest forms a 16-sword wheel, and renewed travel peels the same six identities back into the trail.
 - **Resilience:** Canvas resolution caps at 1.5 device pixels per CSS pixel. Touch deactivates hover-specific effects. Reduced motion recenters a static field, removes leaves and swords, and stops continuous animation; missing canvas support leaves the site fully usable.

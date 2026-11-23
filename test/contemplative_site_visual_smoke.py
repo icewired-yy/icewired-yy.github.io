@@ -433,7 +433,15 @@ def _install_deterministic_routes(page: Page, url_root: str, site_root: Path) ->
                 route.fulfill(status=404, content_type="text/plain", body="Not found")
                 return
 
-            content_type = mimetypes.guess_type(file_path.name)[0] or "application/octet-stream"
+            # Override Windows registry MIME mappings that may label JavaScript
+            # as text/plain and cause Chromium to reject ES module dependencies.
+            if file_path.suffix.lower() in {".js", ".mjs"}:
+                content_type = "application/javascript"
+            else:
+                content_type = (
+                    mimetypes.guess_type(file_path.name)[0]
+                    or "application/octet-stream"
+                )
             route.fulfill(status=200, content_type=content_type, body=file_path.read_bytes())
             return
 
@@ -661,8 +669,9 @@ def _assert_route_content(
             balance, empty-state behavior, or hover expansion differs.
 
     Side effects:
-        On desktop home, hovers the first Research row and waits for its
-        transition. No persistent page state is changed.
+        On desktop home, exercises the cancellable ten-second portrait hold,
+        persists its decorative unlock in the isolated browser context, then
+        hovers the first Research row. No repository state is changed.
     """
     # Validate the identity and collection previews composed on the homepage.
     if route_name == "home":
@@ -734,6 +743,30 @@ def _assert_route_content(
 
         # Confirm Research stays image-left and Projects image-right at desktop width.
         if viewport_name == "desktop":
+            # Keep swords dormant by default, cancel a short hold, then unlock at ten seconds.
+            sword_canvas = page.locator("#light-field")
+            sword_unlock_target = page.locator("[data-sword-unlock]")
+            assert sword_unlock_target.count() == 1
+            assert sword_canvas.get_attribute("data-sword-unlocked") == "false"
+            unlock_bounds = sword_unlock_target.bounding_box()
+            unlock_x = unlock_bounds["x"] + unlock_bounds["width"] * 0.5
+            unlock_y = unlock_bounds["y"] + unlock_bounds["height"] * 0.5
+            page.mouse.move(unlock_x, unlock_y)
+            page.mouse.down()
+            page.wait_for_timeout(450)
+            page.mouse.up()
+            assert sword_canvas.get_attribute("data-sword-unlocked") == "false"
+            page.mouse.down()
+            page.wait_for_timeout(10_150)
+            assert sword_canvas.get_attribute("data-sword-unlocked") == "true"
+            page.mouse.up()
+            assert page.evaluate(
+                "localStorage.getItem('contemplative-sword-unlocked-v1')"
+            ) == "1"
+            page.mouse.move(unlock_x - 80, unlock_y + 40, steps=6)
+            page.wait_for_timeout(180)
+            assert page.evaluate("sword_mode !== 'dormant'")
+
             research_order = page.locator(".home-research .work-item").first.evaluate(
                 "element => ({ image: element.querySelector('.work-image').getBoundingClientRect().x, copy: element.querySelector('.work-content').getBoundingClientRect().x })"
             )

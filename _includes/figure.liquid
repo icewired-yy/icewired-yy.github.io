@@ -7,6 +7,9 @@
   {% if include.slot %}
     slot="{{ include.slot | escape }}"
   {% endif %}
+  {% if include.data_sword_unlock %}
+    data-sword-unlock
+  {% endif %}
 >
   <picture>
     <!-- Auto scaling with imagemagick -->

@@ -5,9 +5,13 @@ const light_field_context = light_field_canvas
   ? light_field_canvas.getContext("2d", { alpha: true })
   : null;
 const sword_image = document.querySelector("#sword-asset");
+const sword_unlock_target = document.querySelector("[data-sword-unlock]");
 const reduced_motion_query = window.matchMedia("(prefers-reduced-motion: reduce)");
 const bamboo_leaves = [];
 const maximum_bamboo_leaf_count = 9;
+const sword_unlock_storage_key = "contemplative-sword-unlocked-v1";
+const sword_unlock_hold_duration_ms = 10000;
+const sword_unlock_pointer_travel_tolerance = 14;
 const maximum_sword_wheel_count = 16;
 const maximum_sword_trail_count = 6;
 const sword_guard_anchor_ratio = 0.255;
@@ -101,6 +105,329 @@ let sword_wheel_center_x = 0;
 let sword_wheel_center_y = 0;
 let sword_breakout_sample_count = 0;
 let sword_breakout_leader_index = -1;
+let sword_effect_unlocked = _read_sword_unlock_state();
+let sword_unlock_pointer_id = null;
+let sword_unlock_start_x = 0;
+let sword_unlock_start_y = 0;
+let sword_unlock_started_at = 0;
+let sword_unlock_timeout = 0;
+let sword_unlock_progress_frame = 0;
+let sword_unlock_confirmation_timeout = 0;
+
+/**
+ * Read the locally persisted flying-sword unlock without requiring storage access.
+ *
+ * @returns {boolean} `true` only when this browser has completed the portrait
+ *   hold before. Missing, blocked, or malformed storage remains safely locked.
+ * @throws {Error} Storage failures are absorbed because decorative motion must
+ *   never prevent the page from loading.
+ * @example
+ * const is_unlocked = _read_sword_unlock_state();
+ *
+ * @sideEffects Reads one local-storage entry when the browser permits it.
+ */
+function _read_sword_unlock_state() {
+  // Treat storage as an optional enhancement for private or restricted contexts.
+  try {
+    return window.localStorage.getItem(sword_unlock_storage_key) === "1";
+  } catch (_error) {
+    return false;
+  }
+}
+
+/**
+ * Persist the completed sword unlock for later routes and visits.
+ *
+ * @returns {void} The function returns no value. A storage failure leaves the
+ *   effect unlocked for the current document only.
+ * @throws {Error} Storage exceptions are intentionally absorbed.
+ * @example
+ * _persist_sword_unlock_state();
+ *
+ * @sideEffects Writes one boolean-like local-storage entry when available.
+ */
+function _persist_sword_unlock_state() {
+  // Keep the interaction functional even when local storage is unavailable.
+  try {
+    window.localStorage.setItem(sword_unlock_storage_key, "1");
+  } catch (_error) {
+    // The in-memory unlock remains authoritative for this page.
+  }
+}
+
+/**
+ * Mirror the unlock into DOM state used by styling and browser regression tests.
+ *
+ * @returns {void} The function returns no value. Missing optional DOM nodes are
+ *   accepted so the shared script can continue on non-home routes.
+ * @throws {Error} This helper does not throw intentionally.
+ * @example
+ * _reflect_sword_unlock_state();
+ *
+ * @sideEffects Updates data attributes on the canvas and optional portrait.
+ */
+function _reflect_sword_unlock_state() {
+  // Publish a stable state marker without exposing a visible control at rest.
+  if (light_field_canvas) {
+    light_field_canvas.dataset.swordUnlocked = String(sword_effect_unlocked);
+  }
+  if (sword_unlock_target) {
+    sword_unlock_target.dataset.swordUnlocked = String(sword_effect_unlocked);
+  }
+}
+
+/**
+ * Clear an incomplete portrait hold and all of its transient visual feedback.
+ *
+ * @returns {void} The function returns no value. Calling it repeatedly is safe.
+ * @throws {Error} This helper does not throw intentionally.
+ * @example
+ * _cancel_sword_unlock_press();
+ *
+ * @sideEffects Cancels timers/frames and resets shared pointer-hold state.
+ */
+function _cancel_sword_unlock_press() {
+  // Cancel both the semantic threshold and its low-cost visual progress frame.
+  window.clearTimeout(sword_unlock_timeout);
+  window.cancelAnimationFrame(sword_unlock_progress_frame);
+  sword_unlock_timeout = 0;
+  sword_unlock_progress_frame = 0;
+
+  // Restore the portrait's silent resting state without changing an unlock.
+  sword_unlock_pointer_id = null;
+  sword_unlock_started_at = 0;
+  if (sword_unlock_target) {
+    sword_unlock_target.classList.remove("is-sword-unlock-pressing");
+    if (
+      !sword_effect_unlocked
+      && !sword_unlock_target.classList.contains("is-sword-unlock-confirmed")
+    ) {
+      sword_unlock_target.style.setProperty("--sword-unlock-progress", "0");
+    }
+  }
+}
+
+/**
+ * Return the portrait progress line to rest after successful sword activation.
+ *
+ * @returns {void} The function returns no value. It is safe when the homepage
+ *   portrait is absent because shared scripts also run on interior routes.
+ * @throws {Error} This helper does not throw intentionally.
+ * @example
+ * sword_unlock_confirmation_timeout = setTimeout(
+ *   _finish_sword_unlock_confirmation,
+ *   900,
+ * );
+ *
+ * @sideEffects Removes one transient class and resets one CSS custom property.
+ */
+function _finish_sword_unlock_confirmation() {
+  // Restore the portrait only after the confirmation pulse has remained visible.
+  if (sword_unlock_target) {
+    sword_unlock_target.classList.remove("is-sword-unlock-confirmed");
+    sword_unlock_target.style.setProperty("--sword-unlock-progress", "0");
+  }
+  sword_unlock_confirmation_timeout = 0;
+}
+
+/**
+ * Advance the subtle portrait progress line while an uninterrupted hold is active.
+ *
+ * @param {DOMHighResTimeStamp} timestamp - Animation timestamp in milliseconds.
+ *   It may be any finite browser-supplied frame time.
+ * @returns {void} The function returns no value and stops scheduling at completion.
+ * @throws {Error} This helper does not throw when the portrait is absent.
+ * @example
+ * sword_unlock_progress_frame = requestAnimationFrame(_render_sword_unlock_progress);
+ *
+ * @sideEffects Updates one CSS custom property and may request another frame.
+ */
+function _render_sword_unlock_progress(timestamp) {
+  // Stop immediately when the hold was released, cancelled, or already completed.
+  if (!sword_unlock_target || sword_unlock_pointer_id === null || sword_effect_unlocked) {
+    sword_unlock_progress_frame = 0;
+    return;
+  }
+
+  // Express real elapsed time so throttled frames cannot shorten the ten-second gate.
+  const progress = _clamp(
+    (timestamp - sword_unlock_started_at) / sword_unlock_hold_duration_ms,
+    0,
+    1,
+  );
+  sword_unlock_target.style.setProperty("--sword-unlock-progress", progress.toFixed(4));
+  sword_unlock_progress_frame = window.requestAnimationFrame(_render_sword_unlock_progress);
+}
+
+/**
+ * Complete the hidden sword unlock and seed its first pointer-local formation.
+ *
+ * @returns {void} The function returns no value. Reduced-motion visitors retain
+ *   the unlock but do not receive animated swords until their preference changes.
+ * @throws {Error} This helper does not throw when canvas or storage is unavailable.
+ * @example
+ * _complete_sword_unlock();
+ *
+ * @sideEffects Persists unlock state, updates portrait feedback, and may start
+ *   the shared light-field renderer at the stored press coordinate.
+ */
+function _complete_sword_unlock() {
+  // Make the unlock authoritative before any rendering or storage side effect.
+  sword_effect_unlocked = true;
+  _persist_sword_unlock_state();
+  window.clearTimeout(sword_unlock_timeout);
+  window.cancelAnimationFrame(sword_unlock_progress_frame);
+  sword_unlock_timeout = 0;
+  sword_unlock_progress_frame = 0;
+
+  // Resolve the quiet progress line into one brief confirmation pulse.
+  if (sword_unlock_target) {
+    sword_unlock_target.classList.remove("is-sword-unlock-pressing");
+    sword_unlock_target.classList.add("is-sword-unlock-confirmed");
+    sword_unlock_target.style.setProperty("--sword-unlock-progress", "1");
+    window.clearTimeout(sword_unlock_confirmation_timeout);
+    sword_unlock_confirmation_timeout = window.setTimeout(
+      _finish_sword_unlock_confirmation,
+      900,
+    );
+  }
+  _reflect_sword_unlock_state();
+
+  // Begin at the held portrait coordinate without bypassing reduced-motion policy.
+  if (!reduced_motion_query.matches && light_field_canvas) {
+    const canvas_bounds = light_field_canvas.getBoundingClientRect();
+    const pointer_x = _clamp(sword_unlock_start_x - canvas_bounds.left, 0, canvas_bounds.width);
+    const pointer_y = _clamp(sword_unlock_start_y - canvas_bounds.top, 0, canvas_bounds.height);
+    light_field_target_x = pointer_x / Math.max(1, canvas_bounds.width);
+    light_field_target_y = pointer_y / Math.max(1, canvas_bounds.height);
+    _record_sword_pointer_motion(pointer_x, pointer_y, performance.now());
+    light_field_pointer_active = true;
+    _request_light_field_frame();
+  }
+  sword_unlock_pointer_id = null;
+}
+
+/**
+ * Begin the ten-second primary-pointer hold on the homepage portrait.
+ *
+ * @param {PointerEvent} event - Primary pointer-down event. Secondary mouse
+ *   buttons and additional touches are ignored.
+ * @returns {void} The function returns no value.
+ * @throws {Error} Pointer capture failures are tolerated by the fallback window
+ *   release listeners registered during initialization.
+ * @example
+ * sword_unlock_target.addEventListener("pointerdown", _begin_sword_unlock_press);
+ *
+ * @sideEffects Captures pointer identity, starts one timeout, and begins progress.
+ */
+function _begin_sword_unlock_press(event) {
+  // Accept one deliberate primary hold only while the hidden effect is locked.
+  if (sword_effect_unlocked || !event.isPrimary || event.button !== 0) {
+    return;
+  }
+  _cancel_sword_unlock_press();
+  sword_unlock_pointer_id = event.pointerId;
+  sword_unlock_start_x = event.clientX;
+  sword_unlock_start_y = event.clientY;
+  sword_unlock_started_at = performance.now();
+
+  // Retain release events outside the portrait when the browser supports capture.
+  try {
+    sword_unlock_target.setPointerCapture(event.pointerId);
+  } catch (_error) {
+    // Window-level release listeners still cancel an interrupted hold.
+  }
+  sword_unlock_target.classList.add("is-sword-unlock-pressing");
+  sword_unlock_timeout = window.setTimeout(
+    _complete_sword_unlock,
+    sword_unlock_hold_duration_ms,
+  );
+  sword_unlock_progress_frame = window.requestAnimationFrame(_render_sword_unlock_progress);
+}
+
+/**
+ * Cancel a portrait hold when the active pointer travels beyond tap tolerance.
+ *
+ * @param {PointerEvent} event - Pointer-move event for any pointer identity.
+ * @returns {void} The function returns no value.
+ * @throws {Error} This handler does not throw intentionally.
+ * @example
+ * sword_unlock_target.addEventListener("pointermove", _track_sword_unlock_press);
+ *
+ * @sideEffects May cancel the active unlock timeout and visual progress.
+ */
+function _track_sword_unlock_press(event) {
+  // Ignore unrelated pointers and allow small natural hand movement.
+  if (event.pointerId !== sword_unlock_pointer_id) {
+    return;
+  }
+  const travel = Math.hypot(
+    event.clientX - sword_unlock_start_x,
+    event.clientY - sword_unlock_start_y,
+  );
+  if (travel > sword_unlock_pointer_travel_tolerance) {
+    _cancel_sword_unlock_press();
+  }
+}
+
+/**
+ * Suppress the browser context menu while the portrait's secret is still locked.
+ *
+ * @param {MouseEvent} event - Context-menu event dispatched from the homepage
+ *   portrait. The event may originate from a mouse or touch long press.
+ * @returns {void} The function returns no value.
+ * @throws {Error} This handler does not throw intentionally.
+ * @example
+ * sword_unlock_target.addEventListener(
+ *   "contextmenu",
+ *   _suppress_locked_sword_context_menu,
+ * );
+ *
+ * @sideEffects Prevents the native context menu before the effect is unlocked.
+ */
+function _suppress_locked_sword_context_menu(event) {
+  // Preserve the normal context menu after discovery while protecting the hold gesture.
+  if (!sword_effect_unlocked) {
+    event.preventDefault();
+  }
+}
+
+/**
+ * Prevent the portrait image from starting a native browser drag operation.
+ *
+ * @param {DragEvent} event - Drag-start event emitted by the portrait image.
+ * @returns {void} The function returns no value.
+ * @throws {Error} This handler does not throw intentionally.
+ * @example
+ * sword_unlock_target.addEventListener("dragstart", _prevent_sword_unlock_drag);
+ *
+ * @sideEffects Cancels the native drag so it cannot interrupt a deliberate hold.
+ */
+function _prevent_sword_unlock_drag(event) {
+  // Keep the portrait stationary throughout both mouse and pen holds.
+  event.preventDefault();
+}
+
+/**
+ * Cancel an unfinished portrait hold when the document becomes hidden.
+ *
+ * @returns {void} The function returns no value. Visible-state notifications
+ *   intentionally leave the current pointer state unchanged.
+ * @throws {Error} This handler does not throw intentionally.
+ * @example
+ * document.addEventListener(
+ *   "visibilitychange",
+ *   _handle_sword_unlock_visibility_change,
+ * );
+ *
+ * @sideEffects May clear the unlock timer and its portrait progress feedback.
+ */
+function _handle_sword_unlock_visibility_change() {
+  // A background tab cannot count toward the required uninterrupted ten seconds.
+  if (document.hidden) {
+    _cancel_sword_unlock_press();
+  }
+}
 
 /**
  * Clamp a finite number to an inclusive numeric interval.
@@ -758,12 +1085,14 @@ function _update_pointer_target(event) {
   light_field_target_x = _clamp(pointer_x / Math.max(1, canvas_bounds.width), 0, 1);
   light_field_target_y = _clamp(pointer_y / Math.max(1, canvas_bounds.height), 0, 1);
 
-  // Feed the exact bounded pointer position to the sword motion detector.
-  _record_sword_pointer_motion(
-    light_field_target_x * canvas_bounds.width,
-    light_field_target_y * canvas_bounds.height,
-    event.timeStamp,
-  );
+  // Feed pointer motion to swords only after the portrait has unlocked them.
+  if (sword_effect_unlocked) {
+    _record_sword_pointer_motion(
+      light_field_target_x * canvas_bounds.width,
+      light_field_target_y * canvas_bounds.height,
+      event.timeStamp,
+    );
+  }
 
   // Seed one leaf promptly when the pointer first activates the ambient effect.
   if (!light_field_pointer_active) {
@@ -1640,8 +1969,8 @@ function _draw_sword_entities(context, base_height) {
  * @sideEffects Mutates all shared flying-sword timing, mode, and entity state.
  */
 function _render_sword_effect(context, delta_seconds, pointer_x, pointer_y) {
-  // Remove decorative sword movement entirely under reduced-motion preference.
-  if (reduced_motion_query.matches) {
+  // Keep the hidden signature dormant until unlocked and honor reduced motion.
+  if (!sword_effect_unlocked || reduced_motion_query.matches) {
     _reset_sword_effect();
     return;
   }
@@ -1865,7 +2194,27 @@ function _initialize_light_field() {
   document.documentElement.addEventListener("pointerleave", _deactivate_pointer_effects);
   reduced_motion_query.addEventListener("change", _handle_motion_preference_change);
 
+  // Register the hidden homepage hold without turning the portrait into visible UI.
+  if (sword_unlock_target) {
+    sword_unlock_target.addEventListener("pointerdown", _begin_sword_unlock_press);
+    sword_unlock_target.addEventListener("lostpointercapture", _cancel_sword_unlock_press);
+    sword_unlock_target.addEventListener(
+      "contextmenu",
+      _suppress_locked_sword_context_menu,
+    );
+    sword_unlock_target.addEventListener("dragstart", _prevent_sword_unlock_drag);
+    window.addEventListener("pointermove", _track_sword_unlock_press, { passive: true });
+    window.addEventListener("pointerup", _cancel_sword_unlock_press, { passive: true });
+    window.addEventListener("pointercancel", _cancel_sword_unlock_press, { passive: true });
+    window.addEventListener("blur", _cancel_sword_unlock_press);
+    document.addEventListener(
+      "visibilitychange",
+      _handle_sword_unlock_visibility_change,
+    );
+  }
+
   // Allocate the bitmap; resizing requests exactly one initial resting frame.
+  _reflect_sword_unlock_state();
   _resize_light_field();
 }
 

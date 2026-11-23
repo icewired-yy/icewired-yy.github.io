@@ -27,7 +27,7 @@ layout: default
 
     {% if page.profile.image %}
       {% assign home_profile_path = page.profile.image | prepend: '/assets/img/' %}
-      {% include figure.liquid path=home_profile_path figure_class='home-hero__portrait' class='home-hero__portrait-image' width='1276' height='1702' alt=page.profile.image_alt sizes='(min-width: 981px) 31vw, (min-width: 701px) 42vw, 100vw' loading='eager' decoding='async' fetchpriority='high' cache_bust=true %}
+      {% include figure.liquid path=home_profile_path figure_class='home-hero__portrait' class='home-hero__portrait-image' width='1276' height='1702' alt=page.profile.image_alt sizes='(min-width: 981px) 31vw, (min-width: 701px) 42vw, 100vw' loading='eager' decoding='async' fetchpriority='high' cache_bust=true data_sword_unlock=true %}
     {% endif %}
 
     <a class="home-hero__invitation" href="#research">
